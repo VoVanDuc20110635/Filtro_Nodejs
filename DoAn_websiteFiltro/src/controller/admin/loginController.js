@@ -22,6 +22,9 @@ const AuthenticationAccountException = require('../../Exception/AuthenticationAc
 let getLoginPage = async (req, res) => {
     return res.render('../views/admin/login.ejs', { session: req.session });
 }
+let getDashBoardPage = async (req, res) => {
+    return res.render('../views/admin/dashboard.ejs', { session: req.session });
+}
 
 let login = async (req, res) => {
     try {
@@ -79,5 +82,6 @@ let logout = async (req, res) => {
 module.exports = {
     getLoginPage,
     login,
-    logout
+    logout,
+    getDashBoardPage
 }

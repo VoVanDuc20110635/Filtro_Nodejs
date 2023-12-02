@@ -1,6 +1,12 @@
 import express from "express";
 import loginController from '../../controller/admin/loginController'
 import accountController from '../../controller/admin/accountController'
+import categoryController from '../../controller/admin/categoryController'
+import flavorController from '../../controller/admin/flavorController'
+import orderController from '../../controller/admin/orderController'
+import productController from '../../controller/admin/productController'
+import staffController from '../../controller/admin/staffController'
+import userController from '../../controller/admin/userController'
 import multer from 'multer';
 import path from 'path';
 import { error } from "console";
@@ -32,7 +38,14 @@ let upload1 = multer({ storage: storage, fileFilter: imageFilter }).array('multi
 const initWebRouteAdmin = (app) => {
   // router.get('/', homeController.getHomepage);
   router.get('/admin/login', loginController.getLoginPage);
+  router.get('/admin', loginController.getDashBoardPage);
   router.get('/admin/account', accountController.getAccountPage);
+  router.get('/admin/category', categoryController.getCategoryPage);
+  router.get('/admin/flavor', flavorController.getFlavorPage);
+  router.get('/admin/order', orderController.getOrderPage);
+  router.get('/admin/product', productController.getProductPage);
+  router.get('/admin/staff', staffController.getStaffPage);
+  router.get('/admin/user', userController.getUserPage);
   // router.post('/login', loginController.login);
 
   return app.use('/', router);
