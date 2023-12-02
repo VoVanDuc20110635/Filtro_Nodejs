@@ -15,6 +15,7 @@
 import express from 'express';
 import configViewEngine from './configs/viewEngine';
 import  initWebRoute from './route/User/web';
+import  initWebRouteAdmin from './route/Admin/web';
 import initAPIRoute from './route/api';
 // import connection from './configs/connectDB';
 require('dotenv').config();
@@ -55,6 +56,8 @@ configViewEngine(app);
 
 // init web route
 initWebRoute(app);
+
+initWebRouteAdmin(app);
 
 // init api
 initAPIRoute(app);
