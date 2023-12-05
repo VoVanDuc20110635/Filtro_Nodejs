@@ -11,7 +11,7 @@ const categoryService = new CategoryService();
 let errorMessage;
 
 let getProductPage = async (req, res) => {
-    let userId = parseInt( req.session.user.userId, 10);
+    // let userId = parseInt( req.session.user.userId, 10);
     const categories = await categoryService.get5Categories();
     let productId = req.params.id;
     let currentProductId = parseInt(productId, 10);

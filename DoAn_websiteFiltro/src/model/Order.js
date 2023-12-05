@@ -20,7 +20,7 @@ const Order = sequelize.define('Order', {
   },
   phoneNumber: {
     type: DataTypes.STRING,
-    field: 'ngaydathang',
+    field: 'sdt',
   },
   email: {
     type: DataTypes.STRING,

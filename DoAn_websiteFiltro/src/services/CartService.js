@@ -55,6 +55,7 @@ class CartService {
     async addProductToCart(cart, productId, quantity, productDetailId) {
         try {
             const product = await productService.getProductById(productId);
+            const productDetail = await productService.getProductDetailById(productDetailId);
 
             if (!product) {
                 throw new Error("Product not found!");
@@ -78,9 +79,9 @@ class CartService {
                     const newCartItem = await CartItem.create({
                         productId: productId,
                         productDetailId: productDetailId,
-                        price: product.price,
+                        price: productDetail.price - productDetail.price*productDetail.discount/100,
                         quantity: quantity,
-                        total: product.price * quantity,
+                        total: (productDetail.price - productDetail.price*productDetail.discount/100) * quantity,
                         purchasedDate: new Date(),
                         cartId: cart.id
                 });
@@ -112,7 +113,7 @@ class CartService {
             const deletedCount = await CartItem.destroy({
                 where: {
                     cartId: cartId,
-                    productId: productId,
+                    productDetailId: productId,
                 },
             });
         } catch (error) {

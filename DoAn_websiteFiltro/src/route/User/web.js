@@ -50,7 +50,10 @@ const initWebRoute = (app) => {
   router.get('/user/profile', userController.showProfile);
   router.post('/user/profile/:userId', userController.processProfile);
   router.get('/user/billing', userController.showBilling);
+  router.get('/user/security', userController.showSecurityPassword);  
   router.post('/order/cancel', orderController.cancel);
+  router.get('/order', orderController.getOrderPage);
+  router.post('/order/placeOrder', orderController.placeOrder);
   router.get('/product/:id', productController.getProductPage );
   router.post('/product/:id/feedback', productController.feedback);
   router.get('/cart', cartController.showCart);

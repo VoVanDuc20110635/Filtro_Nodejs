@@ -307,13 +307,11 @@
                                     <%= product.productName %>
                                 </h6>
                                 <div class="d-flex justify-content-center">
-                                    <h6>
-                                        <%= (product.price - (product.price * product.discount /
-                                            100)).toLocaleString('en-US') %>đ
+                                    <h6 class="discountProduct" data-product-id="<%= product.productId %>"> Giảm giá: 
                                     </h6>
-                                    <h6 class="text-muted ml-2"><del>
+                                    <!-- <h6 class="text-muted ml-2"><del>
                                             <%= product.price.toLocaleString('en-US') %>đ
-                                        </del></h6>
+                                        </del></h6> -->
 
                                 </div>
                             </div>
@@ -504,7 +502,7 @@
                         </tr>
                     </table>
                     <div class="bk_save_user_flex_hidden" style="margin-bottom: 5px;">
-                        <button type="submit" class="button-save-user_flex_hidden" style="background-color: #0f65c1">Save</button>
+                        <button type="submit" class="button-save-user_flex_hidden" style="background-color: #0f65c1">Add</button>
                     </div>
                 </form>
             </div>
@@ -530,6 +528,19 @@
 
     <script>
         $(document).ready(function () {
+            $('.discountProduct').each(function () {
+                const productId = $(this).data('product-id');
+                const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
+                const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+
+                // Update the content of the current h6.discountProduct
+                if (maxDiscount > 0) {
+                    $(this).text(`Giảm giá lên đến ${maxDiscount}%`);
+                } else {
+                    $(this).hide();
+                }
+            });
             $(document).on('click', '.showImportButton', function () {
                 const formImport = document.getElementById('formEdit');
                 const productId = $(this).data('product-id');
@@ -539,14 +550,21 @@
                     productDetailList :
                     JSON.parse(productDetailList);
 
+                // // Calculate the maximum discount for the current product
+                // const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                // $(this).closest('.card-body').find('h6.discountProduct').text("Giảm giá lên đến " + maxDiscount + "%");
+                // // Set the content of the h6 tag for the current product
+                // // $('.discountProduct' + productId).text("Giảm giá lên đến " + maxDiscount + "%");
+
                 // Clear existing options in the select
                 $('#productDetailSelect').empty();
 
                 // Add options to the select
                 productDetailArray.forEach(function (productDetail) {
+                    let price = productDetail.price-productDetail.price*productDetail.discount/100;
                     $('#productDetailSelect').append($('<option>', {
                     value: productDetail.productDetailId, // Replace with the actual property of productDetail
-                    text: productDetail.weight + "gram với giá " + productDetail.price + "đ; stock: " + productDetail.stock// Replace with the actual property of productDetail
+                    text: productDetail.weight + "gram với giá " + price + "đ;" + "( giảm giá:"+productDetail.discount  +"%);" + " tồn kho: " + productDetail.stock// Replace with the actual property of productDetail
                     }));
                 });
 

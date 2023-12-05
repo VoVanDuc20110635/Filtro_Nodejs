@@ -194,9 +194,9 @@
                                     <img src="<%= item.Product.image %>" alt="" style="width: 50px; width: 70px; margin-left: 15px;">
                                     <%= item.Product.productName %>
                                 </td>
-                                <td class="align-middle" id="priceItem"><%= item.ProductDetail.weight %>gram</td>
-                                <td class="align-middle" id="priceItem" th:value="<%= item.Product.price - item.Product.price * item.Product.discount/100 %>">
-                                    <%= item.Product.price - item.Product.price * item.Product.discount/100 %>
+                                <td class="align-middle" id="weightItem"><%= item.ProductDetail.weight %>gram</td>
+                                <td class="align-middle" id="priceItem" th:value="<%= item.ProductDetail.price - item.ProductDetail.price * item.ProductDetail.discount/100 %>đ">
+                                    <%= item.ProductDetail.price - item.ProductDetail.price * item.ProductDetail.discount/100 %>đ
                                 </td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -214,10 +214,10 @@
                                     </div>
                                 </td>
                                 <td class="align-middle" id="totalItemPrice">
-                                    <%= (item.Product.price - item.Product.price * item.Product.discount/100) * item.quantity %>
+                                    <%= (item.ProductDetail.price - item.ProductDetail.price * item.ProductDetail.discount/100) * item.quantity %>đ
                                 </td>
                                 <td class="align-middle">
-                                    <form action="/cart/remove/<%= item.Product.productId %>" method="post">
+                                    <form action="/cart/remove/<%= item.ProductDetail.productDetailId %>" method="post">
                                         <button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
                                     </form>
                                 </td>
@@ -249,7 +249,7 @@
                             <a onclick="submitUpdateCartForm()" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                         <% } %>
                     </div>
-                    <form id="hiddenForm" action="/cart/update" method="post" style="display: none;">
+                    <form id="hiddenForm" action="/order" method="get" style="display: none;">
                         <input type="hidden" name="productIds" id="productIdsInput">
                         <input type="hidden" name="quantities" id="quantitiesInput">
                     </form>

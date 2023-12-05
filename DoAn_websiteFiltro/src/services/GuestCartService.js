@@ -47,7 +47,7 @@ class GuestCartService {
     async addProductToGuestCart(guestCart, productId, quantity, productDetailId) {
         try {
             const product = await productService.getProductById(productId);
-
+            const productDetail = await productService.getProductDetailById(productDetailId);
             if (!product) {
                 throw new Error("Product not found!");
             }
@@ -72,8 +72,8 @@ class GuestCartService {
                         productId: productId,
                         productDetailId: productDetailId,
                         quantity: quantity,
-                        price: product.price,
-                        total: product.price * quantity,
+                        price: productDetail.price - productDetail.price*productDetail.discount/100,
+                        total: (productDetail.price - productDetail.price*productDetail.discount/100) * quantity,
                         purchasedDate: new Date(),
                         tempCartId: guestCart.id
                     });

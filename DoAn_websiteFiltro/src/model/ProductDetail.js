@@ -29,6 +29,14 @@ const ProductDetail = sequelize.define('ProductDetail', {
   status: {
     type: DataTypes.INTEGER,
     field: 'trangthai',
+  },
+  discount: {
+    type: DataTypes.INTEGER,
+    field: 'giamgia',
+  },
+  sold: {
+    type: DataTypes.INTEGER,
+    field: 'daban',
   }
 }, {
   tableName: 'sanpham_chitiet', // Specify the table name

@@ -40,8 +40,18 @@ let showBilling = async (req, res) => {
     return res.render('../views/user/user-billing.ejs', { session: req.session, orderList: orderList });
 }
 
+let showSecurityPassword = async (req, res) => {
+    let user = req.session.user;
+    if (!user){
+        res.render('../views/user/user-profile.ejs', {session: req.session, message: "Please Login"});
+        return;
+    }
+    return res.render('../views/user/user-security.ejs', { session: req.session });
+}
+
 module.exports = {
     showProfile,
     processProfile,
-    showBilling
+    showBilling,
+    showSecurityPassword
 }

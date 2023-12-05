@@ -583,6 +583,18 @@ class ProductService {
             throw error;
         }
     }
+    async getProductDetailById(id) {
+        try {
+            const productDetail = await ProductDetail.findOne({
+                where: { productDetailId: id } // Assuming your Product model has an 'id' field
+                
+            });
+
+            return productDetail;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = ProductService;
