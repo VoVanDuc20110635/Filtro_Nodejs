@@ -29,6 +29,10 @@ const OrderDetail = sequelize.define('OrderDetail', {
   total: {
     type: DataTypes.INTEGER,
     field: 'tong',
+  },
+  productId: {
+    type: DataTypes.INTEGER,
+    field: 'masp',
   }
 }, {
   tableName: 'dathang_chitiet', // Specify the table name

@@ -122,11 +122,11 @@ class GuestCartService {
     }
 
     async removeCartItemByGuestCartIdAndProductId(guestCartId, productId) {
-        try {
+        try {  
             const deletedCount = await CartItem.destroy({
                 where: {
                     tempCartId: guestCartId,
-                    productId: productId,
+                    productDetailId: productId,
                 },
             });
         } catch (error) {

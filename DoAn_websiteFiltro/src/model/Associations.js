@@ -55,7 +55,11 @@ CartItem.belongsTo(Product, {foreignKey: 'productId'});
 
 // Product and OrderDetails
 ProductDetail.hasMany(OrderDetail, {foreignKey: 'productDetailId'});
-OrderDetail.belongsTo(Product, {foreignKey: 'productDetailId'});
+OrderDetail.belongsTo(ProductDetail, {foreignKey: 'productDetailId'});
+
+// ProductDetail and OrderDetails
+Product.hasMany(OrderDetail, {foreignKey: 'productId'});    
+OrderDetail.belongsTo(Product, {foreignKey: 'productId'});
 
 // Product and InvoiceDetails
 Product.hasMany(InvoiceDetail, {foreignKey: 'productId'});

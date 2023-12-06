@@ -29,15 +29,27 @@ let placeOrder = async(req, res) => {
         } else{
             return res.redirect('/login');
         }
-        return res.redirect('/cart');
+        return res.redirect('/user/billing');
     }
     catch(err){
-        return res.redirect('/cart');
+        return res.redirect('/user/billing');
     }
     
+}
+
+let getInvoicePage = async(req, res) => {
+    if (req.session.user){
+        let orderId = req.params.id;
+        let order = await orderService.getInvoiceByOrderId(orderId);
+        let orderDetailList = order.OrderDetails;
+        return res.render('../views/user/invoice.ejs', { session: req.session,orderDetailList:orderDetailList, order: order });
+    } else{
+        return res.render('../views/user/invoice.ejs', { session: req.session});    
+    }
 }
 module.exports = {
     cancel,
     getOrderPage,
-    placeOrder
+    placeOrder,
+    getInvoicePage
 }

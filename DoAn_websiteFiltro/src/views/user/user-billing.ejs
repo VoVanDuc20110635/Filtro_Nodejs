@@ -150,9 +150,14 @@
                                                 <%= new Date(item.orderDate).toISOString().slice(0, 10) %>
                                             </td>
                                             <td>
-                                                <%= (item.total).toLocaleString('en-US', { style: 'currency' ,
-                                                    currency: 'USD' }) %>
+                                                <% if (item.total !== null && item.total !== undefined) { %>
+                                                    <%= item.total%>đ
+                                                <% } else { %>
+                                                    <!-- Handle the case where item.total is null or undefined -->
+                                                    No data
+                                                <% } %>
                                             </td>
+                                            
                                             <td>
                                                 <% if (item.status===1) { %>
                                                     <span class="badge bg-light text-dark">Pending verification</span>

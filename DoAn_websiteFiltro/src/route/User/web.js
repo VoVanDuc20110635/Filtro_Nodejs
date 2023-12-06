@@ -54,6 +54,7 @@ const initWebRoute = (app) => {
   router.post('/order/cancel', orderController.cancel);
   router.get('/order', orderController.getOrderPage);
   router.post('/order/placeOrder', orderController.placeOrder);
+  router.get('/invoice/:id', orderController.getInvoicePage);
   router.get('/product/:id', productController.getProductPage );
   router.post('/product/:id/feedback', productController.feedback);
   router.get('/cart', cartController.showCart);

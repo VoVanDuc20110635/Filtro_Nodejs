@@ -1,10 +1,12 @@
 const Associations = require('../model/Associations');
 const User = require('../model/User');
 const Order = require('../model/Order');
+const Product = require('../model/Product');
 const OrderDetail = require('../model/OrderDetail');
 const CartItemService = require('../services/CartItemService');
 const cartItemService = new CartItemService();
 const CartItem = require('../model/CartItem');
+const ProductDetail = require('../model/ProductDetail');
 class OrderService {
     constructor() { };
     async getOrderByUserId(userId) {
@@ -67,5 +69,37 @@ class OrderService {
             throw error;
         }
     }
+    async getInvoiceByOrderId(orderId) {
+        try {
+          const order = await Order.findOne({
+            where: {
+              orderId: orderId,
+            },
+            include: [
+              {
+                model: OrderDetail,
+                include: [Product, ProductDetail],
+              },
+            ],
+          });
+          
+          // Modify the image field for each Product in each OrderDetail
+            if (order && order.OrderDetails) {
+                order.OrderDetails.forEach((orderDetail) => {
+                if (orderDetail.Product) {
+                    if (orderDetail.Product.image) {
+                        // Update the image field with the desired path
+                        orderDetail.Product.image = '/image/upload/' + orderDetail.Product.image;
+                    }
+                }
+                });
+            }
+
+          return order;
+        } catch (error) {
+          console.error('Error finding order by orderId:', error);
+          throw error;
+        }
+      }
 }
 module.exports = OrderService;
