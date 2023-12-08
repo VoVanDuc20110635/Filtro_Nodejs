@@ -26,6 +26,8 @@
     <link href="/css/style.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="/css/boot1/owl.carousel.min.css">
+
+    <link href="/css/form.css" rel="stylesheet">
 </head>
 
 <body>
@@ -63,7 +65,7 @@
         </div>
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a href="" class="text-decoration-none">
+                <a href="/" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span
                             class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                 </a>
@@ -81,13 +83,8 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="" class="btn border">
+                <a href="/cart" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
                 </a>
             </div>
         </div>
@@ -182,10 +179,10 @@
                         <!-- Add additional carousel items here -->
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                        <i class="fa fa-2x fa-angle-left text-dark"></i>
+                        <!-- <i class="fa fa-2x fa-angle-left text-dark"></i> -->
                     </a>
                     <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                        <i class="fa fa-2x fa-angle-right text-dark"></i>
+                        <!-- <i class="fa fa-2x fa-angle-right text-dark"></i> -->
                     </a>
                 </div>
             </div>
@@ -196,12 +193,13 @@
                 </h3>
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="far fa-star"></small>
+                        <small class="far fa-star fa-star-sum"></small>
+                        <small class="far fa-star fa-star-sum"></small>
+                        <small class="far fa-star fa-star-sum"></small>
+                        <small class="far fa-star fa-star-sum"></small>
+                        <small class="far fa-star fa-star-sum"></small>
                     </div>
+                    <input type="hidden" name="numberOfStartSum" id="numberOfStartSum" value="3" />
                     <small class="pt-1">
                         <%= '(' + numberOfFeedback + ' Reviews)' %>
                     </small>
@@ -219,15 +217,15 @@
                 </div>
 
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <form action="/cart/add" method="POST" class="d-flex">
+                    <form class="d-flex">
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn" id="quantityButtonPlus" onclick="decreaseQuantity()">
                                 <div class="btn btn-primary btn-minus">
                                     <i class="fa fa-minus"></i>
                                 </div>
                             </div>
-                            <input type="text" id="quantityInput" name="quantity"
-                                class="form-control bg-secondary text-center" value="1">
+                            <input type="text" id="quantityInput2"
+                                class="form-control bg-secondary text-center" value="<%= quantityDefault %>">
                             <div class="input-group-btn" id="quantityButtonMinus" onclick="increaseQuantity()">
                                 <div class="btn btn-primary btn-plus">
                                     <i class="fa fa-plus"></i>
@@ -235,8 +233,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="productId" value="<%= product.id %>" />
-                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                            Cart</button>
+                        <a class="btn btn-primary px-3 showImportButton" data-product-id="<%= product.productId %>" data-productDetail-list="<%= JSON.stringify(product.ProductDetails) %>"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</a>
                     </form>
                 </div>
 
@@ -276,7 +273,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h4 class="mb-4">
-                                    <%= numberOfFeedback + ' review for ' + product.productName %>
+                                    <%= numberOfFeedback + ' review(s) ' %>
                                 </h4>
                                 <% feedbackList.forEach(function(feedback) { %>
                                     <div class="media-feedback mb-4">
@@ -338,7 +335,7 @@
                                         </div>
                                     </form>
                                     <% } else { %>
-                                        <h4 class="text-center">Please login to comment!</h4>
+                                        <a href="/login" style="border: 1px solid;" class="text-center">Please login to comment!</a>
                                         <% } %>
                             </div>
                         </div>
@@ -370,22 +367,19 @@
                                         <%= product.productName %>
                                     </h6>
                                     <div class="d-flex justify-content-center">
-                                        <h6>
-                                            <%= (product.price - (product.price * product.discount /
-                                                100)).toLocaleString('en-US', { style: 'currency' , currency: 'USD' })
-                                                %>
+                                        <h6 class="discountProduct" data-product-id="<%= product.productId %>"> Giảm giá: 
                                         </h6>
-                                        <h6 class="text-muted ml-2"><del>
+                                        <!-- <h6 class="text-muted ml-2"><del>
                                                 <%= (product.price).toLocaleString('en-US', { style: 'currency' ,
                                                     currency: 'USD' }) %>
-                                            </del></h6>
+                                            </del></h6> -->
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between bg-light border">
                                     <a href="/product/<%= product.productId %>" class="btn btn-sm text-dark p-0"><i
                                             class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                    <button class="btn btn-sm text-dark p-0" type="submit"><i
-                                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
+                                    <a class="btn btn-sm text-dark p-0 showImportButton" data-product-id="<%= product.productId %>" data-productDetail-list="<%= JSON.stringify(product.ProductDetails) %>"><i
+                                            class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</a>
                                 </div>
                                 <input type="hidden" name="productId" value="<%= product.id %>">
                                 <input type="hidden" name="quantity" value="1">
@@ -472,15 +466,48 @@
     <!-- Footer End -->
 
 
+    <div class="overlay_flex_hidden" id="formEdit">
+        <div class="container_flex_hidden">
+            <div class="form_flex_hidden">
+                <form action="/cart/add" method="post" >
+                    <table>
+                        <tr style="display: none">
+                            <td><input type="hidden" value="" name="productId" id="productId"></td>
+                        </tr>
+                        <tr style="display: none">
+                            <td><input type="hidden" id="quantityInput" name="quantity"
+                                value="<%= quantityDefault %>"></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #0f65c1;" colspan="3">Chọn loại sản phẩm</th>
+                        </tr>
+                                                <!-- Dynamic select for product details -->
+                        <tr>
+                            <td>Product Detail</td>
+                            <td>
+                                <select id="productDetailSelect" name="productDetailId">
+                                <!-- Options will be added dynamically -->
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="bk_save_user_flex_hidden" style="margin-bottom: 5px;">
+                        <button type="submit" class="button-save-user_flex_hidden" style="background-color: #0f65c1">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
-    <script>
+    <!-- <script>
         function increaseQuantity() {
             var quantityInput = document.getElementById('quantityInput');
             var quantity = parseInt(quantityInput.value);
             quantity = quantity + 1;
-            quantityInput.value = quantity;
+            document.getElementById('quantityInput').setProperty('value') = quantity;
         }
     </script>
     <script>
@@ -492,9 +519,9 @@
             } else {
                 quantity = quantity - 1;
             }
-            quantityInput.value = quantity;
+            document.getElementById('quantityInput').setProperty('value') = quantity;
         }
-    </script>
+    </script> -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
         var feedbackList = document.querySelectorAll('.media-body-feedback');
@@ -511,6 +538,28 @@
         });
     </script>
     <script>
+        function increaseQuantity() {
+            var quantityInput = document.getElementById('quantityInput');
+            var quantity = parseInt(quantityInput.value);
+            quantity = quantity + 1;
+            quantityInput.value = quantity;
+            var quantityInput2 = document.getElementById('quantityInput2');
+            quantityInput2.value = quantity;
+        }
+
+        function decreaseQuantity() {
+            var quantityInput = document.getElementById('quantityInput');
+            var quantity = parseInt(quantityInput.value);
+            if (quantity == 1) {
+                quantity = 1;
+            } else {
+                quantity = quantity - 1;
+            }
+            quantityInput.value = quantity;
+            var quantityInput2 = document.getElementById('quantityInput2');
+            quantityInput2.value = quantity;
+        }   
+
         function setRating(rating) {
             var stars = document.getElementsByClassName('fa-star-comment');
             var input = document.getElementById('numberOfStarsInput');
@@ -530,6 +579,8 @@
             // Đặt giá trị cho phần tử input
             console.log(rating);
             input.value = rating;
+            var quantityInput = document.getElementById('quantityInput');
+            quantityInput.value
         }
     </script>
 
@@ -553,6 +604,77 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+     <script>
+        $(document).ready(function () {
+            var stars = document.getElementsByClassName('fa-star-sum');
+            var input = document.getElementById('numberOfStartSum');
+            // Xóa lớp 'fas' (sao đầy) và thêm lớp 'far' (sao trống) cho tất cả các sao
+            for (var i = 0; i < stars.length; i++) {
+                stars[i].classList.remove('fas');
+                stars[i].classList.add('far');
+            }
+
+            // Thêm lớp 'fas' (sao đầy) cho số sao đã được chọn
+            for (var j = 0; j < input.value; j++) {
+                stars[j].classList.remove('far');
+                stars[j].classList.add('fas');
+            }
+            $('.discountProduct').each(function () {
+                const productId = $(this).data('product-id');
+                const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
+                const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+
+                // Update the content of the current h6.discountProduct
+                if (maxDiscount > 0) {
+                    $(this).text(`Giảm giá lên đến ${maxDiscount}%`);
+                } else {
+                    $(this).text(`Không giảm giá!`);
+                    $(this).css('visibility', 'hidden');
+                    
+                }
+            });
+            $(document).on('click', '.showImportButton', function () {
+                const formImport = document.getElementById('formEdit');
+                const productId = $(this).data('product-id');
+                document.getElementById('productId').value = productId;
+                const productDetailList = $(this).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetailList) ?
+                    productDetailList :
+                    JSON.parse(productDetailList);
+
+                // // Calculate the maximum discount for the current product
+                // const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                // $(this).closest('.card-body').find('h6.discountProduct').text("Giảm giá lên đến " + maxDiscount + "%");
+                // // Set the content of the h6 tag for the current product
+                // // $('.discountProduct' + productId).text("Giảm giá lên đến " + maxDiscount + "%");
+
+                // Clear existing options in the select
+                $('#productDetailSelect').empty();
+
+                // Add options to the select
+                productDetailArray.forEach(function (productDetail) {
+                    let price = productDetail.price-productDetail.price*productDetail.discount/100;
+                    $('#productDetailSelect').append($('<option>', {
+                    value: productDetail.productDetailId, // Replace with the actual property of productDetail
+                    text: productDetail.weight + "gram với giá " + price + "đ;" + "( giảm giá:"+productDetail.discount  +"%);" + " tồn kho: " + productDetail.stock// Replace with the actual property of productDetail
+                    }));
+                });
+
+                formImport.style.display= 'flex';
+            });
+
+            $(document).on('click', function (e) {
+                const formImport = document.getElementById('formEdit');
+                formImport.addEventListener('click', function (e) {
+                    if (e.target === formImport) {
+                        formImport.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
+                    }
+                });
+            })
+        })
+    </script>
 </body>
 
 </html>

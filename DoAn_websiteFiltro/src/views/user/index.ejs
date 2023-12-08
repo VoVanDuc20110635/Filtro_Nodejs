@@ -68,7 +68,7 @@
         </div>
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a href="" class="text-decoration-none">
+                <a href="/" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span
                             class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                 </a>
@@ -86,13 +86,8 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="" class="btn border">
+                <a href="/cart" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
                 </a>
             </div>
         </div>
@@ -318,7 +313,7 @@
                             <input type="hidden" value="<%= product.productId %>" name="productId">
                             <input type="hidden" value="1" name="quantity">
                             <div class="card-footer d-flex justify-content-between bg-light border">
-                                <a href="/product/<%= product.id %>" class="btn btn-sm text-dark p-0"><i
+                                <a href="/product/<%= product.productId %>" class="btn btn-sm text-dark p-0"><i
                                         class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                                 <a class="btn btn-sm text-dark p-0 showImportButton" data-product-id="<%= product.productId %>" data-productDetail-list="<%= JSON.stringify(product.ProductDetails) %>"><i
                                         class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</a>
@@ -377,22 +372,20 @@
                                     <%= product.productName %>
                                 </h6>
                                 <div class="d-flex justify-content-center">
-                                    <h6>
-                                        <%= (product.price - (product.price * product.discount /
-                                            100)).toLocaleString('en-US') %>đ
+                                    <h6 class="discountProduct" data-product-id="<%= product.productId %>"> Giảm giá: 
                                     </h6>
-                                    <h6 class="text-muted ml-2"><del>
+                                    <!-- <h6 class="text-muted ml-2"><del>
                                             <%= product.price.toLocaleString('en-US') %>đ
-                                        </del></h6>
+                                        </del></h6> -->
                                 </div>
                             </div>
-                            <input type="hidden" name="productId" value="<%= product.id %>">
+                            <input type="hidden" name="productId" value="<%= product.productId %>">
                             <input type="hidden" name="quantity" value="1">
                             <div class="card-footer d-flex justify-content-between bg-light border">
-                                <a href="/product/<%= product.id %>" class="btn btn-sm text-dark p-0"><i
+                                <a href="/product/<%= product.productId %>" class="btn btn-sm text-dark p-0"><i
                                         class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                <button class="btn btn-sm text-dark p-0" type="submit"><i
-                                        class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
+                                <a class="btn btn-sm text-dark p-0 showImportButton" data-product-id="<%= product.productId %>" data-productDetail-list="<%= JSON.stringify(product.ProductDetails) %>"><i
+                                        class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</a>
                             </div>
                         </div>
                     </form>
@@ -538,7 +531,9 @@
                 if (maxDiscount > 0) {
                     $(this).text(`Giảm giá lên đến ${maxDiscount}%`);
                 } else {
-                    $(this).hide();
+                    $(this).text(`Không giảm giá!`);
+                    $(this).css('visibility', 'hidden');
+                    
                 }
             });
             $(document).on('click', '.showImportButton', function () {

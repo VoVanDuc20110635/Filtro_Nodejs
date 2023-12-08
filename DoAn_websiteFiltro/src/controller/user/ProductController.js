@@ -18,13 +18,15 @@ let getProductPage = async (req, res) => {
     let product = await productService.getProductById(currentProductId);
     let feedbackList = await feedbackService.getAllFeedBackByProductId(currentProductId);
     let numberOfFeedback = feedbackList.length;
+    let quantityDefault = 1;
     let productList = await productService.getTop4ProductsByFlavor(product.Flavor.flavorId);
     if (errorMessage != null){
         return res.render('../views/user/detail.ejs', {errorMessage: errorMessage});
     }
     errorMessage = null;
     return res.render('../views/user/detail.ejs', {session: req.session, product: product, numberOfFeedback: numberOfFeedback,
-        products: productList, currentProductId: currentProductId, feedbackList: feedbackList, categories: categories});
+        products: productList, currentProductId: currentProductId, feedbackList: feedbackList, categories: categories,
+        quantityDefault: quantityDefault});
 
 }
 

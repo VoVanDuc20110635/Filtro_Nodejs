@@ -39,6 +39,7 @@ let getHomepage = async (req, res) => {
     let productTopSellingList = await productService.getTop8SellingProducts();
     // console.log(productTopSellingList[0].ProductDetails[0]);
     let productTop4DiscountList = await productService.getTopDiscountProducts();
+
     return res.render('../views/user/index.ejs', { session: req.session, product6thList, productTopSellingList, productTop4DiscountList,
         categories: categories});
 }

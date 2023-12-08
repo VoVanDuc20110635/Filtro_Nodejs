@@ -44,6 +44,10 @@ let showCart = async(req,res) => {
 
 let addCart = async(req, res) => {
     let {productId, quantity,productDetailId} = req.body;
+    console.log(productId, quantity,productDetailId);
+    if (quantity === undefined) {
+        quantity = 1;
+      }
     let user = req.session.user; 
     let guessCart = req.session.guestCart;
     let cart = null;

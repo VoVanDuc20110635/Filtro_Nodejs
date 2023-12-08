@@ -64,6 +64,7 @@ class ProductService {
                     status: 1, // Filter by products with status 1
                     flavorId: flavorId
                 },
+                include: ProductDetail,
                 order: [['sold', 'DESC']], // Order by sold in descending order
                 limit: 4, // Limit the result to 8 rows
             });
@@ -89,6 +90,7 @@ class ProductService {
                 where: {
                     status: 1, // Filter by products with status 1
                 },
+                include: ProductDetail,
                 order: [['discount', 'DESC']], // Order by discount in descending order
                 limit: 4, // Limit the result to 4 rows
             });
@@ -563,7 +565,7 @@ class ProductService {
         try {
             const product = await Product.findOne({
                 where: { productId: id }, // Assuming your Product model has an 'id' field
-                include: Flavor
+                include: [Flavor,ProductDetail]
             });
             // console.log(product);
 
