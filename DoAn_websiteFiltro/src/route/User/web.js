@@ -51,6 +51,7 @@ const initWebRoute = (app) => {
   router.post('/user/profile/:userId', userController.processProfile);
   router.get('/user/billing', userController.showBilling);
   router.get('/user/security', userController.showSecurityPassword);  
+  router.post('/user/security', userController.changePassword);  
   router.post('/order/cancel', orderController.cancel);
   router.get('/order', orderController.getOrderPage);
   router.post('/order/placeOrder', orderController.placeOrder);

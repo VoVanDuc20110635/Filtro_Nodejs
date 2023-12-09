@@ -21,6 +21,14 @@ class UserService {
             }
         })
     }
+    async getUserById2(id) {
+        return await User.findOne({
+            where: {
+                userId: id
+            },
+            include: Account
+        })
+    }
     async registerUser(userName, accountName, email, password, repeatPassword) {
         const existingAccount = await accountService.checkAccountName(accountName);
         if (existingAccount) {
@@ -71,5 +79,28 @@ class UserService {
         user.phoneNumber = phoneNumber;
         await user.save();
     }
+    async changePassword(oldPassword, newPassword, userId){
+        
+        const saltRounds = 10; // You can adjust the number of salt rounds
+        const hashNewPassword = await bcrypt.hash(newPassword, saltRounds);
+        const userDatabase = await User.findOne({
+            where: {
+                userId: userId
+            },
+            include: Account
+        })
+        const passwordMatches = await bcrypt.compare(oldPassword, userDatabase.Account.password);
+        if (passwordMatches === false ){
+            return false;
+        }
+        const accountDatabase = await Account.findOne({
+            where: {
+                id: userDatabase.accountId
+            }
+        })
+        accountDatabase.password = hashNewPassword;
+        accountDatabase.save();
+        return true;
+    }    
 }
 module.exports = UserService;

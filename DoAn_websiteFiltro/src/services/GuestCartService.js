@@ -55,7 +55,7 @@ class GuestCartService {
             const cartItem = await CartItem.findOne({
                 where: {
                     tempCartId:parseInt(guestCart.id, 10) ,
-                    productId: parseInt(productId, 10),
+                    productDetailId: parseInt(productDetailId, 10),
                 },
             });
             if (cartItem) {

@@ -63,7 +63,7 @@ class CartService {
             const cartItem = await CartItem.findOne({
                 where: {
                     cartId:parseInt(cart.id, 10) ,
-                    productId: parseInt(productId, 10),
+                    productDetailId: parseInt(productDetailId, 10),
                 },
             });
             if(cartItem){

@@ -15,6 +15,7 @@ class OrderService {
                 where: {
                     userId: userId,
                 },
+                order: [['orderDate', 'DESC']],
             });
             return orders;
         } catch (error) {
@@ -52,6 +53,7 @@ class OrderService {
                 let orderDetail = await OrderDetail.create({
                     orderId: newOrder.orderId,
                     productDetailId: cartItem.productDetailId,
+                    productId: cartItem.productId,
                     quantity: cartItem.quantity,
                     pricePerProduct: cartItem.price,
                     total: cartItem.total

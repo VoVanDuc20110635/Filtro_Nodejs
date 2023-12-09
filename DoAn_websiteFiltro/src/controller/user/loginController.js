@@ -28,17 +28,17 @@ let login = async (req, res) => {
         const { accountName, password } = req.body;
         const account = await accountService.authenticateUser(accountName, password);
         const user = await userService.getUserById(account.User.userId);
-        const cart = await cartService.getCurrentCartByUserId(user.userId);
+        // const cart = await cartService.getCurrentCartByUserId(user.userId);
         
         // console.log(user);
         req.session.authenticated = true;
         req.session.account = account;
         req.session.user = user;
-        req.session.cart = cart;
+        // req.session.cart = cart;
 
-        if (req.session.guestCart){
-            guestCartService.changeGuestCartToCart(cart.id, req.session.guestCart.id );
-        }
+        // if (req.session.guestCart){
+        //     guestCartService.changeGuestCartToCart(cart.id, req.session.guestCart.id );
+        // }
 
         return res.redirect("/");
     } catch (exception) {

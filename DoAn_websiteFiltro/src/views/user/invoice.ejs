@@ -121,7 +121,7 @@
                                 <% orderDetailList.forEach(function(item) { %>
                                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                                         <div>
-                                            <h6 style="width: 200px;" class="my-0"><%= item.Product.productName %></h6>
+                                            <a href="/product/<%= item.Product.productId %>" style="width: 200px;" class="my-0"><%= item.Product.productName %></a>
                                             <img src="<%= item.Product.image %>" alt="" style="width: 50px; width: 70px;">
                                             <small class="text-muted">Số lượng: <%= item.quantity %></small>
                                         </div>

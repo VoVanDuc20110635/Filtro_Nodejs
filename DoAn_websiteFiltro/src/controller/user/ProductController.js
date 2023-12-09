@@ -20,13 +20,19 @@ let getProductPage = async (req, res) => {
     let numberOfFeedback = feedbackList.length;
     let quantityDefault = 1;
     let productList = await productService.getTop4ProductsByFlavor(product.Flavor.flavorId);
+    let averageNumberOfStars = await feedbackService.getAverageNumberOfStars(productId);
     if (errorMessage != null){
-        return res.render('../views/user/detail.ejs', {errorMessage: errorMessage});
+        let errorMessageTemp = errorMessage;
+        errorMessage = null;
+        return res.render('../views/user/detail.ejs', {session: req.session, product: product, numberOfFeedback: numberOfFeedback,
+            products: productList, currentProductId: currentProductId, feedbackList: feedbackList, categories: categories,
+            quantityDefault: quantityDefault, averageNumberOfStars:averageNumberOfStars, errorMessage: errorMessageTemp});
     }
     errorMessage = null;
+    
     return res.render('../views/user/detail.ejs', {session: req.session, product: product, numberOfFeedback: numberOfFeedback,
         products: productList, currentProductId: currentProductId, feedbackList: feedbackList, categories: categories,
-        quantityDefault: quantityDefault});
+        quantityDefault: quantityDefault, averageNumberOfStars:averageNumberOfStars});
 
 }
 
@@ -34,9 +40,20 @@ let feedback = async(req, res) => {
     let productId = parseInt(req.params.id, 10);
     let userId = parseInt( req.session.user.userId, 10);
     let {content, numberOfStars, currentDay} = req.body;
-    numberOfStars = parseInt(numberOfStars, 10);
+    console.log(numberOfStars);
+    if (numberOfStars == undefined){
+        numberOfStars = 5;
+    } else{
+        numberOfStars = parseInt(numberOfStars, 10);
+    }
+    
+    let checkHaveOrderYet = await feedbackService.checkOrderYet(userId, productId);
+    if(checkHaveOrderYet == false){
+        errorMessage = "Bạn chưa mua sản phẩm này nên không được bình luận";
+    } else{
+        await feedbackService.addFeedBack(userId, productId, content, numberOfStars, currentDay);
+    }
     // console.log(userId, productId, content, numberOfStars, currentDay);
-    await feedbackService.addFeedBack(userId, productId, content, numberOfStars, currentDay);
     return res.redirect(`/product/${productId}`);
 
 }

@@ -109,65 +109,65 @@
             </a>
         <% } %>
     </div>
-    <th:block th:if="${session.user != null}">
-    <div class="container-xl px-4 mt-4">
-        <!-- Account page navigation-->
-        <nav class="nav nav-borders">
-            <a class="nav-link  ms-0" href="/user/profile"
-            >Profile</a>
-            <a class="nav-link" href="/user/billing"
-            >Order</a>
-            <a class="nav-link active" href="/user/security"
-            >Password</a>
-        </nav>
-        <hr class="mt-0 mb-4">
-        <div class="row">
-            <div class="col">
-                <!-- Change password card-->
-                <div class="card mb-4">
-                    <div class="card-header">Change Password</div>
-                    <div class="card-body">
-                        <% if (typeof message !== 'undefined' && message) { %>
-                            <div class="mt-3 alert alert-success" role="alert">
-                                Your account has been updated successfully.
-                            </div>
-                        <% } %>
-                        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
-                            <div class="mt-3 alert alert-danger" role="alert" th:if="${errorMessage}"
-                                th:text="${errorMessage}">
-                                Your account has been updated successfully.
-                            </div>
-                        <% } %>
-                        <form method="post" th:action="@{/user/security}">
-                            <!-- Form Group (current password)-->
-                            <div class="mb-3">
-                                <label class="small mb-1" for="currentPassword">Enter Present Password</label>
-                                <input class="form-control" id="currentPassword" type="password"
-                                       name="currentPassword"
-                                       placeholder="Enter current password">
-                            </div>
-                            <!-- Form Group (new password)-->
-                            <div class="mb-3">
-                                <label class="small mb-1" for="newPassword">Enter New Password</label>
-                                <input class="form-control" id="newPassword" type="password"
-                                       name="newPassword"
-                                       placeholder="Enter new password">
-                            </div>
-                            <!-- Form Group (confirm password)-->
-                            <div class="mb-3">
-                                <label class="small mb-1" for="confirmPassword">Re-enter New Password</label>
-                                <input class="form-control" id="confirmPassword" type="password"
-                                       name="repeatNewPassword"
-                                       placeholder="Confirm new password">
-                            </div>
-                            <button class="btn btn-primary" type="submit">Change</button>
-                        </form>
+    
+    <% if (typeof session !== 'undefined' && session && session.user) { %>
+        <div class="container-xl px-4 mt-4">
+            <!-- Account page navigation-->
+            <nav class="nav nav-borders">
+                <a class="nav-link  ms-0" href="/user/profile"
+                >Profile</a>
+                <a class="nav-link" href="/user/billing"
+                >Order</a>
+                <a class="nav-link active" href="/user/security"
+                >Password</a>
+            </nav>
+            <hr class="mt-0 mb-4">
+            <div class="row">
+                <div class="col">
+                    <!-- Change password card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Change Password</div>
+                        <div class="card-body">
+                            <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+                                <div class="mt-3 alert alert-success" role="alert">
+                                    Your account has been updated successfully.
+                                </div>
+                            <% } %>
+                            <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+                                <div class="mt-3 alert alert-danger" role="alert" >
+                                    <%= errorMessage%>
+                                </div>
+                            <% } %>
+                            <form method="post" action="/user/security">
+                                <!-- Form Group (current password)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="currentPassword">Enter Present Password</label>
+                                    <input class="form-control" id="currentPassword" type="password"
+                                        name="oldPassword"
+                                        placeholder="Enter current password">
+                                </div>
+                                <!-- Form Group (new password)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="newPassword">Enter New Password</label>
+                                    <input class="form-control" id="newPassword" type="password"
+                                        name="newPassword"
+                                        placeholder="Enter new password">
+                                </div>
+                                <!-- Form Group (confirm password)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="confirmPassword">Re-enter New Password</label>
+                                    <input class="form-control" id="confirmPassword" type="password"
+                                        name="repeatPassword"
+                                        placeholder="Confirm new password">
+                                </div>
+                                <button class="btn btn-primary" type="submit">Change</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </th:block>
+    <% } %>
 </th:block>
 
 
