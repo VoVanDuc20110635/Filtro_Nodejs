@@ -56,8 +56,7 @@ let addCart = async(req, res) => {
             cart = await cartService.getCurrentCartByUserId(user.userId);
             req.session.cart = cart;
         } catch (error){
-            cart = await cartService.createCart(user);
-            req.session.cart = cart;
+            
         }
         try{
             await cartService.addProductToCart(cart, productId, quantity, productDetailId);

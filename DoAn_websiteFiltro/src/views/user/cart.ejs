@@ -169,9 +169,15 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <div class="col-lg-8 table-responsive mb-5">
+                <p>Chọn tất cả</p>
+                <label style="position: relative; display: inline-block; width: 20px; height: 20px; border: solid 1px black;">
+                    <input class="masterCheckbox" id = "masterCheckbox" type="checkbox" style="position: absolute; opacity: 0; cursor: pointer;" onchange="toggleAllCheckboxes(this)">
+                    <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 16px; color: pink;"></span>
+                </label>
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
                         <tr>
+                            <th></th>
                             <th>Products</th>
                             <th>Weight</th>
                             <th>Price</th>
@@ -184,6 +190,12 @@
                         <% if (typeof cartItemList !== 'undefined' && cartItemList && Array.isArray(cartItemList) && cartItemList.length > 0 ) { %>
                         <% cartItemList.forEach(function(item) { %>
                             <tr>
+                                <td class="align-middle">
+                                    <label style="position: relative; display: inline-block; width: 20px; height: 20px; border: solid 1px black;">
+                                        <input type="checkbox" class="itemCheckbox" style="position: absolute; opacity: 0; cursor: pointer;" onchange="changeCheckboxColor(this)">
+                                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 16px; color: pink;"></span>
+                                    </label>
+                                </td>
                                 <input type="hidden" class="idProductItem" id="<%= item.Product.productId %>">
                                 <td class="align-middle" style="text-align: left;">
                                     <img src="<%= item.Product.image %>" alt="" style="width: 50px; width: 70px; margin-left: 15px;">
@@ -200,7 +212,7 @@
                                                 <i class="fa fa-minus"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary text-center" readonly value="<%= item.quantity %>">
+                                        <input type="text" class="form-control form-control-sm bg-secondary text-center" value="<%= item.quantity %>">
                                         <div class="input-group-btn">
                                             <div class="btn btn-sm btn-primary btn-plus">
                                                 <i class="fa fa-plus"></i>
@@ -208,6 +220,9 @@
                                         </div>
                                     </div>
                                 </td>
+                                <input type="hidden" class="form-control form-control-sm bg-secondary text-center quantityPro" value="<%= item.quantity %>">
+                                <input type="hidden" class="form-control form-control-sm bg-secondary text-center productDetailIdPro" value="<%= item.ProductDetail.productDetailId %>">
+                                <input type="hidden" class="form-control form-control-sm bg-secondary text-center pricePro" value="<%= item.ProductDetail.price %>">
                                 <td class="align-middle" id="totalItemPrice">
                                     <%= (item.ProductDetail.price - item.ProductDetail.price * item.ProductDetail.discount/100) * item.quantity %>đ
                                 </td>
@@ -244,9 +259,10 @@
                             <a onclick="submitUpdateCartForm()" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                         <% } %>
                     </div>
-                    <form id="hiddenForm" action="/order" method="get" style="display: none;">
+                    <form id="hiddenForm" action="/order" method="post" style="display: none;">
                         <input type="hidden" name="productIds" id="productIdsInput">
                         <input type="hidden" name="quantities" id="quantitiesInput">
+                        <input type="hidden" name="prices" id="pricesInput">
                     </form>
                     
                 </div>
@@ -348,6 +364,8 @@
                 var quantity = parseInt(quantityInput.value);
                 quantity++;
                 quantityInput.value = quantity;
+                var quantityProInput = row.querySelector('.quantityPro');
+                quantityProInput.value = quantity;
                 updateTotalItemPrice(quantity);
                 updateTotalOrder();
             });
@@ -357,6 +375,8 @@
                 if (quantity > 1) {
                     quantity--;
                     quantityInput.value = quantity;
+                    var quantityProInput = row.querySelector('.quantityPro');
+                    quantityProInput.value = quantity;
                     updateTotalItemPrice(quantity);
                     updateTotalOrder();
                 }
@@ -380,6 +400,7 @@
                 var totalPriceElement = document.getElementById('totalPriceCart');
                 totalPriceElement.textContent = total + 'đ';
             }
+            
         });
     </script>
     <script>
@@ -396,29 +417,70 @@
         totalPriceElement.textContent = total + 'đ';
     </script>
     <script>
+        function changeCheckboxColor(checkbox) {
+            var checkboxesMasters = document.querySelectorAll('.masterCheckbox');
+            checkboxesMasters.forEach(function (masterCheckbox) {
+                var checkmarkMaster = masterCheckbox.nextElementSibling; 
+                var checkmark = checkbox.nextElementSibling; // Get the <span> element
+                if (checkbox.checked) {
+                    checkmark.innerHTML = '✔';
+                } else {
+                    checkmark.innerHTML = '';
+                    checkmarkMaster.innerHTML = '';
+                }
+            });
+            
+        }
+        function toggleAllCheckboxes(masterCheckbox) {
+        // Get all checkboxes with the class 'itemCheckbox'
+            var checkboxes = document.querySelectorAll('.itemCheckbox');
+            // Iterate through each checkbox and set its state based on the master checkbox
+            checkboxes.forEach(function (checkbox) {
+                var checkmark = checkbox.nextElementSibling; 
+                if (masterCheckbox.checked) {
+                checkmark.innerHTML = '✔';
+                } else {
+                    checkmark.innerHTML = '';
+                }
+            });
+            var checkmarkMaster = masterCheckbox.nextElementSibling; 
+            if(masterCheckbox.checked){
+                checkmarkMaster.innerHTML = '✔';
+            } else{
+                checkmarkMaster.innerHTML = '';
+            }
+        }
         function submitUpdateCartForm() {
             var hiddenForm = document.getElementById('hiddenForm');
             var productIdsInput = document.getElementById('productIdsInput');
             var quantitiesInput = document.getElementById('quantitiesInput');
+            var pricesInput = document.getElementById('pricesInput');
+            
             productIdsInput.value = '';
             quantitiesInput.value = '';
+            pricesInput.value = '';
             // Lấy tất cả các hàng (rows)
             var rows = document.querySelectorAll('.align-middle tr');
 
             // Duyệt qua từng hàng
             rows.forEach(function (row) {
-                var productId = row.querySelector('.idProductItem').id;
-                var quantityInput = row.querySelector('.quantity input');
-
-                // Cập nhật giá trị của input
-                productIdsInput.value += productId + ',';
-                quantitiesInput.value += quantityInput.value + ',';
+                var checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox.checked) {
+                    var productId = row.querySelector('.productDetailIdPro').value;
+                    var quantityInput = row.querySelector('.quantityPro');
+                    var priceInput = row.querySelector('.pricePro').value;
+                    console.log(priceInput);
+                    // Cập nhật giá trị của input
+                    productIdsInput.value += productId + ',';
+                    quantitiesInput.value += quantityInput.value + ',';
+                    pricesInput.value += priceInput + ',';
+                }
             });
 
             // Xóa dấu phẩy cuối cùng trong danh sách
             productIdsInput.value = productIdsInput.value.slice(0, -1);
             quantitiesInput.value = quantitiesInput.value.slice(0, -1);
-
+            pricesInput.value = pricesInput.value.slice(0, -1);
             // Gửi form
             hiddenForm.submit();
 

@@ -140,7 +140,7 @@
                     <div class="col-xl-8">
                         <!-- Account details card-->
                         <div class="card mb-4">
-                            <div class="card-header">Account Details</div>
+                            <div class="card-header">Thông tin chi tiết</div>
                             <% if (typeof message !== 'undefined' && message) { %>
                                 <div class="mt-3 alert alert-success" role="alert">
                                     <%= message %>
@@ -156,47 +156,47 @@
                                 <form method="post" action="/user/profile/<%= user.userId %>">
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-12">
-                                            <label class="small mb-1" for="inputUsername">Name</label>
-                                            <input class="form-control" id="inputUsername" type="text" name="name" placeholder="Enter your first name" value="<%= user.name || 'Name' %>">
+                                            <label class="small mb-1" for="inputUsername">Họ và tên</label>
+                                            <input class="form-control" id="inputUsername" type="text" name="name" placeholder="Enter your first name" value="<%= user.name || 'Name' %>" required>
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-12">
-                                            <label class="small mb-1" for="inputLocation">Address</label>
-                                            <input class="form-control" id="inputLocation" type="text" name="address" placeholder="Enter your first name" value="<%= user.address || 'Address' %>">
+                                            <label class="small mb-1" for="inputLocation">Địa chỉ</label>
+                                            <input class="form-control" id="inputLocation" type="text" name="address" placeholder="Enter your first name" value="<%= user.address || 'Address' %>" required>
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputZip">Zip code</label>
-                                            <input class="form-control" id="inputZip" type="text" name="zip" placeholder="Enter your organization name" value="<%= user.zip || 1 %>">
+                                            <input class="form-control" id="inputZip" type="text" name="zip" placeholder="Enter your organization name" value="<%= user.zip || 1 %>" required>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputCity">City</label>
-                                            <input class="form-control" id="inputCity" type="text" name="city" placeholder="Enter your location" value="<%= user.city || 'HCM' %>">
+                                            <label class="small mb-1" for="inputCity">Thành phố</label>
+                                            <input class="form-control" id="inputCity" type="text" name="city" placeholder="Enter your location" value="<%= user.city || 'HCM' %>" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                        <input class="form-control" id="inputEmailAddress" type="email" name="email" placeholder="Enter your email address" value="<%= user.email || 'email' %>">
+                                        <input class="form-control" id="inputEmailAddress" type="email" name="email" placeholder="Enter your email address" value="<%= user.email || 'email' %>" required>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-4">
-                                            <label class="small mb-1" for="inputPhone">Phone Number</label>
-                                            <input class="form-control" id="inputPhone" type="text" name="phoneNumber" placeholder="Enter your phone number" value="<%= user.phoneNumber || '086' %>">
+                                            <label class="small mb-1" for="inputPhone">Số điện thoại</label>
+                                            <input class="form-control" id="inputPhone" type="text" name="phoneNumber" placeholder="Enter your phone number" value="<%= user.phoneNumber || '086' %>" required>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="small mb-1" for="inputBirthday">Date of Birth</label>
+                                            <label class="small mb-1" for="inputBirthday">Ngày sinh</label>
                                             <input class="form-control" id="inputBirthday" type="text" name="dob" placeholder="yyyy-MM-dd"
-                                                    value="<%= user.dob instanceof Date ? user.dob.toISOString().slice(0, 10) : '2002-11-02' %>">
+                                                    value="<%= user.dob instanceof Date ? user.dob.toISOString().slice(0, 10) : '2002-11-02' %>" required>
 
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="small mb-1" for="inputSex">Sex</label>
-                                            <input class="form-control" id="inputSex" type="text" name="sex" placeholder="Enter your sex" value="<%= user.sex || 'Male' %>">
+                                            <label class="small mb-1" for="inputSex">Giới tính</label>
+                                            <input class="form-control" id="inputSex" type="text" name="sex" placeholder="Enter your sex" value="<%= user.sex || 'Male' %>" required>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary" type="submit">Update Information</button>
+                                    <button class="btn btn-primary" type="submit">Cập nhật</button>
                                 </form>
                                 
                             </div>

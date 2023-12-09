@@ -7,6 +7,8 @@ const bcrypt = require('bcrypt');
 const AccountNameExistException = require('../Exception/AccountNameExistException');
 const PasswordDoNotMatchException = require('../Exception/PasswordDoNotMatchException');
 const UserNotFoundException = require('../Exception/UserNotFoundException');
+const CartService = require('../services/CartService')
+const cartService = new CartService();
 class UserService {
     constructor() { };
     async getAllUser() {
@@ -61,6 +63,9 @@ class UserService {
             email: email,
             accountId: account.id
         });
+
+        // create cart
+        let cart = await cartService.createCart(user);
     }
 
     async updateUser(userId, name, address, zip, city, email, phoneNumber, dob, sex){

@@ -53,7 +53,7 @@ const initWebRoute = (app) => {
   router.get('/user/security', userController.showSecurityPassword);  
   router.post('/user/security', userController.changePassword);  
   router.post('/order/cancel', orderController.cancel);
-  router.get('/order', orderController.getOrderPage);
+  router.post('/order', orderController.getOrderPage);
   router.post('/order/placeOrder', orderController.placeOrder);
   router.get('/invoice/:id', orderController.getInvoicePage);
   router.get('/product/:id', productController.getProductPage );

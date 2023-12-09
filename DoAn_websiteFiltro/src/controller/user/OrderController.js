@@ -11,6 +11,11 @@ let cancel = async (req, res) => {
 }
 let getOrderPage = async (req, res) => {
     if (req.session.user){
+        let {productIds, quantities,prices} = req.body;
+        var productDetailIdArray = productIds.split(',').map(Number);
+        var quantitiesArray = quantities.split(',').map(Number);
+        var pricesArray = prices.split(',').map(Number);
+        await cartItemService.updateCartItemList(req.session.cart.id, productDetailIdArray, quantitiesArray, pricesArray);
         let cartItemList = await cartItemService.getCartItemList(req.session.cart.id);
         const sum = cartItemList.reduce((acc, item) => acc + item.total, 0);
         return res.render('../views/user/order.ejs', { session: req.session, cartItemList:cartItemList, sum:sum});

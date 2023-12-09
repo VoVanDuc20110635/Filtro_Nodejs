@@ -136,8 +136,6 @@ class GuestCartService {
     }
 
     async changeGuestCartToCart(cartId, tempCartId){
-        console.log("cartId: ", cartId);
-        console.log("tempCartId: ", tempCartId);
         try {
             // Find all CartItems with tempCartId = 15
             const cartItemsToUpdate = await CartItem.findAll({
@@ -145,12 +143,25 @@ class GuestCartService {
                 tempCartId: tempCartId,
               },
             });
+            const cartItemsExist= await CartItem.findAll({
+                where: {
+                  cartId: cartId,
+                },
+              });
             if(cartItemsToUpdate){
                 for (const cartItem of cartItemsToUpdate) {
-                    await cartItem.update({
-                      tempCartId: null,
-                      cartId: cartId,
-                    });
+                    // Check if the cartItem's id is not present in cartItemsExist
+                    const productDetailIdExists = cartItemsExist.some(
+                        (existingCartItem) => existingCartItem.productDetailId === cartItem.productDetailId
+                      );
+                  
+                      if (!productDetailIdExists) {
+                        // If the productDetailId doesn't exist in any cartItemsExist, update it
+                        await cartItem.update({
+                          tempCartId: null,
+                          cartId: cartId,
+                        });
+                    }
                 }
             }
           } catch (error) {

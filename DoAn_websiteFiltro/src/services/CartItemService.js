@@ -24,6 +24,24 @@ class CartItemService{
 
         return productsWithUpdatedImage;
     }
+    async updateCartItemList(cartId, productDetailIds, quantities, pricesArray){
+        for (let i = 0; i < productDetailIds.length; i++) {
+            const productDetailId = productDetailIds[i];
+            const quantity = quantities[i];
+            const price = pricesArray[i];
+        
+            // Update the quantity in the database
+            await CartItem.update(
+                { quantity: quantity ,total: price*quantity},
+                {
+                    where: {
+                        cartId: cartId, // Add any other conditions you need
+                        productDetailId: productDetailId
+                    }
+                }
+            );
+        }
+    }
     
 }
 module.exports = CartItemService;

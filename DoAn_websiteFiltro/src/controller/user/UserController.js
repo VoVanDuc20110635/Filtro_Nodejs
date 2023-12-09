@@ -5,6 +5,8 @@ const userService = new UserService();
 const InputService = require('../../services/InputService');
 const inputService = new InputService();
 const bcrypt = require('bcrypt');
+let errorMessage;
+let message;
 let showProfile = async (req, res) => {
     let temp = req.session.user;
     if (!temp){
@@ -12,6 +14,14 @@ let showProfile = async (req, res) => {
         return;
     }
     let user = await userService.getUserById(temp.userId);
+    if (message){
+        return res.render('../views/user/user-profile.ejs', { session: req.session, user: user, message: message });    
+    }
+    if (errorMessage){
+        return res.render('../views/user/user-profile.ejs', { session: req.session, user: user, errorMessage:errorMessage });    
+    }
+    message = null;
+    errorMessage = null;
     return res.render('../views/user/user-profile.ejs', { session: req.session, user: user });
 }
 
@@ -22,6 +32,7 @@ let processProfile = async (req, res) => {
     let {name, address, zip, city, email, phoneNumber, dob, sex} = req.body;
     // console.log(name, address, zip, city, email, phoneNumber, dob, sex);
     await userService.updateUser(userId, name, address, zip, city, email, phoneNumber, dob, sex);
+    message = "Cập nhật thành công!";
     return res.redirect('/user/profile');
 }
 
