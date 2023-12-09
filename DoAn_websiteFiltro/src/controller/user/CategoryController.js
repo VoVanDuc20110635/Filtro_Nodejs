@@ -80,6 +80,7 @@ let getShopPage = async (req, res) => {
                 sortType);
             products = result.products;
             totalPages = result.totalPages;
+            // totalPages = 5;
         }
         currentIdAll = 'all';
     } else {

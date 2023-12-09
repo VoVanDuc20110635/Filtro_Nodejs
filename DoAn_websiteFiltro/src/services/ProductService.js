@@ -143,9 +143,11 @@ class ProductService {
 
             const products = await Product.findAndCountAll({
                 where: { status: 1 },
+                include: ProductDetail,
                 order: orderBy,
                 offset,
                 limit,
+                distinct: true
             });
             const productsWithUpdatedImage = products.rows.map((product) => ({
                 ...product.toJSON(),
@@ -201,6 +203,7 @@ class ProductService {
                     flavorId: flavorId,
                     status: 1
                 },
+                include: ProductDetail,
                 order: orderBy,
                 offset,
                 limit,
@@ -260,6 +263,7 @@ class ProductService {
                     categoryId: categoryId,
                     status: 1
                 },
+                include: ProductDetail,
                 order: orderBy,
                 offset,
                 limit,
@@ -318,6 +322,7 @@ class ProductService {
                     },
                     status: 1
                 },
+                include: ProductDetail,
                 order: orderBy,
                 offset,
                 limit,
@@ -376,6 +381,7 @@ class ProductService {
                     categoryId: categoryId,
                     status: 1
                 },
+                include: ProductDetail,
                 order: orderBy,
                 offset,
                 limit,
@@ -431,6 +437,7 @@ class ProductService {
                     flavorId: flavorId,
                     status: 1
                 },
+                include: ProductDetail,
                 order: orderBy,
                 offset,
                 limit,
@@ -487,6 +494,7 @@ class ProductService {
                     categoryId: categoryId,
                     status: 1
                 },
+                include: ProductDetail,
                 order: orderBy,
                 offset,
                 limit,
@@ -542,6 +550,7 @@ class ProductService {
                     categoryId: categoryId,
                     status: 1
                 },
+                include: ProductDetail,
                 order: orderBy,
                 offset,
                 limit,

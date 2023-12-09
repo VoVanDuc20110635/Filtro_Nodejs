@@ -302,12 +302,11 @@
                                     <%= product.productName %>
                                 </h6>
                                 <div class="d-flex justify-content-center">
+                                    <h10 class="text-truncate priceAfterDiscount" style="margin-bottom: 2px; font-size: 15px;" data-product-id="<%= product.productId %>"></h10>
+                                </div>
+                                <div class="d-flex justify-content-center">
                                     <h6 class="discountProduct" data-product-id="<%= product.productId %>"> Giảm giá: 
                                     </h6>
-                                    <!-- <h6 class="text-muted ml-2"><del>
-                                            <%= product.price.toLocaleString('en-US') %>đ
-                                        </del></h6> -->
-
                                 </div>
                             </div>
                             <input type="hidden" value="<%= product.productId %>" name="productId">
@@ -338,14 +337,6 @@
                     <p>Amet lorem at rebum amet dolores. Elitr lorem dolor sed amet diam labore at justo ipsum
                         eirmod duo labore labore.</p>
                 </div>
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-white p-4" placeholder="Email Goes Here">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary px-4">Subscribe</button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -372,11 +363,11 @@
                                     <%= product.productName %>
                                 </h6>
                                 <div class="d-flex justify-content-center">
+                                    <h10 class="text-truncate priceAfterDiscount" style="margin-bottom: 2px; font-size: 15px;" data-product-id="<%= product.productId %>"></h10>
+                                </div>
+                                <div class="d-flex justify-content-center">
                                     <h6 class="discountProduct" data-product-id="<%= product.productId %>"> Giảm giá: 
                                     </h6>
-                                    <!-- <h6 class="text-muted ml-2"><del>
-                                            <%= product.price.toLocaleString('en-US') %>đ
-                                        </del></h6> -->
                                 </div>
                             </div>
                             <input type="hidden" name="productId" value="<%= product.productId %>">
@@ -526,10 +517,10 @@
                 const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
                 const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
                 const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
-
+                const minDiscount = Math.min(...productDetailArray.map(detail => detail.discount));
                 // Update the content of the current h6.discountProduct
                 if (maxDiscount > 0) {
-                    $(this).text(`Giảm giá lên đến ${maxDiscount}%`);
+                    $(this).text(`Giảm giá: ${minDiscount}% - ${maxDiscount}%`);
                 } else {
                     $(this).text(`Không giảm giá!`);
                     $(this).css('visibility', 'hidden');
@@ -564,6 +555,17 @@
                 });
 
                 formImport.style.display= 'flex';
+            });
+            $('.priceAfterDiscount').each(function () {
+                const productId = $(this).data('product-id');
+                const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
+                const maxPrice = Math.max(...productDetailArray.map(detail => detail.price));
+                const minPrice = Math.min(...productDetailArray.map(detail => detail.price));
+                // Update the content of the current h6.discountProduct
+                const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                $(this).text(`${minPrice}đ - ${maxPrice}đ`);
+                
             });
 
             $(document).on('click', function (e) {

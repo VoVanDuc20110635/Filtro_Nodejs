@@ -24,6 +24,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/form.css" rel="stylesheet">
 </head>
 
 <body>
@@ -316,26 +317,24 @@
 
                             <div class="row pb-3 px-xl-5">
                                 <% products.forEach(function(product) { %>
-                                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1" style="padding-right: 0px;">
                                         <form action="/cart/add" method="POST">
-                                            <div class="card product-item border-0 mb-4">
+                                            <div class="card product-item border-0 mb-4" style="padding: 0px;">
                                                 <div
                                                     class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                                    <img class="img-fluid" src="<%= product.image %>" alt="">
+                                                    <img class="img-fluid" src="<%= product.image %>" alt="" style="width: 100%;">
                                                 </div>
                                                 <div
                                                     class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                                    <h6 class="text-truncate mb-3">
+                                                    <h6 class="text-truncate" style="margin-bottom: 2px;"> 
                                                         <%= product.productName %>
                                                     </h6>
                                                     <div class="d-flex justify-content-center">
-                                                        <h6>
-                                                            <%= (product.price - (product.price * product.discount /
-                                                                100)).toLocaleString('en-US') + 'đ' %>
+                                                        <h10 class="text-truncate priceAfterDiscount" style="margin-bottom: 2px; font-size: 15px;" data-product-id="<%= product.productId %>"></h10>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <h6 class="discountProduct" style="font-size: 15px;" data-product-id="<%= product.productId %>"> Giảm giá: 
                                                         </h6>
-                                                        <h6 class="text-muted ml-2"><del>
-                                                                <%= product.price.toLocaleString('en-US') + 'đ' %>
-                                                            </del></h6>
                                                     </div>
                                                 </div>
                                                 <input type="hidden" name="productId" value="<%= product.productId %>">
@@ -344,9 +343,8 @@
                                                     <a href="/product/<%= product.productId %>"
                                                         class="btn btn-sm text-dark p-0"><i
                                                             class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                                    <button class="btn btn-sm text-dark p-0" type="submit"><i
-                                                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To
-                                                        Cart</button>
+                                                            <a class="btn btn-sm text-dark p-0 showImportButton" data-product-id="<%= product.productId %>" data-productDetail-list="<%= JSON.stringify(product.ProductDetails) %>"><i
+                                                                class="fas fa-shopping-cart text-primary mr-1"></i>Add to cart</a>
                                                 </div>
                                             </div>
                                         </form>
@@ -355,44 +353,76 @@
                                         <div class="col-12 pb-1">
                                             <nav aria-label="Page navigation">
                                                 <ul class="pagination justify-content-center mb-3">
-                                                    <li class="page-item <%= currentPage == 1 ? 'disabled' : '' %>">
-                                                        <a class="page-link"
-                                                            id="<%= currentPage > 1 ? 'page-' + (currentPage - 1) : 'page-' + currentPage %>"
-                                                            onclick="submitHiddenFormFromSortType(this.id)"
-                                                            aria-label="Previous">
+                                                    <li class="page-item <%= currentPage == 1 ? 'disabled' : '' %>" style="cursor: pointer;">
+                                                        <a class="page-link" id="<%= currentPage > 1 ? 'page-' + (currentPage - 1) : 'page-' + currentPage %>"
+                                                            onclick="submitHiddenFormFromSortType(this.id)" aria-label="Previous">
                                                             <span aria-hidden="true">&laquo;</span>
                                                             <span class="sr-only">Previous</span>
                                                         </a>
                                                     </li>
-                                                    <% if (totalPages> 0) { %>
-                                                        <% for (let page=1; page <=totalPages; page++) { %>
-                                                            <li
-                                                                class="page-item <%= page == currentPage ? 'active' : '' %>">
-                                                                <a class="page-link" id="<%= 'page-' + page %>"
-                                                                    onclick="submitHiddenFormFromSortType(this.id)">
+                                                
+                                                    <% if (totalPages <= 3) { %>
+                                                        <% for (let page = 1; page <= totalPages; page++) { %>
+                                                            <li style="cursor: pointer;" class="page-item <%= page == currentPage ? 'active' : '' %>">
+                                                                <a class="page-link" id="<%= 'page-' + page %>" onclick="submitHiddenFormFromSortType(this.id)">
                                                                     <%= page %>
                                                                 </a>
                                                             </li>
+                                                        <% } %>
+                                                    <% } else { %>
+                                                        <% if (currentPage <= 2) { %>
+                                                            <% for (let page = 1; page <= 3; page++) { %>
+                                                                <li style="cursor: pointer;" class="page-item <%= page == currentPage ? 'active' : '' %>">
+                                                                    <a class="page-link" id="<%= 'page-' + page %>" onclick="submitHiddenFormFromSortType(this.id)">
+                                                                        <%= page %>
+                                                                    </a>
+                                                                </li>
                                                             <% } %>
-                                                                <% } else { %>
-                                                                    <li
-                                                                        class="page-item <%= page == currentPage ? 'active' : '' %>">
-                                                                        <a class="page-link" id="page-1"
-                                                                            onclick="submitHiddenFormFromSortType(this.id)">
-                                                                            1
-                                                                        </a>
-                                                                    </li>
-                                                                    <% } %>
-                                                                        <li
-                                                                            class="page-item <%= currentPage >= totalPages ? 'disabled' : '' %>">
-                                                                            <a class="page-link"
-                                                                                id="<%= currentPage < totalPages ? 'page-' + (currentPage + 1) : 'page-' + currentPage %>"
-                                                                                onclick="submitHiddenFormFromSortType(this.id)"
-                                                                                aria-label="Next">
-                                                                                <span aria-hidden="true">&raquo;</span>
-                                                                                <span class="sr-only">Next</span>
-                                                                            </a>
-                                                                        </li>
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">...</span>
+                                                            </li>
+                                                        <% } else if (currentPage >= totalPages - 1) { %>
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">...</span>
+                                                            </li>
+                                                            <% for (let page = totalPages - 2; page <= totalPages; page++) { %>
+                                                                <li style="cursor: pointer;" class="page-item <%= page == currentPage ? 'active' : '' %>">
+                                                                    <a class="page-link" id="<%= 'page-' + page %>" onclick="submitHiddenFormFromSortType(this.id)">
+                                                                        <%= page %>
+                                                                    </a>
+                                                                </li>
+                                                            <% } %>
+                                                        <% } else { %>
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">...</span>
+                                                            </li>
+                                                            <% for (let page = currentPage - 1; page <= currentPage + 1; page++) { %>
+                                                                <li style="cursor: pointer;" class="page-item <%= page == currentPage ? 'active' : '' %>">
+                                                                    <a class="page-link" id="<%= 'page-' + page %>" onclick="submitHiddenFormFromSortType(this.id)">
+                                                                        <%= page %>
+                                                                    </a>
+                                                                </li>
+                                                            <% } %>
+                                                            <li class="page-item disabled">
+                                                                <span class="page-link">...</span>
+                                                            </li>
+                                                        <% } %>
+                                                    <% } %>
+                                                
+                                                    <li class="page-item <%= currentPage >= totalPages ? 'disabled' : '' %>">
+                                                        <a class="page-link"
+                                                            id="<%= currentPage < totalPages ? 'page-' + (currentPage + 1) : 'page-' + currentPage %>"
+                                                            onclick="submitHiddenFormFromSortType(this.id)" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </li>
+                                                    <!-- Combobox -->
+                                                    <select id="pageSelector" onchange="submitHiddenFormFromSortType(this.value)" style="margin-left: 2px;">
+                                                        <% for (let page = 1; page <= totalPages; page++) { %>
+                                                            <option value="<%= 'page-' + page %>" <%= page == currentPage ? 'selected' : '' %>><%= page %></option>
+                                                        <% } %>
+                                                    </select>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -479,6 +509,38 @@
     </div>
     <!-- Footer End -->
 
+    <div class="overlay_flex_hidden" id="formEdit">
+        <div class="container_flex_hidden">
+            <div class="form_flex_hidden">
+                <form action="/cart/add" method="post" >
+                    <table>
+                        <tr style="display: none">
+                            <td><input type="hidden" value="" name="productId" id="productId"></td>
+                        </tr>
+                        <tr style="display: none">
+                            <td><input type="hidden" value="1" name="quantity"></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #0f65c1;" colspan="3">Chọn loại sản phẩm</th>
+                        </tr>
+                                                <!-- Dynamic select for product details -->
+                        <tr>
+                            <td>Product Detail</td>
+                            <td>
+                                <select id="productDetailSelect" name="productDetailId">
+                                <!-- Options will be added dynamically -->
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="bk_save_user_flex_hidden" style="margin-bottom: 5px;">
+                        <button type="submit" class="button-save-user_flex_hidden" style="background-color: #0f65c1">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
     <script src="js/main.js"></script>
     <!-- script -->
@@ -563,6 +625,75 @@
     <script src="mail/contact.js"></script>
 
     <!-- Template Javascript -->
+
+    <script>
+        $(document).ready(function () {
+            $('.discountProduct').each(function () {
+                const productId = $(this).data('product-id');
+                const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
+                const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                const minDiscount = Math.min(...productDetailArray.map(detail => detail.discount));
+                // Update the content of the current h6.discountProduct
+                if (maxDiscount > 0) {
+                    $(this).text(`Giảm giá: ${minDiscount}% - ${maxDiscount}%`);
+                } else {
+                    $(this).text(`Không giảm giá!`);
+                    $(this).css('visibility', 'hidden');
+                    
+                }
+            });
+            $('.priceAfterDiscount').each(function () {
+                const productId = $(this).data('product-id');
+                const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
+                const maxPrice = Math.max(...productDetailArray.map(detail => detail.price));
+                const minPrice = Math.min(...productDetailArray.map(detail => detail.price));
+                // Update the content of the current h6.discountProduct
+                const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                $(this).text(`${minPrice}đ - ${maxPrice}đ`);
+                
+            });
+            $(document).on('click', '.showImportButton', function () {
+                const formImport = document.getElementById('formEdit');
+                const productId = $(this).data('product-id');
+                document.getElementById('productId').value = productId;
+                const productDetailList = $(this).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetailList) ?
+                    productDetailList :
+                    JSON.parse(productDetailList);
+
+                // // Calculate the maximum discount for the current product
+                // const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                // $(this).closest('.card-body').find('h6.discountProduct').text("Giảm giá lên đến " + maxDiscount + "%");
+                // // Set the content of the h6 tag for the current product
+                // // $('.discountProduct' + productId).text("Giảm giá lên đến " + maxDiscount + "%");
+
+                // Clear existing options in the select
+                $('#productDetailSelect').empty();
+
+                // Add options to the select
+                productDetailArray.forEach(function (productDetail) {
+                    let price = productDetail.price-productDetail.price*productDetail.discount/100;
+                    $('#productDetailSelect').append($('<option>', {
+                    value: productDetail.productDetailId, // Replace with the actual property of productDetail
+                    text: productDetail.weight + "gram với giá " + price + "đ;" + "( giảm giá:"+productDetail.discount  +"%);" + " tồn kho: " + productDetail.stock// Replace with the actual property of productDetail
+                    }));
+                });
+
+                formImport.style.display= 'flex';
+            });
+
+            $(document).on('click', function (e) {
+                const formImport = document.getElementById('formEdit');
+                formImport.addEventListener('click', function (e) {
+                    if (e.target === formImport) {
+                        formImport.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
+                    }
+                });
+            })
+        })
+    </script>
 
 </body>
 
