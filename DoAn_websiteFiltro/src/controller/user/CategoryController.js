@@ -26,7 +26,7 @@ let getShopPage = async (req, res) => {
     const { id } = req.params;
     // console.log(req.query);
     // console.log("id category: ", id);
-    let { lowPrice = 0, highPrice = 1000000, sortType = 'best_selling', flavorId = 0, currentPage = 1 } = req.query;
+    let {searchName='', lowPrice = 0, highPrice = 1000000, sortType = 'best_selling', flavorId = 0, currentPage = 1 } = req.query;
     //when get data from req.query, everything is string
     // console.log(lowPrice, highPrice, sortType, flavorId, currentPage);
     // const materialList = await Material.findAll();
@@ -46,6 +46,7 @@ let getShopPage = async (req, res) => {
     if (id === 'all') {
         if (dataHighPrice !== 1000000 && dataFlavorId !== 0) {
             let result = await productService.getProductByPriceAndFlavor(
+                searchName,
                 dataLowPrice,
                 dataHighPrice,
                 dataFlavorId,
@@ -57,6 +58,7 @@ let getShopPage = async (req, res) => {
             totalPages = result.totalPages;
         } else if (dataHighPrice !== 1000000) {
             let result = await productService.getProductByPrice(
+                searchName,
                 dataLowPrice,
                 dataHighPrice,
                 dataCurrentPage,
@@ -67,6 +69,7 @@ let getShopPage = async (req, res) => {
             totalPages = result.totalPages;
         } else if (dataFlavorId !== 0) {
             let result = await productService.getProductByFlavor(
+                searchName,
                 dataFlavorId,
                 dataCurrentPage,
                 pageSize,
@@ -75,7 +78,8 @@ let getShopPage = async (req, res) => {
             products = result.products;
             totalPages = result.totalPages;
         } else {
-            let result = await productService.sortPage(dataCurrentPage,
+            let result = await productService.sortPage(searchName,
+                dataCurrentPage,
                 pageSize,
                 sortType);
             products = result.products;
@@ -86,6 +90,7 @@ let getShopPage = async (req, res) => {
     } else {
         if (dataHighPrice !== 1000000 && flavorId !== 0) {
             let result = await productService.getProductByCategoryAndPriceAndFlavor(
+                searchName,
                 parseInt(id),
                 dataLowPrice,
                 dataHighPrice,
@@ -98,6 +103,7 @@ let getShopPage = async (req, res) => {
             totalPages = result.totalPages;
         } else if (dataHighPrice !== 1000000) {
             let result = await productService.getProductByCategoryAndPrice(
+                searchName,
                 parseInt(id),
                 dataLowPrice,
                 dataHighPrice,
@@ -109,6 +115,7 @@ let getShopPage = async (req, res) => {
             totalPages = result.totalPages;
         } else if (flavorId !== 0) {
             let result = await productService.getProductByCategoryAndFlavor(
+                searchName,
                 parseInt(id),
                 dataFlavorId,
                 dataCurrentPage,
@@ -119,6 +126,7 @@ let getShopPage = async (req, res) => {
             totalPages = result.totalPages;
         } else {
             let result = await productService.getProductByCategory(
+                searchName,
                 parseInt(id),
                 dataCurrentPage,
                 pageSize,
@@ -149,11 +157,53 @@ let getShopPage = async (req, res) => {
         session: req.session, categories: categories, products: products,
         currentPage: dataCurrentPage, dataLowPrice: dataLowPrice, dataHighPrice: dataHighPrice, currentId: currentId,
         sortType: sortType, totalPages: totalPages, currentIdAll: currentIdAll, category: category, flavorList: flavorList,
-        flavorId: dataFlavorId, dataFlavorId: dataFlavorId
+        flavorId: dataFlavorId, dataFlavorId: dataFlavorId, searchName: searchName
     });
+}
+
+let getShopPageByNameProduct = async (req, res) => {
+    try {
+        let {searchName=''} = req.query;
+        // searchName = searchName || '';
+        let lowPrice = 0, highPrice = 1000000, sortType = 'best_selling', flavorId = 0, currentPage = 1;
+        let products;
+        let currentIdAll = 'all';
+        let totalPages;
+        let currentId = 0;
+        const  id  = 'all';
+        const pageSize = 8;
+        const categories = await categoryService.get5Categories();
+        const dataLowPrice = parseInt(lowPrice);
+        const dataHighPrice = parseInt(highPrice);
+        const dataFlavorId = parseInt(flavorId);
+        const dataCurrentPage = parseInt(currentPage);
+        let category;
+        if (id !== 'all'){
+            category = await categoryService.getCategoryById(id);
+        }
+        let flavorList = await flavorService.getFlavorList();
+        let result = await productService.searchProductsByName(
+            searchName,
+            currentPage,
+            pageSize,
+            sortType
+        );
+        products = result.products;
+        totalPages = result.totalPages;
+        return res.render('../views/user/shop.ejs', {
+            session: req.session, categories: categories, products: products,
+            currentPage: dataCurrentPage, dataLowPrice: dataLowPrice, dataHighPrice: dataHighPrice, currentId: currentId,
+            sortType: sortType, totalPages: totalPages, currentIdAll: currentIdAll, category: category, flavorList: flavorList,
+            flavorId: dataFlavorId, dataFlavorId: dataFlavorId, searchName: searchName
+        });
+    } catch (error) {
+        console.error('Error sorting and paginating products:', error);
+        throw error;
+    }   
 }
 
 
 module.exports = {
     getShopPage,
+    getShopPageByNameProduct
 }

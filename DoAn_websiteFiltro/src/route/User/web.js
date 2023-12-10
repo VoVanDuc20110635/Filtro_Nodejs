@@ -40,11 +40,14 @@ const initWebRoute = (app) => {
   router.get('/', homeController.getHomepage);
   router.get('/login', loginController.getLoginPage);
   router.post('/login', loginController.login);
+  router.get('/forgotPassword', loginController.getForgotPasswordPage);
+  router.post('/forgotPassword', loginController.processForgotPassword);
   router.get('/logout', loginController.logout);
   router.get('/test', homeController.testAccountModel);
   router.get('/register', registerController.getRegisterPage);
   router.post('/register', registerController.registerUser);
   router.get('/category/:id', categoryController.getShopPage);
+  router.get('/category', categoryController.getShopPageByNameProduct);
   router.get('/contact', contactController.getContactPage );
   router.post('/contact', contactController.addContact );
   router.get('/user/profile', userController.showProfile);

@@ -16,12 +16,34 @@ const cartService = new CartService();
 const GuestCartService = require('../../services/GuestCartService');
 const guestCartService = new GuestCartService();
 
+const SendMailService = require('../../services/SendMailService');
+const sendMailService = new SendMailService();
+
 
 const AuthenticationAccountException = require('../../Exception/AuthenticationAccountException');
 
 let getLoginPage = async (req, res) => {
     return res.render('../views/user/login.ejs', { session: req.session });
 }
+
+let getForgotPasswordPage = async (req, res) => {
+    return res.render('../views/user/forgotPassword.ejs', { session: req.session });
+}
+
+let processForgotPassword = async(req, res) => {
+    let {email} = req.body;
+    const emailDetails = {
+        recipient: email,
+        msgBody: 'Hello, this is the email body.',
+        subject: 'Test Email',
+        // attachment: 'Attachment content', // Uncomment this line if you have an attachment
+    };
+    await sendMailService.sendMail(emailDetails).then((result) => {
+        console.log(result);
+      });
+    return res.render('../views/user/forgotPassword.ejs', { session: req.session });
+}
+
 
 let login = async (req, res) => {
     try {
@@ -79,5 +101,7 @@ let logout = async (req, res) => {
 module.exports = {
     getLoginPage,
     login,
-    logout
+    logout,
+    getForgotPasswordPage,
+    processForgotPassword
 }

@@ -74,13 +74,13 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+                <form action="/category" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input type="text" name = "searchName"class="form-control" placeholder="Search for products"  text="<%= searchName%>" value="<%= searchName%>">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                            <button type="submit" class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -190,6 +190,7 @@
                                 <input type="hidden" name="sortType" value="<%= sortType %>" />
                                 <input type="hidden" name="flavorId" value="<%= flavorId %>" />
                                 <input type="hidden" name="currentPage" value="<%= currentPage %>" />
+                                <input type="hidden" name="searchName" value="<%= searchName %>" />
                             </form>
                             <!-- Price Start -->
                             <div class="border-bottom mb-4 pb-4">
@@ -245,9 +246,9 @@
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                                             <input type="checkbox" class="custom-control-input" id="price-5"
-                                                value="200000,999999"
+                                                value="200000,9999999"
                                                 onchange="submitHiddenFormFromSortType(this.value)" <% if
-                                                (dataLowPrice===200000 && dataHighPrice===999999) { %>checked<% } %>>
+                                                (dataLowPrice===200000 && dataHighPrice===9999999) { %>checked<% } %>>
                                                 <label class="custom-control-label" for="price-5">Over 200000đ</label>
                                         </div>
                                     </form>
@@ -568,6 +569,7 @@
             var sortType = document.querySelector('input[name="sortType"]');
             var flavorId = document.querySelector('input[name="flavorId"]');
             var currentPage = document.querySelector('input[name="currentPage"]');
+            var searchName = document.querySelector('input[name="searchName"]');
             // alert("ban dang chon page: " + input);
             if (input.includes(',')) {
                 var priceRange = input.split(',')
