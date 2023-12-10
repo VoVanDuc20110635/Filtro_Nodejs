@@ -26,7 +26,7 @@ let getShopPage = async (req, res) => {
     const { id } = req.params;
     // console.log(req.query);
     // console.log("id category: ", id);
-    let {searchName='', lowPrice = 0, highPrice = 1000000, sortType = 'best_selling', flavorId = 0, currentPage = 1 } = req.query;
+    let {searchName='', lowPrice = 0, highPrice = 10000000, sortType = 'best_selling', flavorId = 0, currentPage = 1 } = req.query;
     //when get data from req.query, everything is string
     // console.log(lowPrice, highPrice, sortType, flavorId, currentPage);
     // const materialList = await Material.findAll();
@@ -44,7 +44,7 @@ let getShopPage = async (req, res) => {
     let totalPages;
 
     if (id === 'all') {
-        if (dataHighPrice !== 1000000 && dataFlavorId !== 0) {
+        if (dataHighPrice !== 10000000 && dataFlavorId !== 0) {
             let result = await productService.getProductByPriceAndFlavor(
                 searchName,
                 dataLowPrice,
@@ -56,7 +56,7 @@ let getShopPage = async (req, res) => {
             );
             products = result.products;
             totalPages = result.totalPages;
-        } else if (dataHighPrice !== 1000000) {
+        } else if (dataHighPrice !== 10000000) {
             let result = await productService.getProductByPrice(
                 searchName,
                 dataLowPrice,
@@ -88,7 +88,7 @@ let getShopPage = async (req, res) => {
         }
         currentIdAll = 'all';
     } else {
-        if (dataHighPrice !== 1000000 && flavorId !== 0) {
+        if (dataHighPrice !== 10000000 && flavorId !== 0) {
             let result = await productService.getProductByCategoryAndPriceAndFlavor(
                 searchName,
                 parseInt(id),
@@ -101,7 +101,7 @@ let getShopPage = async (req, res) => {
             );
             products = result.products;
             totalPages = result.totalPages;
-        } else if (dataHighPrice !== 1000000) {
+        } else if (dataHighPrice !== 10000000) {
             let result = await productService.getProductByCategoryAndPrice(
                 searchName,
                 parseInt(id),

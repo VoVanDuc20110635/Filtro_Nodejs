@@ -339,54 +339,48 @@ class ProductService {
                 },
                 include: ProductDetail,
                 order: orderBy,
-                offset,
-                limit,
                 distinct: true,
-              });
-              
-            console.log(products);
+            });
+            const copyProducts = await Product.findAndCountAll({
+                where: {
+                  productName: {
+                    [Op.like]: `%${searchName}%`,
+                  },
+                  status: 1,
+                },
+                include: ProductDetail,
+                order: orderBy,
+                distinct: true,
+            });
 
-
-            // Check if products.rows is defined and not empty before applying filter
-            // Check if products.rows is defined and not empty before applying filter
-            const filteredProducts = products.rows && products.rows.length > 0
-            ? products.rows.filter(product => {
-                // Check if all ProductDetails meet the condition
-                const detailsMeetCondition = product.ProductDetails.every(detail => {
-                    const calculatedPrice = detail.price - (detail.price * detail.discount / 100);
-
-                    // Log additional details for debugging
-                    console.log('Product ID:', product.productId);
-                    console.log('Product Name:', product.productName);
-                    console.log('Detail ID:', detail.productDetailId);
-                    console.log('Calculated Price:', calculatedPrice);
-                    console.log('Low Price:', lowPrice);
-                    console.log('High Price:', highPrice);
-
-                    return calculatedPrice > lowPrice && calculatedPrice < highPrice;
-                });
-
-                // Log whether the condition is met or not
-                console.log('Details Meet Condition:', detailsMeetCondition);
-
-                return detailsMeetCondition;
-            })
-            : [];
-
-            console.log('filteredProducts: ', filteredProducts);
-
-
-            // Check if filteredProducts is not empty before using .map
-            const productsWithUpdatedImage = filteredProducts.length > 0
-            ? filteredProducts.map((product) => ({
+            copyProducts.rows = [];
+            
+            for (var i = 0; i < products.rows.length; ++i) {
+                let detailsMeetConditionCheck = false;
+                var product = products.rows[i];
+                for (var j = 0; j < product.ProductDetails.length; ++j) {
+                    var productDetail = product.ProductDetails[j];
+                    if (lowPrice < productDetail.price - productDetail.price*productDetail.discount/100 &&
+                        highPrice > productDetail.price - productDetail.price*productDetail.discount/100 ) {
+                            detailsMeetConditionCheck = true;
+                            break;
+                    }
+                }
+                if (detailsMeetConditionCheck == false){
+                    
+                    
+                }else {
+                    copyProducts.rows.push(product); 
+                    detailsMeetConditionCheck = false;
+                }
+            }; 
+            const totalPages = Math.ceil(copyProducts.rows.length / pageSize);
+            copyProducts.rows = copyProducts.rows.slice((currentPage - 1) * pageSize, (currentPage - 1) * pageSize + limit );
+            const productsWithUpdatedImage = copyProducts.rows.map((product) => ({
                 ...product.toJSON(),
                 image: '/image/upload/' + product.image, // Prepend the string to the existing image value
-                }))
-            : [];
-
-            console.log('productsWithUpdatedImage: ', productsWithUpdatedImage);
-
-            const totalPages = Math.ceil(filteredProducts.count / pageSize);
+            }));
+            
             return {
                 products: productsWithUpdatedImage,
                 totalPages,

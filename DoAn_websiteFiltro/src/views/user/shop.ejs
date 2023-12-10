@@ -175,12 +175,8 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5 justify-content-center">
             <!-- Shop Product Start -->
-            <% if (typeof products !=='undefined' && products.length===0) { %>
-                <div class="col-lg-9 col-md-12">
-                    <h2 class="text-center">No matching products found!</h2>
-                </div>
-                <% } %>
-                    <% if (typeof products !=='undefined' && products.length> 0) { %>
+            
+                    
                         <!-- Shop Sidebar Start -->
                         <div class="col-lg-3 col-md-12">
                             <form id="hiddenForm" action="/category/<%= currentIdAll === 'all' ? 'all' : category.id %>"
@@ -200,56 +196,56 @@
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                             <input type="checkbox" class="custom-control-input" id="price-all"
-                                                value="0,1000000" onchange="submitHiddenFormFromSortType(this.value)" <%
-                                                if (dataLowPrice===0 && dataHighPrice===1000000) { %>checked<% } %>>
+                                                value="0,10000000" onchange="submitHiddenFormFromSortType(this.value)" <%
+                                                if (dataLowPrice===0 && dataHighPrice===10000000) { %>checked<% } %>>
                                                 <label class="custom-control-label" for="price-all">All Price</label>
                                         </div>
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                             <input type="checkbox" class="custom-control-input" id="price-1"
-                                                value="0,50000" onchange="submitHiddenFormFromSortType(this.value)" <%
-                                                if (dataLowPrice===0 && dataHighPrice===50000) { %>checked<% } %>>
-                                                <label class="custom-control-label" for="price-1">0 - 50000đ</label>
+                                                value="0,200000" onchange="submitHiddenFormFromSortType(this.value)" <%
+                                                if (dataLowPrice===0 && dataHighPrice===200000) { %>checked<% } %>>
+                                                <label class="custom-control-label" for="price-1">0 - 200000đ</label>
                                         </div>
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                             <input type="checkbox" class="custom-control-input" id="price-2"
-                                                value="50000,100000" onchange="submitHiddenFormFromSortType(this.value)"
-                                                <% if (dataLowPrice===50000 && dataHighPrice===100000) { %>checked<% }
+                                                value="200000,400000" onchange="submitHiddenFormFromSortType(this.value)"
+                                                <% if (dataLowPrice===200000 && dataHighPrice===400000) { %>checked<% }
                                                 %>>
-                                                <label class="custom-control-label" for="price-2">50000 -
-                                                    100000đ</label>
+                                                <label class="custom-control-label" for="price-2">200000 -
+                                                    400000đ</label>
                                         </div>
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                             <input type="checkbox" class="custom-control-input" id="price-3"
-                                                value="100000,150000"
+                                                value="400000,600000"
                                                 onchange="submitHiddenFormFromSortType(this.value)" <% if
-                                                (dataLowPrice===100000 && dataHighPrice===150000) { %>checked<% } %>>
-                                                <label class="custom-control-label" for="price-3">100000 -
-                                                    150000đ</label>
+                                                (dataLowPrice===400000 && dataHighPrice===600000) { %>checked<% } %>>
+                                                <label class="custom-control-label" for="price-3">400000 -
+                                                    600000đ</label>
                                         </div>
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                             <input type="checkbox" class="custom-control-input" id="price-4"
-                                                value="150000,200000"
+                                                value="600000,800000"
                                                 onchange="submitHiddenFormFromSortType(this.value)" <% if
-                                                (dataLowPrice===150000 && dataHighPrice===200000) { %>checked<% } %>>
-                                                <label class="custom-control-label" for="price-4">150000 -
-                                                    200000đ</label>
+                                                (dataLowPrice===600000 && dataHighPrice===800000) { %>checked<% } %>>
+                                                <label class="custom-control-label" for="price-4">600000 -
+                                                    800000đ</label>
                                         </div>
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                                             <input type="checkbox" class="custom-control-input" id="price-5"
-                                                value="200000,9999999"
+                                                value="800000,9999999"
                                                 onchange="submitHiddenFormFromSortType(this.value)" <% if
-                                                (dataLowPrice===200000 && dataHighPrice===9999999) { %>checked<% } %>>
-                                                <label class="custom-control-label" for="price-5">Over 200000đ</label>
+                                                (dataLowPrice===800000 && dataHighPrice===9999999) { %>checked<% } %>>
+                                                <label class="custom-control-label" for="price-5">Over 800000đ</label>
                                         </div>
                                     </form>
 
@@ -286,7 +282,12 @@
 
                             <!-- Color End -->
                         </div>
-
+                        <% if (typeof products !=='undefined' && products.length===0) { %>
+                            <div class="col-lg-9 col-md-12">
+                                <h2 class="text-center">No matching products found!</h2>
+                            </div>
+                            <% } %>
+                        <% if (typeof products !=='undefined' && products.length> 0) { %>
                         <!-- Shop Product Start -->
                         <div class="col-lg-9 col-md-12">
                             <div class="col-12 pb-1">
