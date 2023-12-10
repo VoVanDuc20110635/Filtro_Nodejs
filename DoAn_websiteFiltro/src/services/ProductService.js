@@ -41,7 +41,7 @@ class ProductService {
                 order: [['sold', 'DESC']], // Order by sold in descending order
                 limit: 8, // Limit the result to 8 rows
             });
-            console.log(topSellingProducts);
+            
             // Update the image URLs for each product
             const updatedProducts = topSellingProducts.map((product) => {
                 const updatedImageName = `/image/upload/${product.image}`;
@@ -481,7 +481,7 @@ class ProductService {
                     orderBy.push(['sold', 'DESC']);
                     break;
             }
-            console.log(lowPrice, highPrice);
+            
             const offset = (currentPage - 1) * pageSize;
             const limit = pageSize;
 

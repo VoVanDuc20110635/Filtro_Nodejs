@@ -80,17 +80,17 @@
           </a>
         </div>
         <div class="col-lg-6 col-6 text-left">
-          <form th:action="@{/search}">
-            <div class="input-group">
-              <input name="name" type="text" class="form-control" placeholder="Search for products">
-              <div class="input-group-append">
-                <button class="input-group-text bg-transparent text-primary" type="submit">
-                  <i class="fa fa-search"></i>
-                </button>
+          <form action="/category" method="get">
+              <div class="input-group">
+                  <input type="text" name = "searchName"class="form-control" placeholder="Search for products" >
+                  <div class="input-group-append">
+                      <button type="submit" class="input-group-text bg-transparent text-primary">
+                          <i class="fa fa-search"></i>
+                      </button>
+                  </div>
               </div>
-            </div>
           </form>
-        </div>
+      </div>
         <div class="col-lg-3 col-6 text-right">
           <a href="/cart" class="btn border">
             <i class="fas fa-shopping-cart text-primary"></i>
@@ -153,12 +153,12 @@
                         class="fa fa-eye"></i></span>
                   </div>
                 </div>
-                <div class="col-md-12 form-group">
+                <!-- <div class="col-md-12 form-group">
                   <div class="creat_account">
                     <input type="checkbox" id="f-option2" name="selector">
                     <label for="f-option2">Keep me logged in</label>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-md-12 form-group">
                   <input type="hidden" name="_csrfParameterName" th:value="${_csrfToken}">
                   <button type="submit" class="primary-btn">Log In</button>

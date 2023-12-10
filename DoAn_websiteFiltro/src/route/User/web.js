@@ -42,6 +42,9 @@ const initWebRoute = (app) => {
   router.post('/login', loginController.login);
   router.get('/forgotPassword', loginController.getForgotPasswordPage);
   router.post('/forgotPassword', loginController.processForgotPassword);
+  router.get('/resetPassword', loginController.getLinkChangePasswordPage);
+  router.get('/resetPasswordPage', loginController.getChangePasswordPage);
+  router.post('/resetPassword', loginController.processChangePassword);
   router.get('/logout', loginController.logout);
   router.get('/test', homeController.testAccountModel);
   router.get('/register', registerController.getRegisterPage);

@@ -23,6 +23,13 @@ class UserService {
             }
         })
     }
+    async getUserByEmail(email) {
+        return await User.findOne({
+            where: {
+                email: email
+            }
+        })
+    }
     async getUserById2(id) {
         return await User.findOne({
             where: {
@@ -40,6 +47,11 @@ class UserService {
         // Check if the passwords match
         if (password !== repeatPassword) {
             throw new PasswordDoNotMatchException("Repeat password isn't correct!");
+        }
+
+        // Check if email exist
+        if (this.getUserByEmail) {
+            throw new PasswordDoNotMatchException("Email exist!");
         }
 
         
@@ -106,6 +118,24 @@ class UserService {
         accountDatabase.password = hashNewPassword;
         accountDatabase.save();
         return true;
+    }   
+    async changePasswordWithoutLogin(newPassword, userId){
+        
+        const saltRounds = 10; // You can adjust the number of salt rounds
+        const hashNewPassword = await bcrypt.hash(newPassword, saltRounds);
+        const userDatabase = await User.findOne({
+            where: {
+                userId: userId
+            },
+            include: Account
+        })
+        const accountDatabase = await Account.findOne({
+            where: {
+                id: userDatabase.accountId
+            }
+        })
+        accountDatabase.password = hashNewPassword;
+        accountDatabase.save();
     }    
 }
 module.exports = UserService;

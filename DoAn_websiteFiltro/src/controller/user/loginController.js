@@ -19,6 +19,8 @@ const guestCartService = new GuestCartService();
 const SendMailService = require('../../services/SendMailService');
 const sendMailService = new SendMailService();
 
+const bcrypt = require('bcrypt');
+
 
 const AuthenticationAccountException = require('../../Exception/AuthenticationAccountException');
 
@@ -32,18 +34,75 @@ let getForgotPasswordPage = async (req, res) => {
 
 let processForgotPassword = async(req, res) => {
     let {email} = req.body;
+    let oldUser = await userService.getUserByEmail(email);
+    if (!oldUser){
+        return res.render('../views/user/forgotPassword.ejs', { session: req.session, errorMessage: "Email không tồn tại!" });
+    }
+    const saltRounds = 10; // You can adjust the number of salt rounds
+    let inputToken = email + oldUser.name;
+    console.log(email + oldUser.name);
+    const hashToken = await bcrypt.hash(inputToken, saltRounds);
+
     const emailDetails = {
         recipient: email,
-        msgBody: 'Hello, this is the email body.',
-        subject: 'Test Email',
+        msgBody: 'Nhấn vào liên kết này để đặt lại mật khẩu: http://localhost:8080/resetPassword?token='+hashToken+'&email='+email,
+        subject: 'Lấy lại mật khẩu Coffee Store',
         // attachment: 'Attachment content', // Uncomment this line if you have an attachment
     };
     await sendMailService.sendMail(emailDetails).then((result) => {
         console.log(result);
       });
-    return res.render('../views/user/forgotPassword.ejs', { session: req.session });
+    return res.render('../views/user/forgotPassword.ejs', { session: req.session, successMessage: "Gửi mail thành công! Vui lòng kiểm tra email để nhận đường link thay đổi mật khẩu!" });
 }
 
+let getLinkChangePasswordPage = async (req, res) => {
+    let {token, email} = req.query;
+    let oldUser = await userService.getUserByEmail(email);
+    if (!oldUser){
+        return res.render('../views/user/forgotPassword.ejs', { session: req.session, errorMessage: "Email không tồn tại!" });
+    }
+    const tokenMatches = await bcrypt.compare(email + oldUser.name, token);
+    if (tokenMatches === false ){
+        return res.render('../views/user/forgotPassword.ejs', { session: req.session, errorMessage: "Token không đúng" });
+    }
+    req.session.email = email;
+    req.session.token = token;
+    return res.redirect('/resetPasswordPage');
+}
+
+let getChangePasswordPage = async (req, res) => {
+    return res.render('../views/user/passwordReset.ejs', { session: req.session });
+}
+
+
+
+
+let processChangePassword = async (req, res) => {
+    let email = req.session.email;
+    let token = req.session.token;
+    let {newPassword, repeatPassword} = req.body;
+    console.log(newPassword, repeatPassword);
+    if (newPassword !== repeatPassword){
+        return res.render('../views/user/passwordReset.ejs', { session: req.session, errorMessage: "RepeatPassword không đúng" });
+    }
+    if (!email || ! token){
+        return res.render('../views/user/forgotPassword.ejs', { session: req.session, errorMessage: "Token không đúng" });
+    }
+    let oldUser = await userService.getUserByEmail(email);
+    if (!oldUser){
+        return res.render('../views/user/forgotPassword.ejs', { session: req.session, errorMessage: "Email không tồn tại!" });
+    }
+    try{
+        await userService.changePasswordWithoutLogin(newPassword, oldUser.userId);
+        delete req.session.email;
+        delete req.session.token;
+        return res.render('../views/user/passwordReset.ejs', { session: req.session, successMessage: "Thay đổi mật khẩu thành công" });
+    } catch(err){
+        console.log(err);
+        return res.render('../views/user/passwordReset.ejs', { session: req.session, errorMessage: "Thay đổi mật khẩu không thành công" });
+    }
+    
+}
 
 let login = async (req, res) => {
     try {
@@ -103,5 +162,8 @@ module.exports = {
     login,
     logout,
     getForgotPasswordPage,
-    processForgotPassword
+    processForgotPassword,
+    getLinkChangePasswordPage,
+    getChangePasswordPage,
+    processChangePassword
 }
