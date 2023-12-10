@@ -206,23 +206,54 @@ class ProductService {
                         [Op.like]: `%${searchName}%`
                         
                     },
-                    price: {
-                        [Op.between]: [lowPrice, highPrice]
+                    flavorId: flavorId,
+                    status: 1
+                },
+                include: ProductDetail,
+                order: orderBy,
+                distinct: true
+            });
+            const copyProducts = await Product.findAndCountAll({
+                where: {
+                    productName: {
+                        [Op.like]: `%${searchName}%`
+                        
                     },
                     flavorId: flavorId,
                     status: 1
                 },
                 include: ProductDetail,
                 order: orderBy,
-                offset,
-                limit,
                 distinct: true
             });
-            const productsWithUpdatedImage = products.rows.map((product) => ({
+            copyProducts.rows = [];
+            
+            for (var i = 0; i < products.rows.length; ++i) {
+                let detailsMeetConditionCheck = false;
+                var product = products.rows[i];
+                for (var j = 0; j < product.ProductDetails.length; ++j) {
+                    var productDetail = product.ProductDetails[j];
+                    if (lowPrice < productDetail.price - productDetail.price*productDetail.discount/100 &&
+                        highPrice > productDetail.price - productDetail.price*productDetail.discount/100 ) {
+                            detailsMeetConditionCheck = true;
+                            break;
+                    }
+                }
+                if (detailsMeetConditionCheck == false){
+                    
+                    
+                }else {
+                    copyProducts.rows.push(product); 
+                    detailsMeetConditionCheck = false;
+                }
+            }; 
+            const totalPages = Math.ceil(copyProducts.rows.length / pageSize);
+            copyProducts.rows = copyProducts.rows.slice((currentPage - 1) * pageSize, (currentPage - 1) * pageSize + limit );
+            const productsWithUpdatedImage = copyProducts.rows.map((product) => ({
                 ...product.toJSON(),
                 image: '/image/upload/' + product.image, // Prepend the string to the existing image value
             }));
-            const totalPages = Math.ceil(products.count / pageSize);
+            
             return {
                 products: productsWithUpdatedImage,
                 totalPages,
@@ -270,8 +301,19 @@ class ProductService {
                         [Op.like]: `%${searchName}%`
                         
                     },
-                    price: {
-                        [Op.between]: [lowPrice, highPrice]
+                    flavorId: flavorId,
+                    categoryId: categoryId,
+                    status: 1
+                },
+                include: ProductDetail,
+                order: orderBy,
+                distinct: true
+            });
+            const copyProducts = await Product.findAndCountAll({
+                where: {
+                    productName: {
+                        [Op.like]: `%${searchName}%`
+                        
                     },
                     flavorId: flavorId,
                     categoryId: categoryId,
@@ -279,15 +321,36 @@ class ProductService {
                 },
                 include: ProductDetail,
                 order: orderBy,
-                offset,
-                limit,
                 distinct: true
             });
-            const productsWithUpdatedImage = products.rows.map((product) => ({
+            copyProducts.rows = [];
+            
+            for (var i = 0; i < products.rows.length; ++i) {
+                let detailsMeetConditionCheck = false;
+                var product = products.rows[i];
+                for (var j = 0; j < product.ProductDetails.length; ++j) {
+                    var productDetail = product.ProductDetails[j];
+                    if (lowPrice < productDetail.price - productDetail.price*productDetail.discount/100 &&
+                        highPrice > productDetail.price - productDetail.price*productDetail.discount/100 ) {
+                            detailsMeetConditionCheck = true;
+                            break;
+                    }
+                }
+                if (detailsMeetConditionCheck == false){
+                    
+                    
+                }else {
+                    copyProducts.rows.push(product); 
+                    detailsMeetConditionCheck = false;
+                }
+            }; 
+            const totalPages = Math.ceil(copyProducts.rows.length / pageSize);
+            copyProducts.rows = copyProducts.rows.slice((currentPage - 1) * pageSize, (currentPage - 1) * pageSize + limit );
+            const productsWithUpdatedImage = copyProducts.rows.map((product) => ({
                 ...product.toJSON(),
                 image: '/image/upload/' + product.image, // Prepend the string to the existing image value
             }));
-            const totalPages = Math.ceil(products.count / pageSize);
+            
             return {
                 products: productsWithUpdatedImage,
                 totalPages,
@@ -426,30 +489,54 @@ class ProductService {
                 where: {
                     productName: {
                         [Op.like]: `%${searchName}%`
-                        
                     },
                     categoryId: categoryId,
                     status: 1
                 },
                 include: ProductDetail,
                 order: orderBy,
-                offset,
-                limit,
                 distinct: true,
-                having: literal(`(
-                    SELECT MAX(price - price * discount)
-                    FROM ProductDetails AS ProductDetail
-                    WHERE ProductDetail.productId = Product.productId
-                  ) BETWEEN :lowPrice AND :highPrice`, {
-                    lowPrice,
-                    highPrice,
-                  }),
             });
-            const productsWithUpdatedImage = products.rows.map((product) => ({
+            const copyProducts = await Product.findAndCountAll({
+                where: {
+                    productName: {
+                        [Op.like]: `%${searchName}%`
+                    },
+                    categoryId: categoryId,
+                    status: 1
+                },
+                include: ProductDetail,
+                order: orderBy,
+                distinct: true,
+            });
+            copyProducts.rows = [];
+            
+            for (var i = 0; i < products.rows.length; ++i) {
+                let detailsMeetConditionCheck = false;
+                var product = products.rows[i];
+                for (var j = 0; j < product.ProductDetails.length; ++j) {
+                    var productDetail = product.ProductDetails[j];
+                    if (lowPrice < productDetail.price - productDetail.price*productDetail.discount/100 &&
+                        highPrice > productDetail.price - productDetail.price*productDetail.discount/100 ) {
+                            detailsMeetConditionCheck = true;
+                            break;
+                    }
+                }
+                if (detailsMeetConditionCheck == false){
+                    
+                    
+                }else {
+                    copyProducts.rows.push(product); 
+                    detailsMeetConditionCheck = false;
+                }
+            }; 
+            const totalPages = Math.ceil(copyProducts.rows.length / pageSize);
+            copyProducts.rows = copyProducts.rows.slice((currentPage - 1) * pageSize, (currentPage - 1) * pageSize + limit );
+            const productsWithUpdatedImage = copyProducts.rows.map((product) => ({
                 ...product.toJSON(),
                 image: '/image/upload/' + product.image, // Prepend the string to the existing image value
             }));
-            const totalPages = Math.ceil(products.count / pageSize);
+            
             return {
                 products: productsWithUpdatedImage,
                 totalPages,

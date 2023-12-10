@@ -195,7 +195,7 @@
                                     <form>
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="price-all"
+                                            <input type="checkbox" class="custom-control-input" id="price-all" style="cursor: pointer;"
                                                 value="0,10000000" onchange="submitHiddenFormFromSortType(this.value)" <%
                                                 if (dataLowPrice===0 && dataHighPrice===10000000) { %>checked<% } %>>
                                                 <label class="custom-control-label" for="price-all">All Price</label>
@@ -203,7 +203,7 @@
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="price-1"
+                                            <input type="checkbox" class="custom-control-input" id="price-1" style="cursor: pointer;"
                                                 value="0,200000" onchange="submitHiddenFormFromSortType(this.value)" <%
                                                 if (dataLowPrice===0 && dataHighPrice===200000) { %>checked<% } %>>
                                                 <label class="custom-control-label" for="price-1">0 - 200000đ</label>
@@ -211,7 +211,7 @@
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="price-2"
+                                            <input type="checkbox" class="custom-control-input" id="price-2" style="cursor: pointer;"
                                                 value="200000,400000" onchange="submitHiddenFormFromSortType(this.value)"
                                                 <% if (dataLowPrice===200000 && dataHighPrice===400000) { %>checked<% }
                                                 %>>
@@ -221,7 +221,7 @@
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="price-3"
+                                            <input type="checkbox" class="custom-control-input" id="price-3" style="cursor: pointer;"
                                                 value="400000,600000"
                                                 onchange="submitHiddenFormFromSortType(this.value)" <% if
                                                 (dataLowPrice===400000 && dataHighPrice===600000) { %>checked<% } %>>
@@ -231,7 +231,7 @@
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="price-4"
+                                            <input type="checkbox" class="custom-control-input" id="price-4" style="cursor: pointer;"
                                                 value="600000,800000"
                                                 onchange="submitHiddenFormFromSortType(this.value)" <% if
                                                 (dataLowPrice===600000 && dataHighPrice===800000) { %>checked<% } %>>
@@ -241,7 +241,7 @@
 
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                                            <input type="checkbox" class="custom-control-input" id="price-5"
+                                            <input type="checkbox" class="custom-control-input" id="price-5" style="cursor: pointer;"
                                                 value="800000,9999999"
                                                 onchange="submitHiddenFormFromSortType(this.value)" <% if
                                                 (dataLowPrice===800000 && dataHighPrice===9999999) { %>checked<% } %>>
@@ -259,7 +259,7 @@
                                 <form>
                                     <div
                                         class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="0" value="0"
+                                        <input type="checkbox" class="custom-control-input" id="0" value="0" style="cursor: pointer;"
                                             onchange="submitHiddenFormFromSortType(this.value)" <% if (dataFlavorId===0)
                                             { %>checked<% } %>>
                                             <label class="custom-control-label" for="0">All</label>
@@ -267,7 +267,7 @@
                                     <% flavorList.forEach(function(flavor) { %>
                                         <div
                                             class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                            <input type="checkbox" class="custom-control-input"
+                                            <input type="checkbox" class="custom-control-input" style="cursor: pointer;"
                                                 id="<%= flavor.flavorId %>" value="<%= flavor.flavorId %>"
                                                 onchange="submitHiddenFormFromSortType(this.value)" <% if
                                                 (dataFlavorId===flavor.flavorId) { %>checked<% } %>>
@@ -298,19 +298,19 @@
                                             Sort by
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                            <a class="dropdown-item" id="best_selling"
+                                            <a class="dropdown-item" id="best_selling" style="cursor: pointer;"
                                                 onclick="submitHiddenFormFromSortType(this.id)">Top-selling product</a>
-                                            <a class="dropdown-item" id="product_name_asc"
+                                            <a class="dropdown-item" id="product_name_asc" style="cursor: pointer;"
                                                 onclick="submitHiddenFormFromSortType(this.id)">Product Name: A-Z</a>
-                                            <a class="dropdown-item" id="product_name_desc"
+                                            <a class="dropdown-item" id="product_name_desc" style="cursor: pointer;"
                                                 onclick="submitHiddenFormFromSortType(this.id)">Product Name: Z-A</a>
-                                            <a class="dropdown-item" id="price_asc"
+                                            <a class="dropdown-item" id="price_asc" style="cursor: pointer;"
                                                 onclick="submitHiddenFormFromSortType(this.id)">Price Ascending</a>
-                                            <a class="dropdown-item" id="price_desc"
+                                            <a class="dropdown-item" id="price_desc" style="cursor: pointer;"
                                                 onclick="submitHiddenFormFromSortType(this.id)">Price Descending</a>
-                                            <a class="dropdown-item" id="newest"
+                                            <a class="dropdown-item" id="newest" style="cursor: pointer;"
                                                 onclick="submitHiddenFormFromSortType(this.id)">Newest</a>
-                                            <a class="dropdown-item" id="oldest"
+                                            <a class="dropdown-item" id="oldest" style="cursor: pointer;"
                                                 onclick="submitHiddenFormFromSortType(this.id)">Oldest</a>
                                         </div>
                                     </div>
