@@ -167,27 +167,39 @@
         <div class="row px-xl-5">
             <div class="col-lg-7 mb-5">
                 <div class="contact-form">
-                    <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate" action="/contact" method="POST">
+                    <div class="col-md-12 form-group">
+                        <% if (typeof message !== 'undefined' && message) { %>
+                            <div id="successMessage" class="alert alert-success" role="alert">
+                                <%= message %>
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+                            <div id="errorMessage" class="alert alert-danger" role="alert">
+                                <%= errorMessage %>
+                            </div>
+                        <% } %>
+                    </div>
+                    <form  action="/contact" method="POST">
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" name="name" placeholder="Your Name"
-                                required="required" data-validation-required-message="Please enter your name" />
+                                required />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <input type="email" class="form-control" id="email" name="email" placeholder="Your Email"
-                                required="required" data-validation-required-message="Please enter your email" />
+                                required />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject"
-                                required="required" data-validation-required-message="Please enter a subject" />
+                                required/>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <textarea class="form-control" rows="6" id="message" name="message" placeholder="Message"
-                                required="required"
-                                data-validation-required-message="Please enter your message"></textarea>
+                                required></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>

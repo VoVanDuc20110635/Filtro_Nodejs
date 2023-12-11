@@ -26,6 +26,10 @@ const Contact = sequelize.define('Contact', {
     type: DataTypes.STRING,
     field: 'tinnhan',
   },
+  response: {
+    type: DataTypes.STRING,
+    field: 'phanhoi',
+  }
 }, {
   tableName: 'lienhe', // Specify the table name
   timestamps: false, // Disable Sequelize's default timestamps (createdAt and updatedAt)

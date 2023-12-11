@@ -22,7 +22,7 @@ let registerUser = async (req, res) => {
         if (await inputService.isValidComment(userName) == false||
         await inputService.isValidComment(accountName) == false||
         await inputService.isValidComment(email) == false){
-            return res.render('../views/user/register.ejs', { errorMessage: "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng" });
+            return res.render('../views/user/register.ejs', { errorMessage: "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự." });
             }
         if ( await inputService.isValidPassword(password) == false||
             await inputService.isValidPassword(repeatPassword) == false){
