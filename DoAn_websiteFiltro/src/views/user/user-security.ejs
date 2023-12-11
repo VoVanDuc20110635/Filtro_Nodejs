@@ -126,11 +126,11 @@
                 <div class="col">
                     <!-- Change password card-->
                     <div class="card mb-4">
-                        <div class="card-header">Change Password</div>
+                        <div class="card-header">Thay đổi mật khẩu</div>
                         <div class="card-body">
                             <% if (typeof successMessage !== 'undefined' && successMessage) { %>
                                 <div class="mt-3 alert alert-success" role="alert">
-                                    Your account has been updated successfully.
+                                    Tài khoản của bạn đã được cập nhật thành công!.
                                 </div>
                             <% } %>
                             <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
@@ -141,26 +141,26 @@
                             <form method="post" action="/user/security">
                                 <!-- Form Group (current password)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="currentPassword">Enter Present Password</label>
+                                    <label class="small mb-1" for="currentPassword">Nhập mật khẩu hiện tại</label>
                                     <input class="form-control" id="currentPassword" type="password"
                                         name="oldPassword"
                                         placeholder="Enter current password">
                                 </div>
                                 <!-- Form Group (new password)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="newPassword">Enter New Password</label>
+                                    <label class="small mb-1" for="newPassword">Nhập mật khẩu mới</label>
                                     <input class="form-control" id="newPassword" type="password"
                                         name="newPassword"
                                         placeholder="Enter new password">
                                 </div>
                                 <!-- Form Group (confirm password)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="confirmPassword">Re-enter New Password</label>
+                                    <label class="small mb-1" for="confirmPassword">Nhập lại mật khẩu mới:</label>
                                     <input class="form-control" id="confirmPassword" type="password"
                                         name="repeatPassword"
                                         placeholder="Confirm new password">
                                 </div>
-                                <button class="btn btn-primary" type="submit">Change</button>
+                                <button class="btn btn-primary" type="submit">Cập nhật</button>
                             </form>
                         </div>
                     </div>

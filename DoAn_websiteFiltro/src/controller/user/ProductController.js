@@ -8,6 +8,9 @@ const feedbackService = new FeedbackService();
 const CategoryService = require('../../services/CategoryService')
 const categoryService = new CategoryService();
 
+const InputService = require('../../services/InputService');
+const inputService = new InputService();
+
 let errorMessage;
 
 let getProductPage = async (req, res) => {
@@ -40,13 +43,15 @@ let feedback = async(req, res) => {
     let productId = parseInt(req.params.id, 10);
     let userId = parseInt( req.session.user.userId, 10);
     let {content, numberOfStars, currentDay} = req.body;
-    console.log(numberOfStars);
     if (numberOfStars == undefined){
         numberOfStars = 5;
     } else{
         numberOfStars = parseInt(numberOfStars, 10);
     }
-    
+    if (await inputService.isValidComment(content) == false){
+        errorMessage = "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự.";
+            return res.redirect(`/product/${productId}`);;
+        }
     let checkHaveOrderYet = await feedbackService.checkOrderYet(userId, productId);
     if(checkHaveOrderYet == false){
         errorMessage = "Bạn chưa mua sản phẩm này nên không được bình luận";

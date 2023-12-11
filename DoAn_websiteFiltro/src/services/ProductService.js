@@ -731,13 +731,10 @@ class ProductService {
         }
     }
 
-    async getProductById(searchName,id) {
+    async getProductById(id) {
         try {
             const product = await Product.findOne({
-                where: { productName: {
-                    [Op.like]: `%${searchName}%`
-                    
-                },
+                where: { 
                 productId: id }, // Assuming your Product model has an 'id' field
                 include: [Flavor,ProductDetail]
             });

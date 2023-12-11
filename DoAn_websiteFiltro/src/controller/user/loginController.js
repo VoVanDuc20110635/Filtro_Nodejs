@@ -19,6 +19,9 @@ const guestCartService = new GuestCartService();
 const SendMailService = require('../../services/SendMailService');
 const sendMailService = new SendMailService();
 
+const InputService = require('../../services/InputService');
+const inputService = new InputService();
+
 const bcrypt = require('bcrypt');
 
 
@@ -57,6 +60,9 @@ let processForgotPassword = async(req, res) => {
 
 let getLinkChangePasswordPage = async (req, res) => {
     let {token, email} = req.query;
+    if (await inputService.isValidComment(email) == false){
+            return res.render('../views/user/forgotPassword.ejs', { errorMessage: "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng" });
+            }
     let oldUser = await userService.getUserByEmail(email);
     if (!oldUser){
         return res.render('../views/user/forgotPassword.ejs', { session: req.session, errorMessage: "Email không tồn tại!" });
@@ -85,6 +91,10 @@ let processChangePassword = async (req, res) => {
     if (newPassword !== repeatPassword){
         return res.render('../views/user/passwordReset.ejs', { session: req.session, errorMessage: "RepeatPassword không đúng" });
     }
+    if ( await inputService.isValidPassword(password) == false||
+            await inputService.isValidPassword(repeatPassword) == false){
+            return res.render('../views/user/passwordReset.ejs', { errorMessage: "Mật khẩu với dài ít nhất 8 ký tự, có ít nhất một chữ hoa, có ít nhất 1 số tự nhiên và chỉ có 1 ký tự đặc biệt:@#$%^&+=.! " });
+            }
     if (!email || ! token){
         return res.render('../views/user/forgotPassword.ejs', { session: req.session, errorMessage: "Token không đúng" });
     }
@@ -107,10 +117,17 @@ let processChangePassword = async (req, res) => {
 let login = async (req, res) => {
     try {
         const { accountName, password } = req.body;
+        if (await inputService.isValidComment(accountName) == false){
+                res.render('../views/user/login.ejs', {session: req.session, message: "AccountName chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự."});
+                return;
+        }
+        if ( await inputService.isValidPassword(password) == false){
+                res.render('../views/user/login.ejs', {session: req.session, message: "Mật khẩu với dài ít nhất 8 ký tự, có ít nhất một chữ hoa, có ít nhất 1 số tự nhiên và chỉ có 1 ký tự đặc biệt:@#$%^&+=.! "});
+                return;
+        }
         const account = await accountService.authenticateUser(accountName, password);
         const user = await userService.getUserById(account.User.userId);
         const cart = await cartService.getCurrentCartByUserId(user.userId);
-        
         // console.log(user);
         req.session.authenticated = true;
         req.session.account = account;

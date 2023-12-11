@@ -30,6 +30,17 @@ let processProfile = async (req, res) => {
     userId = parseInt(userId,10);
     // console.log(userId);
     let {name, address, zip, city, email, phoneNumber, dob, sex} = req.body;
+    if (await inputService.isValidComment(name) == false||
+        await inputService.isValidComment(address) == false||
+        await inputService.isValidComment(zip) == false||
+        await inputService.isValidComment(city) == false||
+        await inputService.isValidComment(email) == false||
+        await inputService.isValidComment(phoneNumber) == false||
+        await inputService.isValidComment(dob) == false||
+        await inputService.isValidComment(sex) == false){
+        errorMessage = "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự.";
+        return res.redirect('/user/profile');
+        }
     // console.log(name, address, zip, city, email, phoneNumber, dob, sex);
     await userService.updateUser(userId, name, address, zip, city, email, phoneNumber, dob, sex);
     message = "Cập nhật thành công!";
@@ -69,31 +80,27 @@ let changePassword = async (req, res) => {
         return;
     }
     let {oldPassword, newPassword,repeatPassword} = req.body;
-    if (await inputService.containsAllowedCharacters(oldPassword) == false||
-        await inputService.containsAllowedCharacters(newPassword) == false||
-        await inputService.containsAllowedCharacters(repeatPassword) == false){
-            res.render('../views/user/user-security.ejs', {session: req.session, errorMessage: "Your input is not valid!"});
+    if (await inputService.isValidPassword(oldPassword) == false||
+        await inputService.isValidPassword(newPassword) == false||
+        await inputService.isValidPassword(repeatPassword) == false){
+            res.render('../views/user/user-security.ejs', {session: req.session, errorMessage: "Mật khẩu với dài ít nhất 8 ký tự, có ít nhất một chữ hoa, có ít nhất 1 số tự nhiên và chỉ có 1 ký tự đặc biệt:@#$%^&+=.! "});
             return;
         }
     if (newPassword !== repeatPassword){
-        res.render('../views/user/user-security.ejs', {session: req.session, errorMessage: "Your repeat password doesn't match!"});
-        return;
-    }
-    if (await inputService.isValidPassword(newPassword) == false){
-        res.render('../views/user/user-security.ejs', {session: req.session, errorMessage: "Your password is not valid. The password must have a minimum length of 8 characters, including at least one uppercase letter, at least one digit, and exactly one special character:@#$%^&+=.!"});
+        res.render('../views/user/user-security.ejs', {session: req.session, errorMessage: "Repeat password không đúng!"});
         return;
     }
     
     try{
         let result = await userService.changePassword(oldPassword, newPassword, userId);
         if (result == false){
-            return res.render('../views/user/user-security.ejs', { session: req.session,errorMessage: "Your current password is not correct!" });
+            return res.render('../views/user/user-security.ejs', { session: req.session,errorMessage: "Mật khẩu hiện tại không đúng!" });
         }
-        return res.render('../views/user/user-security.ejs', { session: req.session,successMessage: "Update Successfully!" });
+        return res.render('../views/user/user-security.ejs', { session: req.session,successMessage: "Cập nhật thành công!" });
 
     } catch(err){
         console.log(err);
-        return res.render('../views/user/user-security.ejs', { session: req.session,errorMessage: "Update Failed!" });
+        return res.render('../views/user/user-security.ejs', { session: req.session,errorMessage: "Cập nhật thất bại!" });
     }
 }
 
