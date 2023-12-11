@@ -1,758 +1,855 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <th:block th:fragment="head_additional">
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Windmill Dashboard</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>FrontEnd</title>
+        <meta name="description" content="Ela Admin - HTML5 Admin Template" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+        <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png" />
+        <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png" />
+    
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet" />
-        <link rel="stylesheet" href="/css/admin/tailwind.output.css"/>
-        <link rel="stylesheet/scss" href="/css/admin/_modal.scss"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"/>
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!--        <link rel="stylesheet" href="/css/crud.css">-->
-<!--        <script src="/javascript/modalAccount.js"></script>-->
-
-        <!-- Theme style -->
-<!--        <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">-->
-        <!-- Theme style -->
-<!--        <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">-->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-        <script src="/js/admin/init-alpine.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
-        <script src="/js/admin/charts-lines.js"></script>
-        <script src="/js/admin/charts-pie.js"></script>
-<!--        <link rel="stylesheet" href="/css/crud.css">-->
-        <script src="/js/admin/modalAccount.js"></script>
-        <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"rel="stylesheet"/>
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css"
+        />
+    
+    
+        <link href="/css/admin/Duc/cs-skin-elastic.css" rel="stylesheet"/>
+        <link href="/css/admin/Duc/style.css" rel="stylesheet"/>
+        <link href="/css/admin/Duc/ui_users.css" rel="stylesheet"/>
+        <link href="/css/admin/Duc/login/bootstrap.css" rel="stylesheet"/>
+        <!--    <link th:href="@{/assets/css/ui_users.css}" rel="stylesheet"/>-->
+        <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    
+    
+        <link
+                href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css"
+                rel="stylesheet"
+        />
+        <link
+                href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css"
+                rel="stylesheet"
+        />
+    
+        <link
+                href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css"
+                rel="stylesheet"
+        />
+        <link
+                href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css"
+                rel="stylesheet"
+        />
+    
+        <link
+                href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+                rel="stylesheet"
+        />
+        <link
+                href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+                rel="stylesheet"
+        />
+        <style>
+            #weatherWidget .currentDesc {
+                color: #ffffff !important;
+            }
+            .traffic-chart {
+                min-height: 335px;
+            }
+            #flotPie1 {
+                height: 150px;
+            }
+            #flotPie1 td {
+                padding: 3px;
+            }
+            #flotPie1 table {
+                top: 20px !important;
+                right: -10px !important;
+            }
+            .chart-container {
+                display: table;
+                min-width: 270px;
+                text-align: left;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            #flotLine5 {
+                height: 105px;
+            }
+    
+            #flotBarChart {
+                height: 150px;
+            }
+            #cellPaiChart {
+                height: 160px;
+            }
+    
+            .bars-icon {
+                position: absolute;
+                top: 18px;
+            }
+    
+    
+            #saveButton {
+                display: none; /* Ẩn liên kết mặc định */
+            }
+    
+        </style>
+    
+        <script
+                src="https://kit.fontawesome.com/8f73a47761.js"
+                crossorigin="anonymous"
+        ></script>
+    
+    
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-        <!-- Theme style -->
-<!--        <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">-->
-    </th:block>
-</head>
-<body>
-<div class="flex h-screen bg-gray-50 dark:bg-gray-900"
-:class="{ 'overflow-hidden': isSideMenuOpen }">
     
-    <aside
-    class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
-    >
-    <div class="py-4 text-gray-500 dark:text-gray-400">
-        <a
-            class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-            href="#"
-        >
-            Four Leaves Shoes
-        </a>
-        <ul class="mt-6">
-            <li class="relative px-6 py-3">
-            <span id="span0"
-            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-            aria-hidden="true"
-            style="display: none;"
-            ></span>
-                <a
-                    class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                    href="/admin/account"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                        ></path>
-                    </svg>
-                    <span class="ml-4">Account</span>
-                </a>
-            </li>
-        </ul>
-        <ul>
-            <li class="relative px-6 py-3">
-                <span id="span1"
-                    class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                    aria-hidden="true"
-                    style="display: none;"
-                ></span>
-                <a
-                    class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/admin/user"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                        ></path>
-                    </svg>
-                    <span class="ml-4">Client</span>
-                </a>
-            </li>
-            <li class="relative px-6 py-3">
-                <span id="span2"
-                    class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                    aria-hidden="true" style="display: none;"
-                ></span>
-                <a
-                    class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/admin/order"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                        ></path>
-                    </svg>
-                    <span class="ml-4">Order</span>
-                </a>
-            </li>
-            <li class="relative px-6 py-3">
-                <span id="span3"
-                    class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                    aria-hidden="true" style="display: none;"
-                ></span>
-                <a
-                    class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/admin/staff"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
-                        ></path>
-                        <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                    </svg>
-                    <span class="ml-4">Employee</span>
-                </a>
-            </li>
-            <li class="relative px-6 py-3">
-                <span id="span4"
-                    class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                    aria-hidden="true" style="display: none;"
-                ></span>
-                <a
-                    class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/admin/product"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
-                        ></path>
-                    </svg>
-                    <span class="ml-4">Product</span>
-                </a>
-            </li>
-            <li class="relative px-6 py-3">
-                <span id="span5"
-                    class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                    aria-hidden="true" style="display: none;"
-                ></span>
-                <a
-                    class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/admin/category"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                        ></path>
-                    </svg>
-                    <span class="ml-4">Category</span>
-                </a>
-            </li>
-            <li class="relative px-6 py-3">
-                <span id="span6"
-                    class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                    aria-hidden="true" style="display: none;"
-                ></span>
-                <a
-                    class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    href="/admin/flavor"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                    </svg>
-                    <span class="ml-4">Flavor</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    </aside>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var currentPath = window.location.pathname;
-
-        if (currentPath.includes("admin/account")) {
-            var spanElement = document.getElementById("span0");
-            spanElement.style.display = "block";
-        }
-
-        if (currentPath.includes("admin/user")) {
-            var spanElement = document.getElementById("span1");
-            spanElement.style.display = "block";
-        }
-        if (currentPath.includes("admin/order")) {
-            var spanElement = document.getElementById("span2");
-            spanElement.style.display = "block";
-        }
-        if (currentPath.includes("admin/staff")) {
-            var spanElement = document.getElementById("span3");
-            spanElement.style.display = "block";
-        }
-        if (currentPath.includes("admin/product")) {
-            var spanElement = document.getElementById("span4");
-            spanElement.style.display = "block";
-        }
-        if (currentPath.includes("admin/category")) {
-            var spanElement = document.getElementById("span5");
-            spanElement.style.display = "block";
-        }
-        if (currentPath.includes("admin/flavor")) {
-            var spanElement = document.getElementById("span6");
-            spanElement.style.display = "block";
-        }
-    });
-    </script>
-
-        <div class="flex flex-col flex-1 w-full">
-            <!--        header-->
-            <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-                <div
-                class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
-                >
-                    <!-- Mobile hamburger -->
-                    <button
-                    class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
-                    @click="toggleSideMenu"
-                    aria-label="Menu"
-                    >
-                        <svg
-                        class="w-6 h-6"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        >
-                            <path
-                            fill-rule="evenodd"
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                            clip-rule="evenodd"
-                            ></path>
-                        </svg>
-                    </button>
-                    <!-- Search input -->
-                    <div class="flex justify-center flex-1 lg:mr-32">
-                        <div
-                        class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
-                        >
-                            <div class="absolute inset-y-0 flex items-center pl-2">
-                                <svg
-                                class="w-4 h-4"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                >
-                                    <path
-                                    fill-rule="evenodd"
-                                    d=""
-                                    clip-rule="evenodd"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <input
-                            class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                            type="text"
-                            placeholder="This is the management page"
-                            aria-label="Search"
-                            readonly
-                            />
-                        </div>
-                    </div>
-                    <ul class="flex items-center flex-shrink-0 space-x-6">
-                        <!-- Theme toggler -->
-                        <li class="flex">
-                            <button
-                            class="rounded-md focus:outline-none focus:shadow-outline-purple"
-                            @click="toggleTheme"
-                            aria-label="Toggle color mode"
-                            >
-                                <template x-if="!dark">
-                                    <svg
-                                    class="w-5 h-5"
-                                    aria-hidden="true"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                        d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-                                        ></path>
-                                    </svg>
-                                </template>
-                                <template x-if="dark">
-                                    <svg
-                                    class="w-5 h-5"
-                                    aria-hidden="true"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                        fill-rule="evenodd"
-                                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                                        clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </template>
-                            </button>
+    <!--    time picker-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+    <!--    parse time-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+        <script src="/assets/js/main.js"></script>
+    </head>
+<body>
+    <div>
+        <aside id="left-panel" class="left-panel" th:fragment="side_bar">
+            <nav class="navbar navbar-expand-sm navbar-default">
+                <div id="main-menu" class="main-menu collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <!-- Navigation__Home -->
+                        <li class="active">
+                            <a href="/home"
+                            ><i class="menu-icon fa fa-solid fa-house"></i>Home
+                            </a>
                         </li>
-                        <!-- Notifications menu -->
-                        <li class="relative">
-                            <button
-                            class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
-                            @click="toggleNotificationsMenu"
-                            @keydown.escape="closeNotificationsMenu"
-                            aria-label="Notifications"
-                            aria-haspopup="true"
+        
+                        <!-- Navigation__Syllabus -->
+                        <li class="menu-item-has-children dropdown">
+                            <a
+                                    href="#"
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
                             >
-                                <svg
-                                class="w-5 h-5"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                >
-                                    <path
-                                    d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-                                    ></path>
-                                </svg>
-                                <!-- Notification badge -->
-                                <span
-                                aria-hidden="true"
-                                class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
-                                ></span>
-                            </button>
-                            <template x-if="isNotificationsMenuOpen">
-                                <ul
-                                x-transition:leave="transition ease-in duration-150"
-                                x-transition:leave-start="opacity-100"
-                                x-transition:leave-end="opacity-0"
-                                @click.away="closeNotificationsMenu"
-                                @keydown.escape="closeNotificationsMenu"
-                                class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
-                                >
-                                    <li class="flex">
-                                        <a
-                                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#"
-                                        >
-                                            <span>Messages</span>
-                                            <span
-                                            class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
-                                            >
-                                13
-                                </span>
-                                        </a>
-                                    </li>
-                                    <li class="flex">
-                                        <a
-                                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#"
-                                        >
-                                            <span>Sales</span>
-                                            <span
-                                            class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
-                                            >
-                                2
-                                </span>
-                                        </a>
-                                    </li>
-                                    <li class="flex">
-                                        <a
-                                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#"
-                                        >
-                                            <span>Alerts</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </template>
+                                <i style="margin-top: 5px;" class="menu-icon fa fa-solid fa-book-open"></i>Syllabus</a
+                            >
+                            <ul class="sub-menu children dropdown-menu">
+                                <li>
+                                    <a href="/syllabus/list"
+                                    ><i class="fa-solid fa-list"></i>View syllabus</a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="/syllabus/create"
+                                    ><i class="fa-solid fa-screwdriver-wrench"></i>Create
+                                        syllabus</a
+                                    >
+                                </li>
+                            </ul>
                         </li>
-                        <!-- Profile menu -->
-                        <li class="relative">
-                            <button
-                            class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
-                            @click="toggleProfileMenu"
-                            @keydown.escape="closeProfileMenu"
-                            aria-label="Account"
-                            aria-haspopup="true"
+        
+                        <!-- Navigation__Class -->
+                        <li class="">
+                            <a href="/class/get_list">
+                                <i class="menu-icon fa fa-solid fa-school"></i>Class</a
                             >
-                                <img
-                                class="object-cover w-8 h-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                                alt=""
-                                aria-hidden="true"
-                                />
-                            </button>
-                            <template x-if="isProfileMenuOpen">
-                                <ul
-                                x-transition:leave="transition ease-in duration-150"
-                                x-transition:leave-start="opacity-100"
-                                x-transition:leave-end="opacity-0"
-                                @click.away="closeProfileMenu"
-                                @keydown.escape="closeProfileMenu"
-                                class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
-                                aria-label="submenu"
-                                >
-                                    <li class="flex">
-                                        <a
-                                        class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        th:href="@{/logout}"
-                                        >
-                                            <svg
-                                            class="w-4 h-4 mr-3"
-                                            aria-hidden="true"
-                                            fill="none"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            >
-                                                <path
-                                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                                                ></path>
-                                            </svg>
-                                            <span>Log out</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </template>
+                        </li>
+        
+                        <!-- Navigation__Training-program -->
+        <!--                <li class="menu-item-has-children dropdown">-->
+        <!--                    <a-->
+        <!--                            href="#"-->
+        <!--                            class="dropdown-toggle"-->
+        <!--                            data-toggle="dropdown"-->
+        <!--                            aria-haspopup="true"-->
+        <!--                            aria-expanded="false"-->
+        <!--                    >-->
+        <!--                        <i class="menu-icon fa fa-microscope"></i>Training program</a-->
+        <!--                    >-->
+        <!--                    <ul class="sub-menu children dropdown-menu">-->
+        <!--                        <li>-->
+        <!--                            <a href="/training_program/get_list"-->
+        <!--                            ><i class="fa-solid fa-list"></i>View training</a-->
+        <!--                            >-->
+        <!--                        </li>-->
+        <!--                        <li>-->
+        <!--                            <a href="#"-->
+        <!--                            ><i class="fa-solid fa-screwdriver-wrench"></i>Create training</a-->
+        <!--                            >-->
+        <!--                        </li>-->
+        <!--                    </ul>-->
+        <!--                </li>-->
+        
+                        <!-- Navigation__Training-Program -->
+                        <li class="">
+                            <a href="/training_program/get_list">
+                                <i class="menu-icon fa fa-microscope"></i>Training Program</a
+                            >
+                        </li>
+                        <!-- Navigation__Training-calender -->
+                        <li class="">
+                            <a href="/calendar">
+                                <i class="menu-icon fa fa-regular fa-calendar"></i>Training
+                                calendar</a
+                            >
+                        </li>
+        
+                        <!-- Navigation__User-management -->
+                        <li class="menu-item-has-children dropdown">
+                            <a
+                                    href="#"
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >
+                                <i class="menu-icon fa fa-solid fa-user-group"></i>User
+                                management</a
+                            >
+                            <ul class="sub-menu children dropdown-menu">
+                                <li>
+                                    <a href="/user/viewUser"
+                                    ><i class="fa-solid fa-list"></i>View users</a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="/user/user_permission"
+                                    ><i class="fa-solid fa-list"></i>User permission</a
+                                    >
+                                </li>
+                            </ul>
+                        </li>
+        
+        <!--                &lt;!&ndash; Navigation__Learning-material &ndash;&gt;-->
+        <!--                <li class="">-->
+        <!--                    <a href="#"  style="font-size: 17px">-->
+        <!--                        <i class="menu-icon fa fa-regular fa-folder-open"></i>Learning-->
+        <!--                        material</a-->
+        <!--                    >-->
+        <!--                </li>-->
+        
+                        <!-- Navigation__Extras -->
+                        <li class="menu-item-has-children dropdown">
+                            <a
+                                    href="#"
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >
+                                <i class="menu-icon fa fa-solid fa-gear"></i>Extras</a
+                            >
+                            <ul class="sub-menu children dropdown-menu">
+                                <li>
+                                    <i class="menu-icon fa fa-paper-plane"></i
+                                    ><a href="/user/updatepassword">Forget Pass</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
-            </header>
-            <!--        main-->
-            <main class="h-full overflow-y-auto">
-                <div class="container px-6 mx-auto grid animated fadeIn">
-                    <h2>View Account</h2>
-                    <div class="col-md-12 form-group">
-                        <% if (typeof message !== 'undefined' && message) { %>
-                            <div id="errorMessage" class="alert alert-success" role="alert"
-                                > <%= message%>
-                            </div>
-                        <% } %>
-                        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
-                            <div id="errorMessage1" class="alert alert-danger" role="success"
-                                > <%= errorMessage%>
-                            </div>
-                        <% } %>
+                <!-- /.navbar-collapse -->
+            </nav>
+        </aside>
+    </div>
+    <div id="right-panel" class="right-panel">
+        <div>
+            <header id="header" class="header" th:fragment="header">
+                <div class="top-left">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="./"
+                        ><img src="/images/fpt.png" alt="Logo" /></a
+                        >
+                        <a class="navbar-brand hidden" href="./"
+                        ><img src="/images/fpt.png" alt="Logo"
+                        /></a>
+                        <a id="menuToggle" class="menutoggle"
+                        ><i class="bars-icon fa fa-bars"></i
+                        ></a>
                     </div>
-                    <table id="example" class="table table-striped" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th class="custom-column">Name</th>
-                            <th class="custom-column">Date</th>
-                            <th class="custom-column">Status</th>
-                            <th class="custom-column">Role</th>
-                            <th class="custom-column">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% if (typeof accounts !== 'undefined' && accounts.length > 0) { %>
-                            <% accounts.forEach(function(account) { %>
-                                <tr class="spandd">
-                                    <td><%= account.accountName %></td>
-                                    <td><%= account.createdDate %></td>
-                                    <td><%= account.status %></td>
-                                    <td>
-                                        <% if (account.roleNumber === 1) { %>
-                                            Admin
-                                        <% } else if (account.roleNumber === 2) { %>
-                                            Staff
-                                        <% } else if (account.roleNumber === 3) { %>
-                                            User
-                                        <% } else { %>
-                                            Unknown Role
-                                        <% } %>
-                                    </td>
-                                    <td>
-                                        <a href="#editModal" class="edit" data-toggle="modal" onclick="showEditModal()">
-                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                                        </a>
-                                        <a href="#deleteModal" id="deleteModalIcon" class="delete" data-toggle="modal" onclick="showDeleteModal()">
-                                            <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                                        </a>
-                                        <input type="hidden" id="id" value="<%= account.id %>">
-                                    </td>
-                                </tr>
-                            <% }); %>
-                        <% } else{ %>
-                                <tr>
-                                    <td colspan="5" class="text-center"><p>No data</p></td>
-                                </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
-
-                    
-
-                    <!-- Edit Modal HTML -->
-                    <div id="editModal" class="modal fade" style="display: none; width: 350px;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form method="post" th:action="@{/admin/account/update}">
-                                    <div class="modal-header">
-                                        <div class="header-left">
-                                            <h4 class="modal-title text-primary"><i class="fas fa-user-edit"></i> Update Account</h4>
-                                        </div>
-                                        <div class="header-right">
-                                            <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="accountName" class="text-primary">Name:</label>
-                                            <input type="text" name="accountName" id="accountName" class="form-control" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password" class="text-primary">Password:</label>
-                                            <input type="text" name="password" id="password" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="editRole" class="text-primary">Role:</label>
-                                            <select id="editRole" name="roleNumber" class="form-control">
-                                                <option value="1">Role 1</option>
-                                                <option value="2">Role 2</option>
-                                                <option value="3">Role 3</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="editStatus" class="text-primary">Status:</label>
-                                            <select id="editStatus" name="status" class="form-control">
-                                                <option value="0">Inactive</option>
-                                                <option value="1">Active</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <input type="submit" class="btn btn-success" value="Save">
-                                        <input type="hidden" name="id" id="saveAccountId">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Create Modal HTML -->
-                    <div id="addModal" class="modal fade" style="display: none; width: 350px;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form method="post" th:action="@{/admin/account/create}" th:object="${account}">
-                                    <div class="modal-header">
-                                        <div class="header-left">
-                                            <h4 class="modal-title">Create Account</h4>
-                                        </div>
-                                        <div class="header-right">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input type="text" name="accountName" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input type="text" name="password" class="form-control" required>
-                                        </div>
-                                        <label for="addRole">Role:</label>
-                                        <select id="addRole" name="roleNumber">
-                                            <option value="1">Role 1</option>
-                                            <option value="2">Role 2</option>
-                                            <option value="3">Role 3</option>
-                                        </select>
-                                        <label for="addStatus">Status:</label>
-                                        <select id="addStatus" name="status">
-                                            <option value="0">Inactive</option>
-                                            <option value="1">Active</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-success" value="Add">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!--    &lt;!&ndash; Delete Modal HTML &ndash;&gt;-->
-                    <div id="deleteModal" class="modal fade" style="display: none; width: 350px;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form method="post" th:action="@{/admin/account/delete}">
-                                    <div class="modal-header">
-                                        <div class="header-left">
-                                            <h4 class="modal-title">Delete Account</h4>
-                                        </div>
-                                        <div class="header-right">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p id="idName2"></p>
-                                        <p class="text-warning"><small>This action cannot be undone.</small></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="hidden" name="id" id="deleteId">
-                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <form id="hiddenForm" th:href="@{/admin/account}" method="GET" style="display: none;">
-                        <input type="hidden" name="sortType" th:value="${sortType}" />
-                        <input type="hidden" name="currentPage" th:value="${currentPage}" />
-                    </form>
-
                 </div>
-            </main>
+                <div class="top-right">
+                    <div class="header-menu">
+            
+                        <div class="user-area dropdown float-right">
+                            <a
+                                    href="#"
+                                    class="dropdown-toggle active"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    style="display: inline; position: unset"
+                            >
+                                <img
+                                        style="margin-top: 10px;margin-left: 10px;"
+                                        class="user-avatar rounded-circle"
+                                        src="/images/default_avatar.jpg"
+                                        alt="User Avatar"
+                                />
+            
+                            </a>
+                            <span th:if="${AuthenticateResponse?.name != null}" style="display: inline; color: white" th:text="'Hello ' + ${AuthenticateResponse?.name}"></span>
+            
+                            <div class="user-menu dropdown-menu">
+            
+                                <a class="nav-link" href="/user/logout"
+                                ><i class="fa fa-power -off"></i>Logout</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="content">
+            <!-- Animated -->
+            <div class="animated fadeIn">
+                <h2>View Class</h2>
+                <div class="col-md-12 form-group">
+                    <div id="errorMessage" th:if="${message}" class="alert alert-success" role="alert"
+                         th:text="${message}">
+                    </div>
+                    <div id="errorMessage1" th:if="${errorMessage}" class="alert alert-danger" role="alert"
+                         th:text="${errorMessage}">
+                    </div>
+                </div>
+                <div class="search-box">
+                    <div class="search">
+                        <button class="my-button" id="showFormButton"><i class="fas fa-plus add"></i>Add Training Program</button>
+                    </div>
+                </div>
+    
+                <table id="example" class="table table-striped" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th class="custom-column">Class</th>
+                        <th class="custom-column">Class Code</th>
+                        <th class="custom-column">Modified on</th>
+                        <th class="custom-column">Created by</th>
+                        <th class="custom-column">Duration</th>
+                        <th class="custom-column">Status</th>
+                        <th class="custom-column">Location</th>
+                        <th class="custom-column"></th>
+                        <th style="display: none"></th>
+                        <th style="display: none"></th>
+                        <th style="display: none"></th>
+                        <th style="display: none"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="spandd" th:each="class : ${classResponses}">
+                        <td th:text="${class.getClassName()}"></td>
+                        <td th:text="${class.getClassCode()}"></td>
+                        <td th:text="${class.getModifiedDate()}"></td>
+                        <td th:text="${class.getCreatedBy().getName()}"></td>
+                        <td th:text="${class.getDuration()}"></td>
+                        <td>
+                                        <span th:text="${class.status}"
+                                              th:classappend="${class.status == 'Planing' ? 'class-planning' :
+                                                                (class.status == 'Opening' ? 'class-opening' :
+                                                                (class.status == 'Scheduled' ? 'class-scheduled' :
+                                                                (class.status  == 'Completed' ? 'class-completed' : '')))}"
+                                              style="display: inline-block; width: 100px; line-height: 1.2em; vertical-align: middle; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;text-align: center">
+                                        </span>
+                        </td>
+                        <td th:text="${class.getLocation()}"></td>
+                        <td class="showFormActions pointer">
+                            <span class="open-form" style="background:none; color: black">...</span>
+                        </td>
+                        <td style="display: none" th:text="${class.getClassId()}"></td>
+                        <td style="display: none" th:text="${class.getTrainingProgramCode()}"></td>
+                        <td style="display: none" th:text="${class.getStartDate()}"></td>
+                        <td style="display: none" th:text="${class.getEndDate()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="overlay" id="formOverlay">
+                    <div class="container">
+                        <div class="form">
+                            <form action="/class/create" method="post" th:object="${ClassRequestUI}">
+                                <table>
+                                    <tr>
+                                        <th style="background-color: #0f65c1;" colspan="3">Add a new class</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">Name</td>
+                                        <td colspan="2"><input style="width: 330px;" type="text" name="className" placeholder="Name" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">Location</td>
+                                        <td colspan="2"><input style="width: 330px;" type="text" name="location" placeholder="Location" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">Status</td>
+                                        <td>
+                                            <label>
+                                                <input type="radio" name="status" value="Planing" > Planing
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="status" value="Opening"> Opening
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="radio" name="status" value="Scheduled" checked> Scheduled
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="status" value="Completed"> Completed
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">Start Date</td>
+                                        <td colspan="2">
+                                            <input style="width: 330px;" type="text" id="startDate" name="startDate" placeholder="Select date" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">End Date</td>
+                                        <td colspan="2">
+                                            <input style="width: 330px;" type="text" id="endDate" name="endDate" placeholder="Select date" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">Training Program</td>
+                                        <td colspan="2">
+                                            <select name="trainingProgramCode" style="width: 330px">
+                                                        <div th:each="response : ${trainingProgramResponses}">
+                                                            <option th:value="${response.trainingProgramCode}" th:text="${response.trainingProgramCode + ' (' + response.name + ')'}"></option>
+                                                        </div>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="bk_save_user" style="margin-bottom: 5px;">
+                                    <button type="submit" class="button-save-user" style="background-color: #0f65c1">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="overlay" id="formActions" style="background: none">
+                    <div class="container" style="margin-right: inherit; max-width: 180px;min-width: 180px;">
+                        <div class="form" style="border-radius: 10px;">
+                            <table>
+                                <tr>
+                                    <td style="padding-top: 0px;padding-bottom: 5px;">
+                                        <p style="padding: 3px;background-color: white;color: #2A4365;text-align: left;padding-left: 0px; display: inline; font-weight: 700;">Manage</p>
+                                        <i class="fa-solid fa-rectangle-xmark close-form-action" style="color: red; display: inline; margin-left: 65px; cursor: pointer"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0px 10px;"><hr style="margin: 0rem 0;"></td>
+                                </tr>
+                                <tr class="pointer">
+                                    <td style="color: #17b5ec;font-weight: normal;padding: 5px;padding-left: 10px;">
+                                        <a id="fifthLink" style="color: #17b5ec;" class="readDetailClass">
+                                            <i class="fa-solid fa-book-open-reader" style="width: 15px;height: 15px;padding-right: 20px;"></i>Read Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class="pointer">
+                                    <td class="open-edit-form" style="color: #17b5ec;font-weight: normal;padding: 5px;padding-left: 10px;"><i class="fa-solid fa-pencil" style="width: 15px;height: 15px;padding-right: 20px;"></i>Edit class</td>
+                                </tr>
+                                <tr class="pointer">
+                                    <td style="color: #17b5ec;font-weight: normal;padding: 5px;padding-left: 10px;">
+                                        <a id="secondLink" style="color: #17b5ec;" class="duplicateClassAction">
+                                            <i class="fa-sharp fa-regular fa-copy" style="width: 15px;height: 15px;padding-right: 20px;"></i>Duplicate class
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class="pointer">
+                                    <td style="color: #17b5ec;font-weight: normal;padding: 5px;padding-left: 10px;">
+                                        <a id="fourthLink" style="color: #17b5ec;" class="deleteClassAction">
+                                            <i class="fa-solid fa-trash" style="width: 15px;height: 15px;padding-right: 20px;"></i>Delete class
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="overlay" id="formEdit">
+                    <div class="container">
+                        <div class="form">
+                            <form action="/class/edit" method="post" >
+                                <table>
+                                    <tr>
+                                        <th style="background-color: #0f65c1;" colspan="3">Edit Class</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td colspan="2"><input type="text" name="className" placeholder="name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Location</td>
+                                        <td colspan="2"><input type="text" name="location" placeholder="location"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">Status</td>
+                                        <td>
+                                            <label>
+                                                <input type="radio" name="status" value="Planing"> Planing
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="status" value="Opening"> Opening
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="radio" name="status" value="Scheduled"> Scheduled
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="status" value="Completed"> Completed
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">Start Date</td>
+                                        <td colspan="2">
+                                            <input style="width: 100%;" type="text" id="startDate2" name="startDate" placeholder="Select date">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">End Date</td>
+                                        <td colspan="2">
+                                            <input style="width: 100%;" type="text" id="endDate2" name="endDate" placeholder="Select date">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Training Program</td>
+                                        <td colspan="2" style="width: 100%">
+                                            <select name="trainingProgramCode" style="width: 100%">
+                                                <div th:each="response : ${trainingProgramResponses}">
+                                                    <option th:value="${response.trainingProgramCode}" th:text="${response.trainingProgramCode + ' (' + response.name + ')'}"></option>
+                                                </div>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none">
+                                        <td>Id</td>
+                                        <td><input type="text" name="classId" placeholder="id"></td>
+                                    </tr>
+                                </table>
+                                <div class="bk_save_user" style="margin-bottom: 5px;">
+                                    <button type="submit" class="button-save-user" style="background-color: #0f65c1">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+            <!--End: Content-->
+            <div class="clearfix"></div>
+    
+            <br>
+            <br>
+            <br>
+            <form type="hidden" style="visibility: hidden" method="post" id="formRequestClassDetail" action="/class/detail" th:object="${ClassRequestUI}">
+                <input name="classId">
+            </form>
+            <form type="hidden" style="visibility: hidden" method="post" id="formRequestClassDuplicate" action="/class/duplicate" th:object="${ClassRequestUI}">
+                <input name="classId">
+            </form>
+            <form type="hidden" style="visibility: hidden" method="post" id="formRequestClassDelete" action="/class/delete" th:object="${ClassRequestUI}">
+                <input name="classId">
+            </form>
+    
+        </div>
+        <div>
+            <footer class="site-footer" th:fragment="footer">
+                <div class="footer-inner bg-2D3748">
+                    <div class="rw">
+                        <div class="col-sm-6 text-left">
+                            Copyright &copy; 2018 Ela Admin. Edited and Developed by Ground-3
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            Designed by <a href="https://colorlib.com">Colorlib</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
+    <!-- Scripts -->
+<script>
+    $(document).ready(function () {
+        // Add User
+        const showFormButton = document.getElementById('showFormButton');
+        const formOverlay = document.getElementById('formOverlay');
+        const showFormActions = document.getElementById('showFormActions');
+        const formActions = document.getElementById('formActions');
+        const formEdit = document.getElementById('formEdit');
+        const showEditForm = document.getElementById('open-edit-form');
+
+        showFormButton.addEventListener('click', function () {
+            formOverlay.style.display = 'flex'; // Hiển thị overlay
+        });
 
 
+        showEditForm.addEventListener('click', function () {
+            formEdit.style.display= 'flex';
+        });
 
-        <script>
-            new DataTable('#example', {
-                "order": []
-            });
-        
-        </script>
-        <script>
-            function getPageFromEntries(id){
-                var sortType = document.querySelector('input[name="sortType"]');
-                var currentPage = document.querySelector('input[name="currentPage"]');
-                sortType.value = id;
-                document.getElementById("hiddenForm").submit();
-            }
-        </script>
-        <script>
-            function showEditModal() {
-                var editModal = document.getElementById("editModal");
-                var createModal = document.getElementById("addModal");
-                var deleteModal = document.getElementById("deleteModal");
-                editModal.style.display = "block";
-                createModal.style.display = "none";
-                deleteModal.style.display = "none";
-            }
-        </script>
-        <script>
-            function showCreateModal() {
-                var editModal = document.getElementById("editModal");
-                var createModal = document.getElementById("addModal");
-                var deleteModal = document.getElementById("deleteModal");
-                createModal.style.display = "block";
-                deleteModal.style.display = "none";
-                editModal.style.display = "none";
-            }
-        </script>
-        <script>
-            function showDeleteModal() {
-                var editModal = document.getElementById("editModal");
-                var createModal = document.getElementById("addModal");
-                var deleteModal = document.getElementById("deleteModal");
-                createModal.style.display = "none";
-                deleteModal.style.display = "block";
-                editModal.style.display = "none";
-                // var idName = document.getElementById('idName');
-                // alert(idName.textContent);
-                // var idName2 = document.getElementById('idName2');
-                // idName2.textContent = 'Are you sure you want to remove "' +  idName.textContent + '" from the list?';
-            }
-        </script>
-        <script>
-            var closeButton = document.querySelector("#editModal .close");
-            closeButton.addEventListener("click", function() {
-                var editModal = document.getElementById("editModal");
-                editModal.style.display = "none";
-            });
-        </script>
-        <script>
-            var closeButton = document.querySelector("#addModal .close");
-            closeButton.addEventListener("click", function() {
-                var editModal = document.getElementById("addModal");
-                editModal.style.display = "none";
-            });
-        </script>
-        <script>
-            var closeButton = document.querySelector("#deleteModal .close");
-            closeButton.addEventListener("click", function() {
-                var editModal = document.getElementById("deleteModal");
-                editModal.style.display = "none";
-            });
-        </script>
 
-    
-</div>
+        formOverlay.querySelector('.container').addEventListener('click', function (e) {
+            e.stopPropagation(); // Ngăn không đóng overlay khi bấm vào form
+        });
+
+        formEdit.querySelector('.container').addEventListener('click', function (e) {
+            e.stopPropagation(); // Ngăn không đóng form edit khi bấm vào form
+        });
+
+        formActions.querySelector('.container').addEventListener('click', function (e) {
+            e.stopPropagation(); // Ngăn không đóng form action khi bấm vào form
+        });
+
+    });
+
+</script>
+<script>
+    new DataTable('#example', {
+        "order": []
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var className = "";
+        var location = "";
+        var status = "";
+        var startDate;
+        var endDate;
+        var trainingProgramCode;
+        var classCode;
+
+        // Chọn ô input bằng id và áp dụng Flatpickr
+        const startDateInput = document.getElementById('startDate');
+        flatpickr(startDateInput, {
+            dateFormat: 'Y-m-d', // Định dạng ngày/tháng/năm (có thể tùy chỉnh)
+            minDate: 'today' // Chỉ cho phép chọn ngày trong tương lai
+        });
+
+        // Chọn ô input bằng id và áp dụng Flatpickr
+        const endDateInput = document.getElementById('endDate');
+        flatpickr(endDateInput, {
+            dateFormat: 'Y-m-d', // Định dạng ngày/tháng/năm (có thể tùy chỉnh)
+            minDate: 'today' // Chỉ cho phép chọn ngày trong tương lai
+        });
+
+        // Chọn ô input bằng id và áp dụng Flatpickr
+        const startDateInput2 = document.getElementById('startDate2');
+        flatpickr(startDateInput2, {
+            dateFormat: 'Y-m-d' // Định dạng ngày/tháng/năm (có thể tùy chỉnh)
+        });
+
+        // Chọn ô input bằng id và áp dụng Flatpickr
+        const endDateInput2 = document.getElementById('endDate2');
+        flatpickr(endDateInput2, {
+            dateFormat: 'Y-m-d' // Định dạng ngày/tháng/năm (có thể tùy chỉnh)
+        });
+
+
+        $(document).on('mouseenter', '.open-form', function () {
+            var row = $(this).closest('tr');
+            var rowOffset = row.offset();
+            var form = $('#formActions');
+            var formTop = rowOffset.top + row.height();
+            if ($(window).scrollTop() > 0) {
+                formTop = rowOffset.top + row.height() - $(window).scrollTop();
+            }
+            form.css({
+                top: formTop + 'px',
+                left:'0px'
+            });
+
+            // Extract data from the row
+            classCode = row.find('td:eq(8)').text();
+            className = row.find('td:eq(0)').text();
+            location = row.find('td:eq(6)').text();
+            status = row.find('td:eq(5) span').text();
+            startDate = row.find('td:eq(10)').text();
+            endDate = row.find('td:eq(11)').text();
+            trainingProgramCode = row.find('td:eq(9)').text();
+
+            // var secondLinkElement = form.find('#secondLink'); // Select by ID
+            // var linkForSecondB = '/class/duplicate/' + classCode;
+            // secondLinkElement.attr('href', linkForSecondB);
+            const formRequestClassDuplicate = document.getElementById('formRequestClassDuplicate');
+            const classIdInput1 = formRequestClassDuplicate.querySelector('[name="classId"]');
+            classIdInput1.value = classCode;
+
+
+            // Set the href attribute for the second <a> tag
+            // var fourthLinkElement = form.find('#fourthLink'); // Select by ID
+            // var linkForSecondD = '/class/delete/' + classCode;
+            // fourthLinkElement.attr('href', linkForSecondD);
+            const formRequestClassDelete = document.getElementById('formRequestClassDelete');
+            const classIdInput2 = formRequestClassDelete.querySelector('[name="classId"]');
+            classIdInput2.value = classCode;
+
+            // var fifthLinkElement = form.find('#fifthLink'); // Select by ID
+            // var linkForfifth = '/class/detail/' + classCode;
+            // fifthLinkElement.attr('href', linkForfifth);
+            const formRequestClassDetail = document.getElementById('formRequestClassDetail');
+            const classIdInput = formRequestClassDetail.querySelector('[name="classId"]');
+            classIdInput.value = classCode;
+
+
+            // You can now use these variables to populate your form or take any other actions
+            // console.log('Clicked on row with data:');
+            // console.log('Training Program Code: ' + trainingProgramCode);
+            // console.log('Name: ' + name);
+            // console.log('Created Date: ' + createdDate);
+            // console.log('Created By: ' + createdBy);
+            // console.log('Duration: ' + duration);
+
+            // Show or hide the formActions div
+            // $('#formActions').show();
+            form.show();
+        });
+        $(document).on('click', '.readDetailClass', function () {
+            const formRequestClassDetail = document.getElementById('formRequestClassDetail');
+            formRequestClassDetail.submit();
+        });
+        $(document).on('click', '.duplicateClassAction', function () {
+            const formRequestClassDuplicate = document.getElementById('formRequestClassDuplicate');
+            formRequestClassDuplicate.submit();
+        });
+        $(document).on('click', '.deleteClassAction', function () {
+            const formRequestClassDelete = document.getElementById('formRequestClassDelete');
+            formRequestClassDelete.submit();
+        });
+
+        $(document).on('click', '.open-edit-form', function () {
+            // Find the closest row to the clicked "..." part
+            // var form = $('#formEdit');
+            // form.show();
+
+            const formEdit = document.getElementById('formEdit');
+            const classNameInput = formEdit.querySelector('[name="className"]');
+            classNameInput.value = className;
+            const locationInput = formEdit.querySelector('[name="location"]');
+            locationInput.value = location;
+            const startDateInput = formEdit.querySelector('[name="startDate"]');
+            // startDateInput.value = startDate;
+            const parsedDate = moment(startDate, "ddd MMM DD HH:mm:ss ZZ YYYY");
+            const formattedStartDate = parsedDate.format("YYYY-MM-DD");
+            startDateInput.value = formattedStartDate;
+
+
+            const endDateInput = formEdit.querySelector('[name="endDate"]');
+            const parsedEndDate = moment(endDate, "ddd MMM DD HH:mm:ss ZZ YYYY");
+            const formattedEndDate = parsedEndDate.format("YYYY-MM-DD");
+            endDateInput.value = formattedEndDate;
+
+            const classIdInput = formEdit.querySelector('[name="classId"]');
+            classIdInput.value = classCode;
+            const planingCheckbox = formEdit.querySelector('input[value="Planing"]');
+            const openingCheckbox = formEdit.querySelector('input[value="Opening"]');
+            const scheduledCheckbox = formEdit.querySelector('input[value="Scheduled"]');
+            const completedCheckbox = formEdit.querySelector('input[value="Completed"]');
+            if (status === 'Planing') {
+                planingCheckbox.checked = true;
+                openingCheckbox.checked = false;
+                scheduledCheckbox.checked = false;
+                completedCheckbox.checked = false;
+            } else if (status === 'Opening') {
+                planingCheckbox.checked = false;
+                openingCheckbox.checked = true;
+                scheduledCheckbox.checked = false;
+                completedCheckbox.checked = false;
+            } else if (status === 'Scheduled') {
+                planingCheckbox.checked = false;
+                openingCheckbox.checked = false;
+                scheduledCheckbox.checked = true;
+                completedCheckbox.checked = false;
+            } else {
+                planingCheckbox.checked = false;
+                openingCheckbox.checked = false;
+                scheduledCheckbox.checked = false;
+                completedCheckbox.checked = true;
+            }
+            var selectElement = $('select[name="trainingProgramCode"]');
+            selectElement.find('option').each(function() {
+                if ($(this).val() === trainingProgramCode) {
+                    $(this).prop('selected', true); // Set the selected attribute to true for the matching option
+                } else{
+                    $(this).prop('selected', false);
+                }
+            });
+            formEdit.style.display = 'flex';
+        });
+
+        // Handle clicks anywhere outside the form to close it
+        // $(document).on('click', function (e) {
+        //     const formActions = document.getElementById('formActions');
+        //     formActions.addEventListener('click', function (e) {
+        //         if (e.target === formActions) {
+        //             formActions.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
+        //         }
+        //     });
+        // });
+        $(document).on('click', '.close-form-action', function () {
+            const formActions = document.getElementById('formActions');
+            formActions.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
+        });
+
+        $(document).on('click', function (e) {
+            const formOverlay = document.getElementById('formOverlay');
+            formOverlay.addEventListener('click', function (e) {
+                if (e.target === formOverlay) {
+                    formOverlay.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
+                }
+            });
+        });
+
+        $(document).on('click', function (e) {
+            const formEdit = document.getElementById('formEdit');
+            formEdit.addEventListener('click', function (e) {
+                if (e.target === formEdit) {
+                    formEdit.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
+                }
+            });
+        });
+
+
+    });
+</script>
 </body>
 </html>

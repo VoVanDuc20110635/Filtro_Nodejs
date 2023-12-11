@@ -9,6 +9,7 @@ const PasswordDoNotMatchException = require('../Exception/PasswordDoNotMatchExce
 const UserNotFoundException = require('../Exception/UserNotFoundException');
 const CartService = require('../services/CartService')
 const cartService = new CartService();
+const moment = require('moment'); // Import the moment library
 class UserService {
     constructor() { };
     async getAllUser() {
@@ -87,8 +88,11 @@ class UserService {
         if (!user) {
             throw new UserNotFoundException(`Can't find this user!`);
         }
+        console.log(dob);
+        console.log(moment(dob).toDate());
         user.name = name;
-        user.dob = dob;
+        let tempDob = moment(dob).toDate(); // Convert dob to a Date object
+        user.dob = new Date(Date.UTC(tempDob.getFullYear(), tempDob.getMonth(), tempDob.getDate()));
         user.sex = sex;
         user.address = address;
         user.zip = zip;
