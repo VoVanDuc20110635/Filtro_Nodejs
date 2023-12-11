@@ -6,6 +6,8 @@ const categoryService = new CategoryService();
 
 const InputService = require('../../services/InputService');
 const inputService = new InputService();
+const SendMailService = require('../../services/SendMailService');
+const sendMailService = new SendMailService();
 
 let successMessage;
 let errorMessage;
@@ -37,6 +39,11 @@ let addContact = async(req, res) => {
             errorMessage = "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự.";
             return res.redirect('/contact');
             }
+    let isEmailExist = await sendMailService.isEmailValid(email);
+    if(!isEmailExist.valid){
+        errorMessage = "Email không tồn tại!";
+        return res.redirect('/contact');
+    }
     let contactData = {
         customerName: name,
         email: email,

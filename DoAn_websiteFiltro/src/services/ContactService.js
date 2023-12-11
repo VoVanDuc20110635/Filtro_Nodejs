@@ -5,7 +5,6 @@ class ContactService {
     async createContact(contactData) {
         try {
             const newContact = await Contact.create(contactData);
-            console.log('Contact created:', newContact.toJSON());
         } catch (error) {
             console.error('Error creating contact:', error);
         }
