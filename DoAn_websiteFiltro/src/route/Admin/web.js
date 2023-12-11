@@ -39,10 +39,16 @@ const initWebRouteAdmin = (app) => {
   // router.get('/', homeController.getHomepage);
   router.get('/admin/login', loginController.getLoginPage);
   router.post('/admin/login', loginController.login);
+  router.get('/admin/logout', loginController.logout);
   router.get('/admin', loginController.getDashBoardPage);
   router.get('/admin/account', accountController.getAccountPage);
+  router.post('/admin/account', accountController.update);
   router.get('/admin/category', categoryController.getCategoryPage);
+  router.post('/admin/category', categoryController.update);
+  router.post('/admin/create/category', categoryController.create);
   router.get('/admin/flavor', flavorController.getFlavorPage);
+  router.post('/admin/flavor', flavorController.update);
+  router.post('/admin/create/flavor', flavorController.create);
   router.get('/admin/order', orderController.getOrderPage);
   router.get('/admin/product', productController.getProductPage);
   router.get('/admin/staff', staffController.getStaffPage);

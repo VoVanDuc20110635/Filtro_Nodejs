@@ -790,7 +790,9 @@ aside.left-panel:hover {
     display: none; }
 .open aside.left-panel .navbar .navbar-nav li > a {
     max-width: 60px;
-    padding-left: 0; }
+    padding-left: 0; 
+    font-size: 15px;    
+}
 .open aside.left-panel .navbar .navbar-nav li.menu-item-has-children {
     overflow: hidden; }
 .open aside.left-panel .navbar .navbar-nav li.menu-item-has-children ul {

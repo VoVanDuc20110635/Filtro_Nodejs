@@ -1,5 +1,6 @@
 const Associations = require('../model/Associations');
 const Category = require('../model/Category')
+const NotExecuteException = require('../Exception/NotExecuteException');
 class CategoryService {
   constructor() { }
   async get5Categories() {
@@ -22,6 +23,54 @@ class CategoryService {
       console.error('Error finding category by ID:', error);
       throw error;
     }
+  }
+  async getListAllCategory() {
+    const listAccount = await Category.findAll({
+        
+    });
+    return listAccount;
+  }
+  async updateCategory(categoryName, status, categoryId) {
+    try {
+        const tempCategory = await Category.findOne({
+            where: {
+                id: categoryId,
+            },
+        });
+        // Hash the password
+        tempCategory.categoryName = categoryName;
+        if(status === 'active'){
+          tempCategory.status = 1;
+        } else{
+          tempCategory.status = 0;
+        }
+        await tempCategory.save();
+    } catch (err){
+        throw new NotExecuteException('Không thể cập nhật!');
+    }
+    
+
+  }
+
+  async createCategory(categoryName, status) {
+    try {
+      let tempStatus;
+      if (status === 'active'){
+        tempStatus = 1;
+      } else{
+        tempStatus = 0;
+      }
+        const tempCategory = await Category.create({
+            categoryName: categoryName,
+            status:tempStatus
+        });
+        // Hash the password
+        
+    } catch (err){
+        throw new NotExecuteException('Không thể thêm mới!');
+    }
+    
+
   }
 
 }

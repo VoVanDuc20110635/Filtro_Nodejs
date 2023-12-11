@@ -88,5 +88,6 @@ module.exports = {
     getLoginPage,
     login,
     logout,
-    getDashBoardPage
+    getDashBoardPage,
+    
 }
