@@ -38,6 +38,7 @@ let upload1 = multer({ storage: storage, fileFilter: imageFilter }).array('multi
 const initWebRouteAdmin = (app) => {
   // router.get('/', homeController.getHomepage);
   router.get('/admin/login', loginController.getLoginPage);
+  router.post('/admin/login', loginController.login);
   router.get('/admin', loginController.getDashBoardPage);
   router.get('/admin/account', accountController.getAccountPage);
   router.get('/admin/category', categoryController.getCategoryPage);

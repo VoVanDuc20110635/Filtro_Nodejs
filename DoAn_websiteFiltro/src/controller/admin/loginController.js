@@ -16,6 +16,9 @@ const cartService = new CartService();
 const GuestCartService = require('../../services/GuestCartService');
 const guestCartService = new GuestCartService();
 
+const InputService = require('../../services/InputService');
+const inputService = new InputService();
+
 
 const AuthenticationAccountException = require('../../Exception/AuthenticationAccountException');
 
@@ -29,23 +32,25 @@ let getDashBoardPage = async (req, res) => {
 let login = async (req, res) => {
     try {
         const { accountName, password } = req.body;
-        const account = await accountService.authenticateUser(accountName, password);
+        if (await inputService.isValidComment(accountName) == false){
+            res.render('../views/admin/login.ejs', {session: req.session, message: "AccountName chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự."});
+            return;
+        }
+        // if ( await inputService.isValidPassword(password) == false){
+        //         res.render('../views/admin/login.ejs', {session: req.session, message: "Mật khẩu với dài ít nhất 8 ký tự, có ít nhất một chữ hoa, có ít nhất 1 số tự nhiên và chỉ có 1 ký tự đặc biệt:@#$%^&+=.! "});
+        //         return;
+        // }
+        const account = await accountService.authenticateAdmin(accountName, password);
         const user = await userService.getUserById(account.User.userId);
-        const cart = await cartService.getCurrentCartByUserId(user.userId);
         
         // console.log(user);
         req.session.authenticated = true;
         req.session.account = account;
         req.session.user = user;
-        req.session.cart = cart;
 
-        if (req.session.guestCart){
-            guestCartService.changeGuestCartToCart(cart.id, req.session.guestCart.id );
-        }
-
-        return res.redirect("/");
+        return res.redirect("/admin");
     } catch (exception) {
-        return res.render('../views/user/login.ejs', { message: exception.message });
+        return res.render('../views/admin/login.ejs', { message: exception.message });
     }
 
 

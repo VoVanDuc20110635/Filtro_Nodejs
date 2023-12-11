@@ -50,7 +50,8 @@ class UserService {
         }
 
         // Check if email exist
-        if (this.getUserByEmail) {
+        let tempUser = await this.getUserByEmail(email);
+        if (tempUser) {
             throw new PasswordDoNotMatchException("Email exist!");
         }
 

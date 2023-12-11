@@ -14,7 +14,8 @@ const userService = new UserService();
 const AuthenticationAccountException = require('../../Exception/AuthenticationAccountException');
 
 let getAccountPage = async (req, res) => {
-    return res.render('../views/admin/account.ejs', { session: req.session });
+    let accountList = await accountService.getListAllUser();
+    return res.render('../views/admin/account.ejs', { session: req.session, accounts: accountList });
 }
 
 

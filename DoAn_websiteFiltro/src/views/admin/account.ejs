@@ -650,7 +650,18 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 <%= account.status %>
                                             </span>
                                             </td>
-                                            <td class="px-4 py-3 text-sm"><%= account.roleNumber %></td>
+                                            <td class="px-4 py-3 text-sm">
+                                                <% if (account.roleNumber === 1) { %>
+                                                    Admin
+                                                <% } else if (account.roleNumber === 2) { %>
+                                                    Staff
+                                                <% } else if (account.roleNumber === 3) { %>
+                                                    User
+                                                <% } else { %>
+                                                    Unknown Role
+                                                <% } %>
+                                            </td>
+                                            
                                             <td class="px-4 py-3 text-sm">
                                             <a href="#editModal" class="edit" data-toggle="modal" onclick="showEditModal()">
                                                 <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>

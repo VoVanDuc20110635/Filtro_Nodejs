@@ -10,6 +10,12 @@ const AuthenticationAccountException = require('../Exception/AuthenticationAccou
 // const { User, Account } = require('../model/Associations'); // Import associations
 class AccountService {
     constructor() { };
+    async getListAllUser() {
+        const listAccount = await Account.findAll({
+            include: User,
+        });
+        return listAccount;
+    }
     async authenticateUser(accountName, password) {
         const tempAccount = await Account.findOne({
             include: User,
@@ -22,7 +28,33 @@ class AccountService {
             throw new AuthenticationAccountException('AccountName không đúng!');
         }
 
-        if (tempAccount.roleNumber !== 3) {
+        // if (tempAccount.roleNumber !== 3) {
+        //     throw new AuthenticationAccountException('Tài khoản không có quyền truy cập!');
+        // }
+
+
+
+        const passwordMatches = await bcrypt.compare(password, tempAccount.password);
+        if (passwordMatches === false) {
+            throw new AuthenticationAccountException('Mật khẩu không đúng');
+        }
+
+        return tempAccount;
+    }
+
+    async authenticateAdmin(accountName, password) {
+        const tempAccount = await Account.findOne({
+            where: {
+                accountName: accountName,
+            },
+            include: User,
+        });
+
+        if (!tempAccount) {
+            throw new AuthenticationAccountException('AccountName không đúng!');
+        }
+
+        if (!(tempAccount.roleNumber == 1 || tempAccount.roleNumber == 2)) {
             throw new AuthenticationAccountException('Tài khoản không có quyền truy cập!');
         }
 
