@@ -351,7 +351,7 @@
                                     <% } %>
                                 </td>
                                 <td>
-                                    <a style="cursor: pointer;" class="edit open-edit-form" data-toggle="modal" style="margin-right: 5px;">
+                                    <a style="cursor: pointer;" class="edit open-edit-form" data-toggle="modal" style="margin-right: 5px;" data-order-id="<%= order.orderId %>" data-orderDetail-list="<%= JSON.stringify(order.OrderDetails) %>">
                                         <i class="fa-solid fa-pencil" style="color: #ff7100;"></i>
                                     </a>
                                 </td>
@@ -366,16 +366,16 @@
                 </table>
                 
                 <div class="overlay" id="formEdit">
-                    <div class="container" style=" max-width: 550px; min-width: 550px;">
+                    <div class="container" style="max-width: 700px;min-width: 700px;overflow-y: auto;max-height: 500px;">
                         <div class="form">
                             <form action="/admin/order" method="post" >
                                 <table>
                                     <tr>
-                                        <th style="background-color: #0f65c1;" colspan="4">Edit Order</th>
+                                        <th style="background-color: #0f65c1;" colspan="7">Edit Order</th>
                                     </tr>
                                     <tr>
-                                        <td style="width: 60px">Status</td>
-                                        <td>
+                                        <td style="width: 60px" colspan="1"> Status</td>
+                                        <td colspan="2">
                                             <label>
                                                 <input type="radio" name="status" value="Pending"> Pending
                                             </label>
@@ -383,7 +383,7 @@
                                                 <input type="radio" name="status" value="Cancel"> Cancel
                                             </label>
                                         </td>
-                                        <td>
+                                        <td colspan="2">
                                             <label>
                                                 <input type="radio" name="status" value="Delivery"> Delivery
                                             </label>
@@ -391,7 +391,7 @@
                                                 <input type="radio" name="status" value="Received"> Received
                                             </label>
                                         </td>
-                                        <td>
+                                        <td colspan="2">
                                             <label>
                                                 <input type="radio" name="status" value="Exchange"> Exchange
                                             </label>
@@ -399,6 +399,15 @@
                                                 <input type="radio" name="status" value="Processed"> Processed
                                             </label>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Tên sản phẩm</td>
+                                        <td>Cân nặng</td>
+                                        <td>Giá</td>
+                                        <td>Số lượng</td>
+                                        <td>Tổng</td>
+                                        <td></td>
                                     </tr>
                                     <tr style="display: none">
                                         <td>Id</td>
@@ -416,41 +425,6 @@
                     </div>
                 </div>
 
-                <div class="overlay" id="formCreate">
-                    <div class="container">
-                        <div class="form">
-                            <form action="/admin/create/category" method="post" >
-                                <table>
-                                    <tr>
-                                        <th style="background-color: #0f65c1;" colspan="3">Create category</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Tên danh mục</td>
-                                        <td colspan="2"><input type="text" name="categoryName" placeholder="Tên danh mục" required></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 110px">Status</td>
-                                        <td>
-                                            <label>
-                                                <input type="radio" name="status" value="active" checked> Active
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="status" value="inactive"> Inactive
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr style="display: none">
-                                        <td>Id</td>
-                                        <td><input type="text" name="categoryId" placeholder="id" value=""></td>
-                                    </tr>
-                                </table>
-                                <div class="bk_save_user" style="margin-bottom: 5px;">
-                                    <button type="submit" class="button-save-user" style="background-color: #0f65c1">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
     
             </div>
             <!--End: Content-->
@@ -484,6 +458,8 @@
 </script>
 <script>
     $(document).ready(function () {
+        // Store a reference to the table body
+        const tableBody = document.querySelector('#formEdit table tbody');
         $(document).on('click', '.open-edit-form', function () {
             var row = $(this).closest('tr');
             var status = row.find('td:eq(7)').text().trim();
@@ -509,33 +485,74 @@
             }else {
                 statusRadioCancel.checked = true;
             }
+            const orderId = $(this).data('order-id');
+            const orderDetailList = $(this).data('orderdetail-list');
+            const orderDetailArray = Array.isArray(orderDetailList) ?
+                orderDetailList :
+                JSON.parse(orderDetailList);
+            console.log(orderDetailList);
+            const tableBody = formEdit.querySelector('table tbody');
+            
+            // Iterate through orderDetailList and create tr elements
+            orderDetailList.forEach((orderDetail, index) => {
+                const tr = document.createElement('tr');
+                tr.classList.add('dynamic-row');
+
+                // Create and append td elements for each property
+
+                const tdProductImage = document.createElement('td');
+                const imageProductImage = document.createElement('img');
+                imageProductImage.src = '/image/upload/' + orderDetail.Product.image;
+                imageProductImage.style.maxWidth = '100px';
+                tdProductImage.appendChild(imageProductImage);
+                tr.appendChild(tdProductImage);
+
+                const tdProductName = document.createElement('td');
+                tdProductName.textContent = orderDetail.Product.productName;
+                tr.appendChild(tdProductName);
+
+
+                // Create and append td elements for each property
+                const tdWeight = document.createElement('td');
+                tdWeight.textContent = orderDetail.ProductDetail.weight;
+                tr.appendChild(tdWeight);
+
+                const tdPrice = document.createElement('td');
+                tdPrice.textContent = orderDetail.ProductDetail.price;
+                tr.appendChild(tdPrice);
+
+                const tdQuantity = document.createElement('td');
+                tdQuantity.textContent = orderDetail.quantity;
+                tr.appendChild(tdQuantity);
+
+                const tdTotal = document.createElement('td');
+                tdTotal.textContent = orderDetail.total;
+                tr.appendChild(tdTotal);
+
+                const tdEmpty = document.createElement('td');
+                tr.appendChild(tdEmpty);
+
+                // Append the created tr to the table body
+                tableBody.appendChild(tr);
+            });
+
             formEdit.style.display = 'flex';
 
         });
 
-        $(document).on('click', '.showAddFormButton', function () {
-            
-            const formCreate = document.getElementById('formCreate');
-            
-            formCreate.style.display = 'flex';
-
-        });
 
 
         $(document).on('click', function (e) {
             const formEdit = document.getElementById('formEdit');
+            
             formEdit.addEventListener('click', function (e) {
                 if (e.target === formEdit) {
                     formEdit.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
-                }
-            });
-            const formCreate = document.getElementById('formCreate');
-            formCreate.addEventListener('click', function (e) {
-                if (e.target === formCreate) {
-                    formCreate.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
+                    $('.dynamic-row').remove();
                 }
             });
         });
+
 
 
 

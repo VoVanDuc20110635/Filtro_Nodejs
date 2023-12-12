@@ -106,10 +106,18 @@ class OrderService {
 
     async getListAllOrder() {
       const listOrder = await Order.findAll({
-        include: [User]
+        include: [
+          { model: User },
+          {
+            model: OrderDetail,
+            include: [Product, ProductDetail],
+          },
+        ],
       });
+    
       return listOrder;
     }
+    
     async updateOrder(status, orderId) {
       try {
           const tempOrder = await Order.findOne({

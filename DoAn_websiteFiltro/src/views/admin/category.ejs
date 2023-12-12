@@ -292,8 +292,10 @@
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (typeof category.status !== null && category.status) { %>
-                                        <%= category.status%>
+                                    <% if (category.status === 1) { %>
+                                        Active
+                                    <% } else { %>
+                                        Inactive
                                     <% } %>
                                 </td>
                                 <td>

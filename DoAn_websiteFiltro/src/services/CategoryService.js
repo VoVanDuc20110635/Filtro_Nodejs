@@ -25,10 +25,10 @@ class CategoryService {
     }
   }
   async getListAllCategory() {
-    const listAccount = await Category.findAll({
+    const listCategory = await Category.findAll({
         
     });
-    return listAccount;
+    return listCategory;
   }
   async updateCategory(categoryName, status, categoryId) {
     try {

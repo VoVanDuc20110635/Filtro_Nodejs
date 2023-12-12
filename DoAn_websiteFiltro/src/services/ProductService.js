@@ -2,6 +2,7 @@ const Product = require('../model/Product');
 const Associations = require('../model/Associations');
 const {Sequelize, Op, literal  } = require('sequelize');
 const Flavor = require('../model/Flavor');
+const Category = require('../model/Category');
 const ProductDetail = require('../model/ProductDetail');
 class ProductService {
     constructor() { };
@@ -824,6 +825,48 @@ class ProductService {
           console.error('Error searching name for products:', error);
           throw error;
         }
+    }
+
+    async getListAllProduct() {
+        try{
+            const listProduct = await Product.findAll({
+                include: [Category, Flavor],
+              });
+              const productsWithUpdatedImage = listProduct.map((product) => ({
+                  ...product.toJSON(),
+                  image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+              }));
+              return productsWithUpdatedImage;
+        } catch(error){
+            console.error('Error get all products:', error);
+            throw error;
+        }
+        
+    }
+    async updateProduct(productName, image, description, status,flavorId, categoryId, productID) {
+        try {
+            const tempProduct = await Product.findOne({
+                where: {
+                    productId: productID,
+                },
+            });
+            // Hash the password
+            tempProduct.productName = productName;
+            tempProduct.image = image;
+            tempProduct.description = description;
+            tempProduct.flavorId = flavorId;
+            tempProduct.categoryId = categoryId;
+            if(status === 'active'){
+                tempProduct.status = 1;
+            } else{
+                tempProduct.status = 0;
+            }
+            await tempProduct.save();
+        } catch (err){
+            throw new NotExecuteException('Không thể cập nhật!');
+        }
+        
+    
       }
 }
 
