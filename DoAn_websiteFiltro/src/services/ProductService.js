@@ -4,6 +4,7 @@ const {Sequelize, Op, literal  } = require('sequelize');
 const Flavor = require('../model/Flavor');
 const Category = require('../model/Category');
 const ProductDetail = require('../model/ProductDetail');
+const NotExecuteException = require('../Exception/NotExecuteException');
 class ProductService {
     constructor() { };
     async getSixthProducts() {
@@ -18,7 +19,7 @@ class ProductService {
 
             // Update the image URLs for each product
             const updatedProducts = latestProducts.map((product) => {
-                const updatedImageName = `/image/upload/${product.image}`;
+                const updatedImageName = `/upload/${product.image}`;
 
                 // Update the image name in the product object
                 product.image = updatedImageName;
@@ -45,7 +46,7 @@ class ProductService {
             
             // Update the image URLs for each product
             const updatedProducts = topSellingProducts.map((product) => {
-                const updatedImageName = `/image/upload/${product.image}`;
+                const updatedImageName = `/upload/${product.image}`;
 
                 // Update the image name in the product object
                 product.image = updatedImageName;
@@ -72,7 +73,7 @@ class ProductService {
             });
             // Update the image URLs for each product
             const updatedProducts = topSellingProducts.map((product) => {
-                const updatedImageName = `/image/upload/${product.image}`;
+                const updatedImageName = `/upload/${product.image}`;
 
                 // Update the image name in the product object
                 product.image = updatedImageName;
@@ -97,7 +98,7 @@ class ProductService {
                 limit: 4, // Limit the result to 4 rows
             });
             const updatedProducts = top4MostDiscountProducts.map((product) => {
-                const updatedImageName = `/image/upload/${product.image}`;
+                const updatedImageName = `/upload/${product.image}`;
 
                 // Update the image name in the product object
                 product.image = updatedImageName;
@@ -157,7 +158,7 @@ class ProductService {
             });
             const productsWithUpdatedImage = products.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             const totalPages = Math.ceil(products.count / pageSize);
             return {
@@ -252,7 +253,7 @@ class ProductService {
             copyProducts.rows = copyProducts.rows.slice((currentPage - 1) * pageSize, (currentPage - 1) * pageSize + limit );
             const productsWithUpdatedImage = copyProducts.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             
             return {
@@ -349,7 +350,7 @@ class ProductService {
             copyProducts.rows = copyProducts.rows.slice((currentPage - 1) * pageSize, (currentPage - 1) * pageSize + limit );
             const productsWithUpdatedImage = copyProducts.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             
             return {
@@ -442,7 +443,7 @@ class ProductService {
             copyProducts.rows = copyProducts.rows.slice((currentPage - 1) * pageSize, (currentPage - 1) * pageSize + limit );
             const productsWithUpdatedImage = copyProducts.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             
             return {
@@ -535,7 +536,7 @@ class ProductService {
             copyProducts.rows = copyProducts.rows.slice((currentPage - 1) * pageSize, (currentPage - 1) * pageSize + limit );
             const productsWithUpdatedImage = copyProducts.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             
             return {
@@ -596,7 +597,7 @@ class ProductService {
             });
             const productsWithUpdatedImage = products.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             const totalPages = Math.ceil(products.count / pageSize);
             return {
@@ -658,7 +659,7 @@ class ProductService {
             });
             const productsWithUpdatedImage = products.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             const totalPages = Math.ceil(products.count / pageSize);
             return {
@@ -719,7 +720,7 @@ class ProductService {
             });
             const productsWithUpdatedImage = products.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             const totalPages = Math.ceil(products.count / pageSize);
             return {
@@ -741,7 +742,7 @@ class ProductService {
             });
             // console.log(product);
 
-            product.image = `/image/upload/${product.image}`;
+            product.image = `/upload/${product.image}`;
 
             // Update the image URLs for each product
             // const updatedProducts = product.map((product) => {
@@ -814,7 +815,7 @@ class ProductService {
             });
             const productsWithUpdatedImage = products.rows.map((product) => ({
                 ...product.toJSON(),
-                image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                image: '/upload/' + product.image, // Prepend the string to the existing image value
             }));
             const totalPages = Math.ceil(products.count / pageSize);
             return {
@@ -834,7 +835,7 @@ class ProductService {
               });
               const productsWithUpdatedImage = listProduct.map((product) => ({
                   ...product.toJSON(),
-                  image: '/image/upload/' + product.image, // Prepend the string to the existing image value
+                  image: '/upload/' + product.image, // Prepend the string to the existing image value
               }));
               return productsWithUpdatedImage;
         } catch(error){
@@ -843,7 +844,7 @@ class ProductService {
         }
         
     }
-    async updateProduct(productName, image, description, status,flavorId, categoryId, productID) {
+    async updateProduct(productName, description, status,flavorId, categoryId, productID) {
         try {
             const tempProduct = await Product.findOne({
                 where: {
@@ -852,7 +853,6 @@ class ProductService {
             });
             // Hash the password
             tempProduct.productName = productName;
-            tempProduct.image = image;
             tempProduct.description = description;
             tempProduct.flavorId = flavorId;
             tempProduct.categoryId = categoryId;
@@ -868,6 +868,43 @@ class ProductService {
         
     
       }
+    async createProduct(productName, description, status,flavorId, categoryId) {
+        try {
+            let tempStatus;
+            if(status === 'active'){
+                tempStatus = 1;
+            } else{
+                tempStatus = 0;
+            }
+            const tempProduct = await Product.create({
+                productName : productName,
+                description : description,
+                flavorId : flavorId,
+                quantity: 0,
+                createdDate: new Date(),
+                categoryId : categoryId,
+                status : tempStatus
+            });
+        } catch (err){
+            throw new NotExecuteException('Không thể thêm!' + err);
+        }
+    }
+    async changeImage(image, productID) {
+    try {
+        const tempProduct = await Product.findOne({
+            where: {
+                productId: productID,
+            },
+        });
+        // Hash the password
+        tempProduct.image = image;
+        await tempProduct.save();
+    } catch (err){
+        throw new NotExecuteException('Không thể cập nhật!');
+    }
+    
+
+    }
 }
 
 module.exports = ProductService;

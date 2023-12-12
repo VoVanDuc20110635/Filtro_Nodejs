@@ -18,7 +18,7 @@ class CartItemService{
             ...cartItem.toJSON(),
             Product: {
                 ...cartItem.Product.toJSON(),
-                image: '/image/upload/' + cartItem.Product.image, // Update the image URL
+                image: '/upload/' + cartItem.Product.image, // Update the image URL
             },
         }));
 

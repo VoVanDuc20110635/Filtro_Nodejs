@@ -36,10 +36,10 @@
         />
     
     
-        <link href="/css/admin/Duc/cs-skin-elastic.css" rel="stylesheet"/>
-        <link href="/css/admin/Duc/style.css" rel="stylesheet"/>
-        <link href="/css/admin/Duc/ui_users.css" rel="stylesheet"/>
-        <link href="/css/admin/Duc/login/bootstrap.css" rel="stylesheet"/>
+        <link href="/public/css/admin/Duc/cs-skin-elastic.css" rel="stylesheet"/>
+        <link href="/public/css/admin/Duc/style.css" rel="stylesheet"/>
+        <link href="/public/css/admin/Duc/ui_users.css" rel="stylesheet"/>
+        <link href="/public/css/admin/Duc/login/bootstrap.css" rel="stylesheet"/>
         <!--    <link th:href="@{/assets/css/ui_users.css}" rel="stylesheet"/>-->
         <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     
@@ -140,7 +140,7 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-        <script src="/js/admin/main.js"></script>
+        <script src="/public/js/admin/main.js"></script>
     </head>
 <body>
     <div>
@@ -227,7 +227,7 @@
                                 <img
                                         style="margin-top: 10px;margin-left: 10px;"
                                         class="user-avatar rounded-circle"
-                                        src="/image/default_avatar.jpg"
+                                        src="/public/image/default_avatar.jpg"
                                         alt="User Avatar"
                                 />
             
@@ -502,7 +502,7 @@
 
                 const tdProductImage = document.createElement('td');
                 const imageProductImage = document.createElement('img');
-                imageProductImage.src = '/image/upload/' + orderDetail.Product.image;
+                imageProductImage.src = '/upload/' + orderDetail.Product.image;
                 imageProductImage.style.maxWidth = '100px';
                 tdProductImage.appendChild(imageProductImage);
                 tr.appendChild(tdProductImage);

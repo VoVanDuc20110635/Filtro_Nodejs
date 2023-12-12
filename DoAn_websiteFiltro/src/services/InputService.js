@@ -26,7 +26,7 @@ class InputService {
     // Valid comment
     async isValidComment(input) {
         // Regular expression to match valid comments (1 to 100 characters)
-        const pattern = /^[a-zA-Z0-9\p{L}@().,!'"\s-]{1,100}$/u;
+        const pattern = /^[a-zA-Z0-9\p{L}@().,!'"\s-]{1,500}$/u;
     
         // Check for a match
         return pattern.test(input);

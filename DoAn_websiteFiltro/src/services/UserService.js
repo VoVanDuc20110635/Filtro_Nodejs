@@ -8,8 +8,11 @@ const AccountNameExistException = require('../Exception/AccountNameExistExceptio
 const PasswordDoNotMatchException = require('../Exception/PasswordDoNotMatchException');
 const UserNotFoundException = require('../Exception/UserNotFoundException');
 const CartService = require('../services/CartService')
+const NotExecuteException = require('../Exception/NotExecuteException');
 const cartService = new CartService();
 const moment = require('moment'); // Import the moment library
+const { Op } = require('sequelize');
+
 class UserService {
     constructor() { };
     async getAllUser() {
@@ -142,5 +145,55 @@ class UserService {
         accountDatabase.password = hashNewPassword;
         accountDatabase.save();
     }    
+
+    async getListAllUser() {
+        const listUser = await User.findAll({
+            
+        });
+        return listUser;
+      }
+    async getListAllStaff() {
+        const listUser = await User.findAll({
+            include: [
+                {
+                    model: Account,
+                    where: {
+                        roleNumber: {
+                            [Op.or]: [1, 2] // Filter for roleNumber = 1 or 2
+                        }
+                    }
+                }
+            ]
+        });
+        return listUser;
+    }
+      async updateUser(name, dob, sex, address, zip, city, email, phoneNumber, status, userId) {
+        try {
+            const tempUser = await User.findOne({
+                where: {
+                    userId: userId,
+                },
+            });
+            // Hash the password
+            tempUser.name = name;
+            tempUser.dob = dob;
+            tempUser.sex = sex;
+            tempUser.address = address;
+            tempUser.zip = zip;
+            tempUser.city = city;
+            tempUser.email = email;
+            tempUser.phoneNumber = phoneNumber;
+            if(status === 'active'){
+                tempUser.status = 1;
+            } else{
+                tempUser.status = 0;
+            }
+            await tempUser.save();
+        } catch (err){
+            throw new NotExecuteException('Không thể cập nhật!');
+        }
+        
+    
+    }
 }
 module.exports = UserService;

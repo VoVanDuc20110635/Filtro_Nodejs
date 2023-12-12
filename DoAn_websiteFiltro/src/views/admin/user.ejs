@@ -1,865 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <th:block th:fragment="head_additional">
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Windmill Dashboard</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>FrontEnd</title>
+        <meta name="description" content="Ela Admin - HTML5 Admin Template" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+        <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png" />
+        <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png" />
+    
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet" />
-        <link rel="stylesheet" href="/css/admin/tailwind.output.css"/>
-        <link rel="stylesheet/scss" href="/css/admin/_modal.scss"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"/>
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!--        <link rel="stylesheet" href="/css/crud.css">-->
-<!--        <script src="/javascript/modalAccount.js"></script>-->
-
-        <!-- Theme style -->
-<!--        <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">-->
-        <!-- Theme style -->
-<!--        <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">-->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-        <script src="/js/admin/init-alpine.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
-        <script src="/js/admin/charts-lines.js"></script>
-        <script src="/js/admin/charts-pie.js"></script>
-<!--        <link rel="stylesheet" href="/css/crud.css">-->
-        <script src="/js/admin/modalUser.js"></script>
-        <!-- Theme style -->
-<!--        <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">-->
-    </th:block>
-</head>
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css"
+        />
+        <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css"
+        />
+    
+    
+        <link href="/public/css/admin/Duc/cs-skin-elastic.css" rel="stylesheet"/>
+        <link href="/public/css/admin/Duc/style.css" rel="stylesheet"/>
+        <link href="/public/css/admin/Duc/ui_users.css" rel="stylesheet"/>
+        <link href="/public/css/admin/Duc/login/bootstrap.css" rel="stylesheet"/>
+        <!--    <link th:href="@{/assets/css/ui_users.css}" rel="stylesheet"/>-->
+        <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    
+    
+        <link
+                href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css"
+                rel="stylesheet"
+        />
+        <link
+                href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css"
+                rel="stylesheet"
+        />
+    
+        <link
+                href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css"
+                rel="stylesheet"
+        />
+        <link
+                href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css"
+                rel="stylesheet"
+        />
+    
+        <link
+                href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+                rel="stylesheet"
+        />
+        <link
+                href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+                rel="stylesheet"
+        />
+        <style>
+            #weatherWidget .currentDesc {
+                color: #ffffff !important;
+            }
+            .traffic-chart {
+                min-height: 335px;
+            }
+            #flotPie1 {
+                height: 150px;
+            }
+            #flotPie1 td {
+                padding: 3px;
+            }
+            #flotPie1 table {
+                top: 20px !important;
+                right: -10px !important;
+            }
+            .chart-container {
+                display: table;
+                min-width: 270px;
+                text-align: left;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            #flotLine5 {
+                height: 105px;
+            }
+    
+            #flotBarChart {
+                height: 150px;
+            }
+            #cellPaiChart {
+                height: 160px;
+            }
+    
+            .bars-icon {
+                position: absolute;
+                top: 18px;
+            }
+    
+    
+            #saveButton {
+                display: none; /* Ẩn liên kết mặc định */
+            }
+    
+        </style>
+    
+        <script
+                src="https://kit.fontawesome.com/8f73a47761.js"
+                crossorigin="anonymous"
+        ></script>
+    
+    
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <!--    time picker-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+    <!--    parse time-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+        <script src="/public/js/admin/main.js"></script>
+    </head>
 <body>
-
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900"
-:class="{ 'overflow-hidden': isSideMenuOpen }">
-
-<aside
-class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
->
-<div class="py-4 text-gray-500 dark:text-gray-400">
-    <a
-        class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-        href="#"
-    >
-        Four Leaves Shoes
-    </a>
-    <ul class="mt-6">
-        <li class="relative px-6 py-3">
-        <span id="span0"
-        class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-        aria-hidden="true"
-        style="display: none;"
-        ></span>
-            <a
-                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="/admin/account"
-            >
-                <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    ></path>
-                </svg>
-                <span class="ml-4">Account</span>
-            </a>
-        </li>
-    </ul>
-    <ul>
-        <li class="relative px-6 py-3">
-            <span id="span1"
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                aria-hidden="true"
-                style="display: none;"
-            ></span>
-            <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="/admin/user"
-            >
-                <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                    ></path>
-                </svg>
-                <span class="ml-4">Client</span>
-            </a>
-        </li>
-        <li class="relative px-6 py-3">
-            <span id="span2"
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                aria-hidden="true" style="display: none;"
-            ></span>
-            <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="/admin/order"
-            >
-                <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                    ></path>
-                </svg>
-                <span class="ml-4">Order</span>
-            </a>
-        </li>
-        <li class="relative px-6 py-3">
-            <span id="span3"
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                aria-hidden="true" style="display: none;"
-            ></span>
-            <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="/admin/staff"
-            >
-                <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
-                    ></path>
-                    <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                </svg>
-                <span class="ml-4">Employee</span>
-            </a>
-        </li>
-        <li class="relative px-6 py-3">
-            <span id="span4"
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                aria-hidden="true" style="display: none;"
-            ></span>
-            <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="/admin/product"
-            >
-                <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
-                    ></path>
-                </svg>
-                <span class="ml-4">Product</span>
-            </a>
-        </li>
-        <li class="relative px-6 py-3">
-            <span id="span5"
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                aria-hidden="true" style="display: none;"
-            ></span>
-            <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="/admin/category"
-            >
-                <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                    ></path>
-                </svg>
-                <span class="ml-4">Category</span>
-            </a>
-        </li>
-        <li class="relative px-6 py-3">
-            <span id="span6"
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                aria-hidden="true" style="display: none;"
-            ></span>
-            <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="/admin/flavor"
-            >
-                <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                </svg>
-                <span class="ml-4">Flavor</span>
-            </a>
-        </li>
-    </ul>
-</div>
-</aside>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var currentPath = window.location.pathname;
-
-    if (currentPath.includes("admin/account")) {
-        var spanElement = document.getElementById("span0");
-        spanElement.style.display = "block";
-    }
-
-    if (currentPath.includes("admin/user")) {
-        var spanElement = document.getElementById("span1");
-        spanElement.style.display = "block";
-    }
-    if (currentPath.includes("admin/order")) {
-        var spanElement = document.getElementById("span2");
-        spanElement.style.display = "block";
-    }
-    if (currentPath.includes("admin/staff")) {
-        var spanElement = document.getElementById("span3");
-        spanElement.style.display = "block";
-    }
-    if (currentPath.includes("admin/product")) {
-        var spanElement = document.getElementById("span4");
-        spanElement.style.display = "block";
-    }
-    if (currentPath.includes("admin/category")) {
-        var spanElement = document.getElementById("span5");
-        spanElement.style.display = "block";
-    }
-    if (currentPath.includes("admin/flavor")) {
-        var spanElement = document.getElementById("span6");
-        spanElement.style.display = "block";
-    }
-});
-</script>
-
-        <div class="flex flex-col flex-1 w-full">
-            <!--        header-->
-            <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-                <div
-                class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
-                >
-                    <!-- Mobile hamburger -->
-                    <button
-                    class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
-                    @click="toggleSideMenu"
-                    aria-label="Menu"
-                    >
-                        <svg
-                        class="w-6 h-6"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        >
-                            <path
-                            fill-rule="evenodd"
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                            clip-rule="evenodd"
-                            ></path>
-                        </svg>
-                    </button>
-                    <!-- Search input -->
-                    <div class="flex justify-center flex-1 lg:mr-32">
-                        <div
-                        class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
-                        >
-                            <div class="absolute inset-y-0 flex items-center pl-2">
-                                <svg
-                                class="w-4 h-4"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                >
-                                    <path
-                                    fill-rule="evenodd"
-                                    d=""
-                                    clip-rule="evenodd"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <input
-                            class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                            type="text"
-                            placeholder="This is the management page"
-                            aria-label="Search"
-                            readonly
-                            />
-                        </div>
-                    </div>
-                    <ul class="flex items-center flex-shrink-0 space-x-6">
-                        <!-- Theme toggler -->
-                        <li class="flex">
-                            <button
-                            class="rounded-md focus:outline-none focus:shadow-outline-purple"
-                            @click="toggleTheme"
-                            aria-label="Toggle color mode"
-                            >
-                                <template x-if="!dark">
-                                    <svg
-                                    class="w-5 h-5"
-                                    aria-hidden="true"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                        d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-                                        ></path>
-                                    </svg>
-                                </template>
-                                <template x-if="dark">
-                                    <svg
-                                    class="w-5 h-5"
-                                    aria-hidden="true"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                        fill-rule="evenodd"
-                                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                                        clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </template>
-                            </button>
+    <div>
+        <aside id="left-panel" class="left-panel" th:fragment="side_bar">
+            <nav class="navbar navbar-expand-sm navbar-default">
+                <div id="main-menu" class="main-menu collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <!-- Navigation__Home -->
+                        <li>
+                            <a href="/admin/account"
+                            ><i class="fa-solid fa-file-invoice" style="margin-right: 5px;"></i>Tài khoản
+                            </a>
                         </li>
-                        <!-- Notifications menu -->
-                        <li class="relative">
-                            <button
-                            class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
-                            @click="toggleNotificationsMenu"
-                            @keydown.escape="closeNotificationsMenu"
-                            aria-label="Notifications"
-                            aria-haspopup="true"
-                            >
-                                <svg
-                                class="w-5 h-5"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                >
-                                    <path
-                                    d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-                                    ></path>
-                                </svg>
-                                <!-- Notification badge -->
-                                <span
-                                aria-hidden="true"
-                                class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
-                                ></span>
-                            </button>
-                            <template x-if="isNotificationsMenuOpen">
-                                <ul
-                                x-transition:leave="transition ease-in duration-150"
-                                x-transition:leave-start="opacity-100"
-                                x-transition:leave-end="opacity-0"
-                                @click.away="closeNotificationsMenu"
-                                @keydown.escape="closeNotificationsMenu"
-                                class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
-                                >
-                                    <li class="flex">
-                                        <a
-                                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#"
-                                        >
-                                            <span>Messages</span>
-                                            <span
-                                            class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
-                                            >
-                                13
-                                </span>
-                                        </a>
-                                    </li>
-                                    <li class="flex">
-                                        <a
-                                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#"
-                                        >
-                                            <span>Sales</span>
-                                            <span
-                                            class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
-                                            >
-                                2
-                                </span>
-                                        </a>
-                                    </li>
-                                    <li class="flex">
-                                        <a
-                                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#"
-                                        >
-                                            <span>Alerts</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </template>
+                        <li class="active">
+                            <a href="/admin/user"
+                            ><i class="fa-solid fa-user" style="margin-right: 5px;"></i>Khách hàng
+                            </a>
                         </li>
-                        <!-- Profile menu -->
-                        <li class="relative">
-                            <button
-                            class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
-                            @click="toggleProfileMenu"
-                            @keydown.escape="closeProfileMenu"
-                            aria-label="Account"
-                            aria-haspopup="true"
-                            >
-                                <img
-                                class="object-cover w-8 h-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                                alt=""
-                                aria-hidden="true"
-                                />
-                            </button>
-                            <template x-if="isProfileMenuOpen">
-                                <ul
-                                x-transition:leave="transition ease-in duration-150"
-                                x-transition:leave-start="opacity-100"
-                                x-transition:leave-end="opacity-0"
-                                @click.away="closeProfileMenu"
-                                @keydown.escape="closeProfileMenu"
-                                class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
-                                aria-label="submenu"
-                                >
-                                    <li class="flex">
-                                        <a
-                                        class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        th:href="@{/logout}"
-                                        >
-                                            <svg
-                                            class="w-4 h-4 mr-3"
-                                            aria-hidden="true"
-                                            fill="none"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            >
-                                                <path
-                                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                                                ></path>
-                                            </svg>
-                                            <span>Log out</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </template>
+                        <li>
+                            <a href="/admin/order"
+                            ><i class="fa-solid fa-receipt" style="margin-right: 5px;"></i>Đơn hàng
+                            </a>
                         </li>
+                        <li>
+                            <a href="/admin/staff"
+                            ><i class="fa-solid fa-user-tie" style="margin-right: 5px;"></i>Nhân viên
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/product"
+                            ><i class="fa-brands fa-product-hunt" style="margin-right: 5px;"></i>Sản phẩm
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/productDetail"
+                            ><i class="fa-solid fa-circle-info" style="margin-right: 5px;"></i>Chi tiết sản phẩm
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/category"
+                            ><i class="fa-solid fa-list" style="margin-right: 5px;"></i>Danh mục
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/flavor"
+                            ><i class="fa-regular fa-star" style="margin-right: 5px;"></i>Hương vị
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/contact"
+                            ><i class="fa-solid fa-comment" style="margin-right: 5px;"></i>Phản hồi
+                            </a>
+                        </li>
+        
+                      
                     </ul>
                 </div>
-            </header>
-            <!--        main-->
-            <main class="h-full overflow-y-auto">
-                <div class="container px-6 mx-auto grid">
-                    <h2
-                    class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
-                    >
-                        Dashboard
-                    </h2>
-                    <!-- CTA -->
-                    <a
-                    class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-                    href="https://github.com/VoVanDuc20110635/FourLeavesShoes"
-                    >
-                        <div class="flex items-center">
-                            <svg
-                            class="w-5 h-5 mr-2"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            >
-                                <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                ></path>
-                            </svg>
-                            <span>Star this project on GitHub</span>
-                        </div>
-                        <span>View more &RightArrow;</span>
-                    </a>
-                    <!-- Cards -->
-                    <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-                        <!-- Card -->
-                        <div
-                        class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-                        >
-                            <div
-                            class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
-                            >
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    Total
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" th:text="${totalElements}"></p>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- New Table -->
-                    <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                        <div class="w-full overflow-x-auto">
-                            <table class="table w-full whitespace-no-wrap">
-                                <thead>
-                                <tr
-                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-                                >
-                                    <th class="px-4 py-3">Name</th>
-                                    <th class="px-4 py-3">Email</th>
-                                    <th class="px-4 py-3">Address</th>
-                                    <th class="px-4 py-3">Phone</th>
-                                    <th class="px-4 py-3">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                    <% if (typeof users !== 'undefined' && users.length > 0) { %>
-                                        <% users.forEach(function(user) { %>
-                                          <tr class="text-gray-700 dark:text-gray-400">
-                                            <td class="px-4 py-3">
-                                              <div class="flex items-center text-sm">
-                                                <div>
-                                                  <p class="font-semibold" id="idName"><%= user.name %></p>
-                                                </div>
-                                              </div>
-                                            </td>
-                                            <td class="px-4 py-3 text-sm"><%= user.email %></td>
-                                            <td class="px-4 py-3 text-sm"><%= user.address %></td>
-                                            <td class="px-4 py-3 text-sm"><%= user.phoneNumber %></td>
-                                            <td class="px-4 py-3 text-sm">
-                                              <a href="#editModal" class="edit" data-toggle="modal" onclick="showEditModal()">
-                                                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                                              </a>
-                                              <a href="#deleteModal" id="deleteModalIcon" class="delete" data-toggle="modal" onclick="showDeleteModal()">
-                                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                                              </a>
-                                              <input type="hidden" id="id" value="<%= user.id %>">
-                                            </td>
-                                          </tr>
-                                        <% }); %>
-                                      <% } else { %>
-                                        <tr>
-                                            <td colspan="5" class="text-center"><p>No data</p></td>
-                                        </tr>
-                                      <% } %>
-                                      
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div
-                        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-                        >
-                    <span th:if="${currentPage*sortType < totalElements }" class="flex items-center col-span-3-paging" th:text="${'Showing ' + (((currentPage*sortType)-sortType) + 1) + '-' + currentPage*sortType + ' of ' + totalElements}">
-                    Showing 21-30 of 100
-                    </span>
-                            <span th:if="${currentPage*sortType >= totalElements }" class="flex items-center col-span-3-paging" th:text="${'Showing ' + (((currentPage*sortType)-sortType) + 1) + '-' + totalElements + ' of ' + totalElements}">
-                    Showing 21-30 of 100
-                    </span>
-                            <span th:if="${(((currentPage*sortType)-sortType) + 1) > totalElements }" class="flex items-center col-span-3-paging" th:text="${'Out of list!'}">
-                    Showing 21-30 of 100
-                    </span>
-                            <div class="flex items-center col-span-3-paging"><label for="entries">Show entries:</label>
-                                <select id="entries" onchange="getPageFromEntries(this.value)">
-                                    <option value="5" onclick="getPageFromEntries(this.id)" th:selected="${sortType == 5}">5</option>
-                                    <option value="10" onclick="getPageFromEntries(this.id)" th:selected="${sortType == 10}">10</option>
-                                    <option value="25" onclick="getPageFromEntries(this.id)" th:selected="${sortType == 25}">25</option>
-                                    <option value="50" onclick="getPageFromEntries(this.id)" th:selected="${sortType == 50}">50</option>
-                                </select><label th:text="'out of ' + ${totalElements} + ' entries'">25</label>
-                            </div>
-                            <!-- Pagination -->
-                            <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                        <nav aria-label="Table navigation">
-                            <ul class="inline-flex items-center">
-                                <li class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple" th:classappend="${currentPage == 1 ? 'disabled' :''}"
-                                    th:if="${currentPage>1}">
-                                    <a th:href="@{/admin/user(sortType=${sortType}, currentPage=${currentPage - 1})}" tabindex="-1">Previous</a>
-                                </li>
-                                <li class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                                    th:classappend="${page==currentPage ? 'active': ''}"
-                                    th:style="${page == currentPage ? 'background: blue; color: white;' : ''}"
-                                    th:each="page : ${#numbers.sequence(1, totalPages)}">
-                                    <a th:href="@{/admin/user(sortType=${sortType}, currentPage=${page})}" class="page-link"
-                                    th:text="${page}">3</a></li>
-                                <li class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                                    th:classappend="${currentPage == totalPages ? 'disabled' : ''}"
-                                    th:if="${currentPage<totalPages}">
-                                    <a th:href="@{/admin/user(sortType=${sortType}, currentPage=${currentPage+1})}"
-                                    class="page-link">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </span>
-                        </div>
-                    </div>
-                    <!-- Edit Modal HTML -->
-    <!--                <div id="editModal" class="modal fade" style="display: none; width: 350px;">-->
-    <!--                    <div class="modal-dialog">-->
-    <!--                        <div class="modal-content">-->
-    <!--                            <form method="post" th:action="@{/admin/user/create}">-->
-    <!--                                <div class="modal-header">-->
-    <!--                                    <div class="header-left">-->
-    <!--                                        <h4 class="modal-title text-primary"><i class="fas fa-user-edit"></i> Create Account</h4>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="header-right">-->
-    <!--                                        <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-    <!--                                    </div>-->
-    <!--                                </div>-->
-    <!--                                <div class="modal-body">-->
-    <!--                                    <div class="form-group">-->
-    <!--                                        <label>Name</label>-->
-    <!--                                        <input type="text" name="name" class="form-control" required>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="form-group">-->
-    <!--                                        <label>Email</label>-->
-    <!--                                        <input type="email" name="email" class="form-control" required>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="form-group">-->
-    <!--                                        <label>Address</label>-->
-    <!--                                        <input type="text" class="form-control" name="address" required></input>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="form-group">-->
-    <!--                                        <label>Phone</label>-->
-    <!--                                        <input type="text" name="phoneNumber" class="form-control" required>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="form-group">-->
-    <!--                                        <label>City</label>-->
-    <!--                                        <input type="text" name="city" class="form-control" required>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="form-group">-->
-    <!--                                        <label>Zip</label>-->
-    <!--                                        <input type="text" name="zip" class="form-control" required>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="form-group">-->
-    <!--                                        <label>DOB</label>-->
-    <!--                                        <input type="text" placeholder="1998/02/15" name="dob" class="form-control" required>-->
-    <!--                                    </div>-->
-    <!--                                    <div class="form-group">-->
-    <!--                                        <label>Sex</label>-->
-    <!--                                        <input type="text" name="sex" class="form-control" required>-->
-    <!--                                    </div>-->
-    <!--                                    <label for="addAccount">Account</label>-->
-    <!--                                    <select id="addAccount" name="account">-->
-    <!--                                        <th:block th:each="usable : ${usableAccounts}">-->
-    <!--                                            <option th:value="${usable.getId()}" th:text="${usable.getAccountName()}"></option>-->
-    <!--                                        </th:block>-->
-    <!--                                    </select>-->
-    <!--                                </div>-->
-    <!--                                <div class="modal-footer">-->
-    <!--                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">-->
-    <!--                                    <input type="submit" class="btn btn-success" value="Add">-->
-    <!--                                </div>-->
-    <!--                            </form>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-                    <!-- Create Modal HTML -->
-                    <div id="editModal" class="modal fade" style="display: none; width: 350px;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form method="post" th:action="@{/admin/user/update}" id="editForm">
-                                    <div class="modal-header">
-                                        <div class="header-left">
-                                            <h4 class="modal-title">Edit Account</h4>
-                                        </div>
-                                        <div class="header-right">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input type="text" name="name" id="name" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="email" name="email" id="email" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Address</label>
-                                            <input type="text" class="form-control" id="address" name="address" required></input>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Phone</label>
-                                            <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>City</label>
-                                            <input type="text" name="city" id="city" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Zip</label>
-                                            <input type="text" name="zip" id="zip" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>DOB</label>
-                                            <input type="text" name="dob" id="dob" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Sex</label>
-                                            <input type="text" name="sex" id="sex" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Account</label>
-                                            <input type="text" name="account" id="account" class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-success" value="Save">
-                                        <input type="hidden" name="id" id="saveUserId">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!--    &lt;!&ndash; Delete Modal HTML &ndash;&gt;-->
-                    <div id="deleteModal" class="modal fade" style="display: none; width: 350px;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form method="post" th:action="@{/admin/user/delete}">
-                                    <div class="modal-header">
-                                        <div class="header-left">
-                                            <h4 class="modal-title">Delete User</h4>
-                                        </div>
-                                        <div class="header-right">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p id="idName2">Are you sure you want to delete these Records?</p>
-                                        <p class="text-warning"><small>This action cannot be undone.</small></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                        <input type="hidden" name="id" id="deleteId">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <form id="hiddenForm" th:href="@{/admin/user}" method="GET" style="display: none;">
-                        <input type="hidden" name="sortType" th:value="${sortType}" />
-                        <input type="hidden" name="currentPage" th:value="${currentPage}" />
-                    </form>
-                </div>
-            </main>
-        </div>
-
+                <!-- /.navbar-collapse -->
+            </nav>
+        </aside>
     </div>
+    <div id="right-panel" class="right-panel">
+        <div>
+            <header id="header" class="header" th:fragment="header">
+                <div class="top-left">
+                    <div class="navbar-header">
+                        <a id="menuToggle" class="menutoggle"
+                        ><i class="bars-icon fa fa-bars"></i
+                        ></a>
+                    </div>
+                </div>
+                <div class="top-right">
+                    <div class="header-menu">
+            
+                        <div class="user-area dropdown float-right">
+                            <a
+                                    href="#"
+                                    class="dropdown-toggle active"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    style="display: inline; position: unset"
+                            >
+                                <img
+                                        style="margin-top: 10px;margin-left: 10px;"
+                                        class="user-avatar rounded-circle"
+                                        src="/public/image/default_avatar.jpg"
+                                        alt="User Avatar"
+                                />
+            
+                            </a>
+                            <% if (session.user && typeof session.user.name !== null ) { %>
+                                <span style="display: inline; color: white">Hello <%= session.user.name %></span>
+                            <% } %>
+                            <div class="user-menu dropdown-menu">
+            
+                                <a class="nav-link" href="/admin/logout"
+                                ><i class="fa fa-power -off"></i>Logout</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="content">
+            <!-- Animated -->
+            <div class="animated fadeIn">
+                <h2>Danh sách người dùng</h2>
+                <div class="col-md-12 form-group">
+                    <% if (typeof message !== 'undefined' && message) { %>
+                      <div id="errorMessage" class="alert alert-success" role="alert">
+                        <%= message %>
+                      </div>
+                      <% } %>
+                        <% if (typeof errorMessage !== 'undefined' &&  errorMessage) { %>
+                          <div id="errorMessage1" class="alert alert-danger" role="alert">
+                            <%= errorMessage %>
+                          </div>
+                          <% } %>
+                  </div>
+                <div class="search-box">
+                    <div class="search">
+                        <!-- <button class="my-button showAddFormButton" id="showAddFormButton"><i class="fas fa-plus add"></i>Add Category</button> -->
+                    </div>
+                </div>
+    
+                <table id="example" class="table table-striped" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th class="custom-column">Id</th>
+                        <th class="custom-column">Tên</th>
+                        <th class="custom-column">Ngày sinh</th>
+                        <th class="custom-column">Giới tính</th>
+                        <th class="custom-column">Địa chỉ</th>
+                        <th class="custom-column">Zip</th>
+                        <th class="custom-column">Thành phố</th>
+                        <th class="custom-column">Email</th>
+                        <th class="custom-column">Số điện thọai</th>
+                        <th class="custom-column">Status</th>
+                        <th class="custom-column">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <% if (typeof users !== 'undefined' && users.length > 0) { %>
+                            <% users.forEach(function(user) { %>
+                            <tr class="spandd">
+                                <td>
+                                    <% if (typeof user.userId !== null && user.userId) { %>
+                                        <%= user.userId%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof user.name !== null && user.name) { %>
+                                        <%= user.name%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof user.dob !== null && user.dob) { %>
+                                        <%= user.dob%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof user.sex !== null && user.sex) { %>
+                                        <%= user.sex%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof user.address !== null && user.address) { %>
+                                        <%= user.address%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof user.zip !== null && user.zip) { %>
+                                        <%= user.zip%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof user.city !== null && user.city) { %>
+                                        <%= user.city%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof user.email !== null && user.email) { %>
+                                        <%= user.email%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof user.phoneNumber !== null && user.phoneNumber) { %>
+                                        <%= user.phoneNumber%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (user.status === 1) { %>
+                                        Active
+                                    <% } else { %>
+                                        Inactive
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <a style="cursor: pointer;" class="edit open-edit-form" data-toggle="modal" onclick="showEditModal()" style="margin-right: 5px;">
+                                        <i class="fa-solid fa-pencil" style="color: #ff7100;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                        <% }else { %>
+                            <tr>
+                                <td colspan="7" class="text-center"><p>No data</p></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                
+                <div class="overlay" id="formEdit">
+                    <div class="container">
+                        <div class="form">
+                            <form action="/admin/user" method="post" >
+                                <table>
+                                    <tr>
+                                        <th style="background-color: #0f65c1;" colspan="3">Edit user</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Họ và tên</td>
+                                        <td colspan="2"><input type="text" name="name" placeholder="Họ và tên" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ngày sinh</td>
+                                        <td colspan="2"><input type="text" name="dob" placeholder="Ngày sinh" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Giới tính</td>
+                                        <td colspan="2"><input type="text" name="sex" placeholder="Giới tính" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Địa chỉ</td>
+                                        <td colspan="2"><input type="text" name="address" placeholder="Địa chỉ" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zip</td>
+                                        <td colspan="2"><input type="text" name="zip" placeholder="Zip" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td colspan="2"><input type="text" name="city" placeholder="city" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td colspan="2"><input type="text" name="email" placeholder="Email" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>SĐT</td>
+                                        <td colspan="2"><input type="text" name="phoneNumber" placeholder="Số điện thoại" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 110px">Status</td>
+                                        <td>
+                                            <label>
+                                                <input type="radio" name="status" value="active"> Active
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="status" value="inactive"> Inactive
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none">
+                                        <td>Id</td>
+                                        <td><input type="text" name="userId" placeholder="id" value=""></td>
+                                    </tr>
+                                </table>
+                                <div class="bk_save_user" style="margin-bottom: 5px;">
+                                    <button type="submit" class="button-save-user" style="background-color: #0f65c1">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+            <!--End: Content-->
+            <div class="clearfix"></div>
+    
+            <br>
+            <br>
+            <br>
+    
+        </div>
+        <div>
+            <footer class="site-footer" th:fragment="footer">
+                <div class="footer-inner bg-2D3748">
+                    <div class="rw">
+                        <div class="col-sm-6 text-left">
+                            Copyright &copy; 2018 Ela Admin. Edited and Developed by Ground-3
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            Designed by <a href="https://colorlib.com">Colorlib</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- Scripts -->
+<script>
+    new DataTable('#example', {
+        "order": []
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.open-edit-form', function () {
+            var row = $(this).closest('tr');
+            var status = row.find('td:eq(9)').text().trim();
+            const formEdit = document.getElementById('formEdit');
+            const nameInput = formEdit.querySelector('input[name="name"]');
+            const dobInput = formEdit.querySelector('input[name="dob"]');
+            const statusRadioActive = formEdit.querySelector('input[value="active"]');
+            const statusRadioInactive = formEdit.querySelector('input[value="inactive"]');
+            const sexInput = formEdit.querySelector('input[name="sex"]');
+            const addressInput = formEdit.querySelector('input[name="address"]');
+            const zipInput = formEdit.querySelector('input[name="zip"]');
+            const cityInput = formEdit.querySelector('input[name="city"]');
+            const emailInput = formEdit.querySelector('input[name="email"]');
+            const phoneNumberInput = formEdit.querySelector('input[name="phoneNumber"]');
+            const userIdInput = formEdit.querySelector('input[name="userId"]');
+            nameInput.value = row.find('td:eq(1)').text().trim();
+            dobInput.value = row.find('td:eq(2)').text().trim();
+            sexInput.value = row.find('td:eq(3)').text().trim();
+            addressInput.value = row.find('td:eq(4)').text().trim();
+            zipInput.value = row.find('td:eq(5)').text().trim();
+            cityInput.value = row.find('td:eq(6)').text().trim();
+            emailInput.value = row.find('td:eq(7)').text().trim();
+            phoneNumberInput.value = row.find('td:eq(8)').text().trim();
+            userIdInput.value = row.find('td:eq(0)').text().trim();
 
-    <script>
-        function getPageFromEntries(id){
-            var sortType = document.querySelector('input[name="sortType"]');
-            var currentPage = document.querySelector('input[name="currentPage"]');
-            sortType.value = id;
-            document.getElementById("hiddenForm").submit();
-        }
-    </script>
-    <script>
-        function showEditModal() {
-            var editModal = document.getElementById("editModal");
-            var createModal = document.getElementById("addModal");
-            var deleteModal = document.getElementById("deleteModal");
-            editModal.style.display = "block";
-            createModal.style.display = "none";
-            deleteModal.style.display = "none";
-        }
-    </script>
-    <script>
-        function showCreateModal() {
-            var editModal = document.getElementById("editModal");
-            var createModal = document.getElementById("addModal");
-            var deleteModal = document.getElementById("deleteModal");
-            createModal.style.display = "block";
-            deleteModal.style.display = "none";
-            editModal.style.display = "none";
-        }
-    </script>
-    <script>
-        function showDeleteModal() {
-            var editModal = document.getElementById("editModal");
-            // var createModal = document.getElementById("addModal");
-            var deleteModal = document.getElementById("deleteModal");
-            // createModal.style.display = "none";
-            deleteModal.style.display = "block";
-            editModal.style.display = "none";
-            // var idName = document.getElementById('idName');
-            // alert(idName.textContent);
-            // var idName2 = document.getElementById('idName2');
-            // idName2.textContent = 'Are you sure you want to remove "' +  idName.textContent + '" from the list?';
-        }
-    </script>
-    <script>
-        var closeButton = document.querySelector("#editModal .close");
-        closeButton.addEventListener("click", function() {
-            var editModal = document.getElementById("editModal");
-            editModal.style.display = "none";
+            if (status === 'Active'){
+                statusRadioActive.checked = true;
+                statusRadioInactive.checked = false;
+            } else{
+                statusRadioActive.checked = false;
+                statusRadioInactive.checked = true;
+            }
+            formEdit.style.display = 'flex';
+
         });
-    </script>
-    <script>
-        var closeButton = document.querySelector("#addModal .close");
-        closeButton.addEventListener("click", function() {
-            var editModal = document.getElementById("addModal");
-            editModal.style.display = "none";
+
+
+        $(document).on('click', function (e) {
+            const formEdit = document.getElementById('formEdit');
+            formEdit.addEventListener('click', function (e) {
+                if (e.target === formEdit) {
+                    formEdit.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
+                }
+            });
         });
-    </script>
-    <script>
-        var closeButton = document.querySelector("#deleteModal .close");
-        closeButton.addEventListener("click", function() {
-            var editModal = document.getElementById("deleteModal");
-            editModal.style.display = "none";
-        });
-    </script>
 
 
 
+    });
+</script>
 </body>
 </html>

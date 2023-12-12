@@ -22,6 +22,15 @@ const storage = multer.diskStorage({
   }
 });
 
+const storage2 = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, appRoot + '/src/upload');
+  },
+  filename: (req, file, cb) =>  {
+    cb(null, file.originalname);
+  }
+});
+
 
 const imageFilter = function (req, file, cb) {
   // Accept images only
@@ -33,6 +42,7 @@ const imageFilter = function (req, file, cb) {
 };
 
 let upload = multer({ storage: storage, fileFilter: imageFilter });
+let upload2 = multer({ storage: storage2});
 let upload1 = multer({ storage: storage, fileFilter: imageFilter }).array('multiple_images', 3);
 
 const initWebRouteAdmin = (app) => {
@@ -53,8 +63,12 @@ const initWebRouteAdmin = (app) => {
   router.post('/admin/order', orderController.update);
   router.get('/admin/product', productController.getProductPage);
   router.post('/admin/product', productController.update);
+  router.post('/admin/product/create', productController.create);
+  router.post('/admin/product/changeImage', upload2.single('file'), productController.changeImage);
   router.get('/admin/staff', staffController.getStaffPage);
+  router.post('/admin/staff', staffController.update);
   router.get('/admin/user', userController.getUserPage);
+  router.post('/admin/user', userController.update);
   // router.post('/login', loginController.login);
 
   return app.use('/', router);
