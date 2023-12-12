@@ -102,6 +102,47 @@ class OrderService {
           console.error('Error finding order by orderId:', error);
           throw error;
         }
+    }
+
+    async getListAllOrder() {
+      const listOrder = await Order.findAll({
+        include: [User]
+      });
+      return listOrder;
+    }
+    async updateOrder(status, orderId) {
+      try {
+          const tempOrder = await Order.findOne({
+              where: {
+                orderId: orderId,
+              }
+          });
+          // Hash the password
+          if(status === 'active'){
+            tempOrder.status = 1;
+          } else{
+            // tempCategory.status = 0;
+          }
+          if (status ===  'Pending'){
+            tempOrder.status = 1;
+        } else if (status === 'Cancel'){
+            tempOrder.status = 2;
+        } else if (status === 'Delivery'){
+            tempOrder.status = 3;
+        } else if (status === 'Received'){
+            tempOrder.status = 4;
+            tempOrder.paymentMethod = 2;
+        } else if (status === 'Exchange'){
+            tempOrder.status = 5;
+        }else {
+            tempOrder.status = 6;
+        }
+          await tempOrder.save();
+      } catch (err){
+          throw new NotExecuteException('Không thể cập nhật!');
       }
+      
+  
+    }
 }
 module.exports = OrderService;
