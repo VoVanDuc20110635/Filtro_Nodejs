@@ -5,6 +5,7 @@ const userService = new UserService();
 const InputService = require('../../services/InputService');
 const inputService = new InputService();
 const bcrypt = require('bcrypt');
+const moment = require('moment'); // Import the moment library
 let errorMessage;
 let message;
 let showProfile = async (req, res) => {
@@ -49,9 +50,13 @@ let processProfile = async (req, res) => {
         }
     try{
         let tempDob = moment(dob).toDate(); // Convert dob to a Date object
-        revertedDob = new Date(Date.UTC(tempDob.getFullYear(), tempDob.getMonth(), tempDob.getDate()));
+        let revertedDob = new Date(Date.UTC(tempDob.getFullYear(), tempDob.getMonth(), tempDob.getDate()));
+        if(isNaN(tempDob)){
+            errorMessage = "Ngày sinh không đúng định dạng, yyyy-MM-dd (năm, tháng , ngày)";
+            return res.redirect('/user/profile');
+        }
     } catch(err){
-        errorMessage = "Ngày sinh không đúng định dạng, yyyy-MM-dd (ngày, tháng, năm)";
+        errorMessage = "Ngày sinh không đúng định dạng, yyyy-MM-dd (năm, tháng , ngày)";
         return res.redirect('/user/profile');
     }
         
