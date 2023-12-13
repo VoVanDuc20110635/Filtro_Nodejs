@@ -117,6 +117,22 @@ class OrderService {
     
       return listOrder;
     }
+    async getListAllOrderByStatus(status) {
+      const listOrder = await Order.findAll({
+        include: [
+          { model: User },
+          {
+            model: OrderDetail,
+            include: [Product, ProductDetail],
+          },
+        ],
+        where: {
+          status: status
+        }
+      });
+    
+      return listOrder;
+    }
     
     async updateOrder(status, orderId) {
       try {

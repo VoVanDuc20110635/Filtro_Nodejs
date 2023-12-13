@@ -114,7 +114,13 @@
             #saveButton {
                 display: none; /* Ẩn liên kết mặc định */
             }
-    
+            
+            p.confirmButton:hover {
+                background-color: rgb(64, 204, 33); /* Replace with the color of your border */
+                color: white;
+                text-decoration: none; /* Optional: Remove the underline on hover */
+            }
+
         </style>
     
         <script
@@ -160,7 +166,7 @@
                             </a>
                         </li>
                         <li class="active">
-                            <a href="/admin/order"
+                            <a href="/admin/order/0"
                             ><i class="fa-solid fa-receipt" style="margin-right: 5px;"></i>Đơn hàng
                             </a>
                         </li>
@@ -264,23 +270,41 @@
                   </div>
                 <div class="search-box">
                     <div class="search">
-                        <button class="my-button showAddFormButton" id="showAddFormButton"><i class="fas fa-plus add"></i>Add Training Program</button>
+                        <% if (typeof numberPending !== 'undefined' &&  numberPending) { %>
+                            <a href="/admin/order/1" class="my-button showAddFormButton"><i class="fa-solid fa-reply"></i>Chờ duyệt (<%= numberPending %>)</a>
+                        <% } %>
+                        <% if (typeof numberCanceled !== 'undefined' &&  numberCanceled) { %>
+                            <a href="/admin/order/2" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Hủy đơn (<%= numberCanceled %>)</a>
+                        <% } %>
+                        <% if (typeof numberDelivering !== 'undefined' &&  numberDelivering) { %>
+                            <a href="/admin/order/3" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đang giao (<%= numberDelivering %>)</a>
+                        <% } %>
+                        <% if (typeof numberReceived !== 'undefined' &&  numberReceived) { %>
+                            <a href="/admin/order/4" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đã nhận (<%= numberReceived %>)</a>
+                        <% } %>
+                        <% if (typeof numberExchange !== 'undefined' &&  numberExchange) { %>
+                            <a href="/admin/order/5" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đổi trả (<%= numberExchange %>)</a>
+                        <% } %>
+                        <% if (typeof numberProcessed !== 'undefined' &&  numberProcessed) { %>
+                            <a href="/admin/order/6" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đã xử lý (<%= numberProcessed %>)</a>
+                        <% } %>
                     </div>
                 </div>
     
                 <table id="example" class="table table-striped" style="width:100%">
                     <thead>
                     <tr>
-                        <th class="custom-column">Mã đơn hàng</th>
-                        <th class="custom-column">Tên khách hàng</th>
-                        <th class="custom-column">Ngày đặt hàng</th>
-                        <th class="custom-column">Số điện thoại</th>
-                        <th class="custom-column">Email</th>
-                        <th class="custom-column">Địa chỉ</th>
-                        <th class="custom-column">Tổng</th>
-                        <th class="custom-column">Status</th>
-                        <th class="custom-column">Thanh toán</th>
-                        <th class="custom-column">Actions</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Mã đơn hàng</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Tên khách hàng</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Ngày đặt hàng</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Số điện thoại</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle; width: 136.2px;">Email</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Địa chỉ</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Tổng</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Status</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Thanh toán</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Chi tiết</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Xác nhận</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -307,7 +331,7 @@
                                         <%= order.phoneNumber %>
                                     <% } %>
                                 </td>
-                                <td>
+                                <td style="width: 70px;">
                                     <% if (order.email !== null && order.email) { %>
                                         <%= order.email %>
                                     <% } %>
@@ -324,17 +348,17 @@
                                 </td>
                                 <td>
                                     <% if (order.status === 1) { %>
-                                        <p style="margin-top: 8px; color: black; border: solid;" >Pending</p>
+                                        <p style="margin-top: 8px; color: black; border: solid;" >Yêu cầu duyệt</p>
                                     <% } else if (order.status === 2) { %>
-                                        <p style="margin-top: 8px; color: rgb(241, 7, 7); border: solid;">Cancel</p>
+                                        <p style="margin-top: 8px; color: rgb(241, 7, 7); border: solid;">Đã Hủy đơn</p>
                                     <% } else if (order.status === 3) { %>
-                                        <p style="margin-top: 8px; color: rgb(241, 113, 7); border: solid;">Delivery</p>
+                                        <p style="margin-top: 8px; color: rgb(241, 113, 7); border: solid;">Đang vận chuyển</p>
                                     <% } else if (order.status === 4) { %>
-                                        <p style="margin-top: 8px; color: rgb(3, 181, 48); border: solid;">Received</p>
+                                        <p style="margin-top: 8px; color: rgb(3, 181, 48); border: solid;">Đã nhận hàng</p>
                                     <% } else if (order.status === 5) { %>
-                                        <p style="margin-top: 8px; color: rgb(8, 32, 193); border: solid;">Exchange</p>
+                                        <p style="margin-top: 8px; color: rgb(8, 32, 193); border: solid;">Yêu cầu đổi</p>
                                     <% } else if (order.status === 6) { %>
-                                        <p style="margin-top: 8px; color: rgb(8, 125, 148); border: solid;">Processed</p>
+                                        <p style="margin-top: 8px; color: rgb(8, 125, 148); border: solid;">Đã xử lý</p>
                                     <% } else { %>
                                         Unknown Role
                                     <% } %>
@@ -352,8 +376,17 @@
                                 </td>
                                 <td>
                                     <a style="cursor: pointer;" class="edit open-edit-form" data-toggle="modal" style="margin-right: 5px;" data-order-id="<%= order.orderId %>" data-orderDetail-list="<%= JSON.stringify(order.OrderDetails) %>">
-                                        <i class="fa-solid fa-pencil" style="color: #ff7100;"></i>
+                                        <i class="fa-solid fa-eye" style="color: #ff7100;"></i>
                                     </a>
+                                </td>
+                                <td>
+                                    <% if (order.status === 1) { %>
+                                        <a href="/admin/updateStatusOrder/<%= order.orderId%>/3" ><p class="confirmButton" style="margin-top: 8px; border: solid black;">Lấy hàng và vận chuyển</p></a>
+                                    <% } else if (order.status === 3) { %>
+                                        <a href="/admin/updateStatusOrder/<%= order.orderId%>/4" ><p class="confirmButton" style="margin-top: 8px; border: solid rgb(241, 113, 7);">Đã giao hàng</p></a>
+                                    <% } else if (order.status === 5) { %>
+                                        <a href="/admin/updateStatusOrder/<%= order.orderId%>/6" ><p class="confirmButton" style="margin-top: 8px; border: solid rgb(8, 32, 193);">Xác nhận đổi trả</p></a>
+                                    <% } %>  
                                 </td>
                             </tr>
                         <% }); %>

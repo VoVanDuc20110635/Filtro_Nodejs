@@ -34,18 +34,18 @@ let getContactPage = async (req, res) => {
     let temp = await contactService.getListAllNonRespondedContact();
     numberOfNonRespondedContact = temp.length;
     if (message){
-        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList,numberOfNonRespondedContact: numberOfNonRespondedContact, message: message });
+        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList,numberOfNonRespondedContact: numberOfNonRespondedContact, message: message ,categoryContact: ""});
         message = null;
         errorMessage = null;
         return;
     } 
     if (errorMessage){
-        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, errorMessage: errorMessage });
+        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, errorMessage: errorMessage,categoryContact: "" });
         message = null;
         errorMessage = null;
         return;
     }
-    return res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, });
+    return res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact,categoryContact: "" });
 }
 let getRespondedContactPage = async (req, res) => {
     if (!req.session.user){
@@ -56,18 +56,18 @@ let getRespondedContactPage = async (req, res) => {
     let temp = await contactService.getListAllNonRespondedContact();
     numberOfNonRespondedContact = temp.length;
     if (message){
-        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList,numberOfNonRespondedContact: numberOfNonRespondedContact, message: message });
+        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList,numberOfNonRespondedContact: numberOfNonRespondedContact, message: message,categoryContact: "đã phản hồi" });
         message = null;
         errorMessage = null;
         return;
     } 
     if (errorMessage){
-        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, errorMessage: errorMessage });
+        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, errorMessage: errorMessage,categoryContact: "đã phản hồi" });
         message = null;
         errorMessage = null;
         return;
     }
-    return res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact });
+    return res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact,categoryContact: "đã phản hồi" });
 }
 let getNonRespondedContactPage = async (req, res) => {
     if (!req.session.user){
@@ -77,18 +77,18 @@ let getNonRespondedContactPage = async (req, res) => {
     let contactList = await contactService.getListAllNonRespondedContact();
     numberOfNonRespondedContact = contactList.length;
     if (message){
-        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, message: message });
+        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, message: message,categoryContact: "chưa phản hồi" });
         message = null;
         errorMessage = null;
         return;
     } 
     if (errorMessage){
-        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, errorMessage: errorMessage });
+        res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact, errorMessage: errorMessage,categoryContact: "chưa phản hồi"  });
         message = null;
         errorMessage = null;
         return;
     }
-    return res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact });
+    return res.render('../views/admin/contact.ejs', { session: req.session, contacts: contactList, numberOfNonRespondedContact: numberOfNonRespondedContact,categoryContact: "chưa phản hồi"  });
 }
 let update = async (req, res) => {
     try{

@@ -61,8 +61,9 @@ const initWebRouteAdmin = (app) => {
   router.get('/admin/flavor', flavorController.getFlavorPage);
   router.post('/admin/flavor', flavorController.update);
   router.post('/admin/create/flavor', flavorController.create);
-  router.get('/admin/order', orderController.getOrderPage);
+  router.get('/admin/order/:status', orderController.getOrderPageByStatus);
   router.post('/admin/order', orderController.update);
+  router.get('/admin/updateStatusOrder/:orderId/:status', orderController.updateStatusOrder);
   router.get('/admin/product', productController.getProductPage);
   router.post('/admin/product', productController.update);
   router.post('/admin/product/create', productController.create);

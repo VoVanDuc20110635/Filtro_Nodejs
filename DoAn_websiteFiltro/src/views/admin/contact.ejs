@@ -160,7 +160,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/order"
+                            <a href="/admin/order/0"
                             ><i class="fa-solid fa-receipt" style="margin-right: 5px;"></i>Đơn hàng
                             </a>
                         </li>
@@ -249,7 +249,7 @@
         <div class="content">
             <!-- Animated -->
             <div class="animated fadeIn">
-                <h2>Danh sách danh mục</h2>
+                <h2>Danh sách phản hồi - <%= categoryContact%></h2>
                 <div class="col-md-12 form-group">
                     <% if (typeof message !== 'undefined' && message) { %>
                       <div id="errorMessage" class="alert alert-success" role="alert">
@@ -268,7 +268,6 @@
                         <% if (typeof numberOfNonRespondedContact !== 'undefined' &&  numberOfNonRespondedContact) { %>
                         <a href="/admin/nonRespondedContact" class="my-button showAddFormButton" id="showAddFormButton"><i class="fa-solid fa-eye"></i>Tin nhắn chưa phản hồi (<%= numberOfNonRespondedContact %>)</a>
                         <% } else { %> 
-                            <a href="/admin/nonRespondedContact" class="my-button showAddFormButton" id="showAddFormButton"><i class="fa-solid fa-eye"></i>Tin nhắn chưa phản hồi</a>
                         <% } %>
                     </div>
                 </div>
