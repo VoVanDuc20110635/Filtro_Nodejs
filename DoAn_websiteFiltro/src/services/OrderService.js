@@ -91,7 +91,7 @@ class OrderService {
                 if (orderDetail.Product) {
                     if (orderDetail.Product.image) {
                         // Update the image field with the desired path
-                        orderDetail.Product.image = '/image/upload/' + orderDetail.Product.image;
+                        orderDetail.Product.image = '/upload/' + orderDetail.Product.image;
                     }
                 }
                 });
@@ -145,6 +145,24 @@ class OrderService {
         }else {
             tempOrder.status = 6;
         }
+          await tempOrder.save();
+      } catch (err){
+          throw new NotExecuteException('Không thể cập nhật!');
+      }
+      
+  
+    }
+    async updateOrderUser(status, orderId) {
+      try {
+        
+          const tempOrder = await Order.findOne({
+              where: {
+                orderId: orderId,
+              }
+          });
+          if (status > 0 && status < 7){
+            tempOrder.status = status;
+          }
           await tempOrder.save();
       } catch (err){
           throw new NotExecuteException('Không thể cập nhật!');

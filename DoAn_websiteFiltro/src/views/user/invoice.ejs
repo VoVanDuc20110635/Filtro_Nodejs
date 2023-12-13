@@ -117,11 +117,11 @@
                                 <span class="text-muted">Your Order</span>
                                 <span class="badge badge-secondary badge-pill"><%= orderDetailList.length %></span>
                             </h4>
-                            <ul class="list-group mb-3 sticky-top">
+                            <ul class="list-group mb-3 sticky-top" style="position: unset;">
                                 <% orderDetailList.forEach(function(item) { %>
                                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                                         <div>
-                                            <a href="/product/<%= item.Product.productId %>" style="width: 200px;" class="my-0"><%= item.Product.productName %></a>
+                                            <h6 style="width: 200px;" class="my-0"><%= item.Product.productName %></h6>
                                             <img src="<%= item.Product.image %>" alt="" style="width: 50px; width: 70px;">
                                             <small class="text-muted">Số lượng: <%= item.quantity %></small>
                                         </div>
@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="list-group-item d-flex justify-content-between">
                                     <span>Total Order</span>
-                                    <strong><%= order.total%>'đ'</strong>
+                                    <strong><%= order.total%>đ</strong>
                                 </div>
                             </form>
                         </div>

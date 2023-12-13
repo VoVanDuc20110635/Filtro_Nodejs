@@ -160,32 +160,47 @@
                                             
                                             <td>
                                                 <% if (item.status===1) { %>
-                                                    <span class="badge bg-light text-dark">Pending verification</span>
+                                                    <span style="font-size: 14px;" style="font-size: 14px;" class="badge bg-light text-dark">Pending</span>
                                                     <% } else if (item.status===2) { %>
-                                                        <span class="badge bg-light text-dark">Verified</span>
-                                                        <% } else if (item.status===3) { %>
-                                                            <span class="badge bg-light text-dark">On its way</span>
-                                                            <% } else if (item.status===4) { %>
-                                                                <span
-                                                                    class="badge bg-success text-dark">Delivered</span>
-                                                                <% } else if (item.status===5) { %>
-                                                                    <span class="badge bg-light text-dark">Processing
-                                                                        return</span>
-                                                                    <% } else if (item.status===6) { %>
-                                                                        <span class="badge bg-success text-dark">Return
-                                                                            processed</span>
-                                                                        <% } %>
+                                                        <div style="background-color: rgb(193, 11, 11); width: 100px;">
+                                                            <span style="font-size: 14px;" class="badge text-dark">Canceled</span>
+                                                        </div>
+                                                    <% } else if (item.status===3) { %>
+                                                        <div style=" background-color: rgb(114, 192, 19); width: 100px;">
+                                                            <span style="font-size: 14px;" class="badge text-dark">Delivery</span>
+                                                        </div>
+                                                    <% } else if (item.status===4) { %>
+                                                        <div style="background-color: rgb(11, 99, 193); width: 100px;">
+                                                            <span style="font-size: 14px;" class="badge text-dark">Received</span>
+                                                        </div>
+                                                    <% } else if (item.status===5) { %>
+                                                        <div style="background-color: orange; width: 100px;">
+                                                            <span style="font-size: 14px; " class="badge text-dark">Exchange</span>
+                                                        </div>
+                                                    <% } else if (item.status===6) { %>
+                                                        <div style="background-color: green; width: 100px;">
+                                                            <span style="font-size: 14px; " class="badge text-dark">Processed</span>
+                                                        </div>
+                                                    <% } %>
                                             </td>
-                                            <td class="action-td">
+                                            <td class="action-td" style="width: 330px;">
                                                 <a href="/invoice/<%= item.orderId %>"
                                                     class="btn btn-outline-primary btn-sm">Read Invoice</a>
-                                                <% if (item.status> 2) { %>
-                                                    <a href="#" data-toggle="modal"
-                                                        id="<%= 'showDeleteBillingModal' + item.orderId %>"
+                                                <% if (item.status === 1) { %>
+                                                    <a style=" width: 180px; text-align: center;" href="/invoice/<%= item.orderId%>/2"
                                                         class="delete btn btn-outline-danger btn-sm"
-                                                        data-order-id="<%= item.orderId %>">Cancel Order</a>
-                                                    <input type="hidden" name="id" id="id" value="<%= item.orderId %>">
-                                                    <% } %>
+                                                        >Hủy đơn hàng</a>
+                                                <% } %>
+                                                <% if (item.status === 3) { %>
+                                                    <a style=" width: 180px; text-align: center;" href="/invoice/<%= item.orderId%>/4"
+                                                        class="delete btn btn-outline-danger btn-sm"
+                                                        >Xác nhận đã nhận hàng</a>
+                                                <% } %>
+                                                <% if (item.status === 4) { %>
+                                                    <a style=" width: 180px; text-align: center;" href="/invoice/<%= item.orderId%>/5"
+                                                        class="delete btn btn-outline-danger btn-sm"
+                                                        >Đổi trả hàng</a>
+                                                <% } %>
                                             </td>
                                         </tr>
                                         <% }); %>
@@ -208,28 +223,6 @@
                 </div>
             </div>
 
-            <div id="deleteBillingModal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form method="post" action="/order/cancel">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Delete Employee</h4>
-                                <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete these Records?</p>
-                                <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-danger" value="Delete">
-                                <input type="hidden" name="id" id="deleteOrderId">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
 
             <% } %>
     </th:block>
@@ -333,36 +326,6 @@
         });
     </script> -->
 
-    <!-- if you want to use the jquery code, you have to import jquery library in the head of this file html -->
-    <script>
-        $(document).ready(function () {
-            // Handle click events for all <a> tags with the "delete" class
-            $("a.delete").on("click", function () {
-                // Get the data-order-id attribute value from the clicked <a> tag
-                var orderId = $(this).data("order-id");
-
-                // Set the value of the input with id "deleteOrderId" to the orderId
-                $("#deleteOrderId").val(orderId);
-
-                // Add the "show" class to the modal with id "deleteBillingModal"
-                $("#deleteBillingModal").addClass("show");
-
-                // Set the style "display: block" for the modal
-                $("#deleteBillingModal").css("display", "block");
-            });
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function () {
-            // Add an event listener for the close button and Cancel input
-            $(".modal .close, .modal input[value='Cancel']").on("click", function () {
-                $("#deleteBillingModal").removeClass("show");
-                $("#deleteBillingModal").css("display", "none");
-            });
-        });
-    </script>
 
 
 </body>

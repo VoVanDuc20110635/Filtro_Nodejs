@@ -42,6 +42,24 @@ let placeOrder = async(req, res) => {
     
 }
 
+let updateOrder = async(req, res) => {
+    try{
+        let orderId = req.params.orderId;
+        let status = req.params.status;
+        let user = req.session.user; 
+        if (user){
+            await orderService.updateOrderUser(status, orderId);
+        } else{
+            return res.redirect('/login');
+        }
+        return res.redirect('/user/billing');
+    }
+    catch(err){
+        return res.redirect('/user/billing');
+    }
+    
+}
+
 let getInvoicePage = async(req, res) => {
     if (req.session.user){
         let orderId = req.params.id;
@@ -56,5 +74,6 @@ module.exports = {
     cancel,
     getOrderPage,
     placeOrder,
-    getInvoicePage
+    getInvoicePage,
+    updateOrder
 }
