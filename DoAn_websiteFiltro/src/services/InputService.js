@@ -12,7 +12,7 @@ class InputService {
     // Contains UTF-8 characters
     async containsUTF8(input) {
         // Regular expression to match strings containing only allowed UTF-8 characters
-        const pattern = /[^\p{L}@(),.!\s]+/u;
+        const pattern = /^[a-zA-Z\p{L}@().,!'"\s-]{1,500}$/u;
 
         // Check for a match
         return pattern.test(input);

@@ -45,18 +45,18 @@ class UserService {
     async registerUser(userName, accountName, email, password, repeatPassword) {
         const existingAccount = await accountService.checkAccountName(accountName);
         if (existingAccount) {
-            throw new AccountNameExistException("This account name is set!");
+            throw new AccountNameExistException("Tên tài khoản đã được đặt!");
         }
 
         // Check if the passwords match
         if (password !== repeatPassword) {
-            throw new PasswordDoNotMatchException("Repeat password isn't correct!");
+            throw new PasswordDoNotMatchException("Repeat password không đúng!");
         }
 
         // Check if email exist
         let tempUser = await this.getUserByEmail(email);
         if (tempUser) {
-            throw new PasswordDoNotMatchException("Email exist!");
+            throw new PasswordDoNotMatchException("Email đã tồn tại!");
         }
 
         
