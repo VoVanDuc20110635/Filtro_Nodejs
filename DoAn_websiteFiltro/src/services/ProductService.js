@@ -905,6 +905,89 @@ class ProductService {
     
 
     }
+    async getListAllProductDetail() {
+        try{
+            const listProductDetail = await ProductDetail.findAll({
+                include: [Product],
+              });
+              return listProductDetail;
+        } catch(error){
+            console.error('Error get all products:', error);
+            throw error;
+        }
+        
+    }
+    async updateProductDetail(productDetailId, productId, weight, price, stock, discount, sold, status) {
+        try {
+            const tempProductDetail = await ProductDetail.findOne({
+                where: {
+                    productDetailId: productDetailId,
+                },
+            });
+            // Hash the password
+            tempProductDetail.productId = productId;
+            tempProductDetail.weight = weight;
+            tempProductDetail.price = price;
+            tempProductDetail.stock = stock;
+            tempProductDetail.discount = discount;
+            tempProductDetail.sold = sold;
+            if(status === 'active'){
+                tempProductDetail.status = 1;
+            } else{
+                tempProductDetail.status = 0;
+            }
+            await tempProductDetail.save();
+
+            const tempProduct = await Product.findOne({
+                where: {
+                    productId: productId,
+                },
+                include: ProductDetail
+            });
+
+            // Calculate the values
+            const calculatedQuantity = tempProduct.ProductDetails.reduce((sum, detail) => sum + detail.stock, 0);
+            const calculatedSold = tempProduct.ProductDetails.reduce((sum, detail) => sum + detail.sold, 0);
+            const calculatedPrice = Math.min(...tempProduct.ProductDetails.map(detail => detail.price));
+            const calculatedDiscount = Math.max(...tempProduct.ProductDetails.map(detail => detail.discount));
+
+            tempProduct.price = calculatedPrice;
+            tempProduct.quantity = calculatedQuantity;
+            tempProduct.discount = calculatedDiscount;
+            tempProduct.sold = calculatedSold;
+
+            await tempProduct.save();
+
+            
+
+            
+        } catch (err){
+            throw new NotExecuteException('Không thể cập nhật!');
+        }
+        
+    
+      }
+    async createProductDetail(productId, weight, price, stock, discount, sold, status) {
+        try {
+            let tempStatus;
+            if(status === 'active'){
+                tempStatus = 1;
+            } else{
+                tempStatus = 0;
+            }
+            const tempProduct = await ProductDetail.create({
+                productId : productId,
+                weight : weight,
+                price : price,
+                stock : stock,
+                discount : discount,
+                sold : sold,
+                status: tempStatus
+            });
+        } catch (err){
+            throw new NotExecuteException('Không thể thêm!' + err);
+        }
+    }
 }
 
 module.exports = ProductService;

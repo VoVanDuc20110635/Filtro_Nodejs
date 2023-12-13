@@ -169,12 +169,12 @@
                             ><i class="fa-solid fa-user-tie" style="margin-right: 5px;"></i>Nhân viên
                             </a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="/admin/product"
                             ><i class="fa-brands fa-product-hunt" style="margin-right: 5px;"></i>Sản phẩm
                             </a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="/admin/productDetail"
                             ><i class="fa-solid fa-circle-info" style="margin-right: 5px;"></i>Chi tiết sản phẩm
                             </a>
@@ -249,7 +249,7 @@
         <div class="content">
             <!-- Animated -->
             <div class="animated fadeIn">
-                <h2>Danh sách sản phẩm</h2>
+                <h2>Danh sách chi tiết sản phẩm</h2>
                 <div class="col-md-12 form-group">
                     <% if (typeof message !== 'undefined' && message) { %>
                       <div id="errorMessage" class="alert alert-success" role="alert">
@@ -264,7 +264,7 @@
                   </div>
                 <div class="search-box">
                     <div class="search">
-                        <button class="my-button showAddFormButton create-product" id="showAddFormButton"><i class="fas fa-plus add "></i>Tạo sản phẩm</button>
+                        <button class="my-button showAddFormButton" id="showAddFormButton"><i class="fas fa-plus add"></i>Add Product Detail</button>
                     </div>
                 </div>
     
@@ -272,104 +272,76 @@
                     <thead>
                     <tr>
                         <th class="custom-column" style="text-align: center; vertical-align: middle;">Mã</th>
-                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Tên</th>
-                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Số lượng tồn kho</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Mã sản phẩm</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Tên sản phẩm</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Cân nặng</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Giá</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Tồn kho</th>
+                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Giảm giá (%)</th>
                         <th class="custom-column" style="text-align: center; vertical-align: middle;">Đã bán</th>
-                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Mô tả</th>
-                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Created Date</th>
                         <th class="custom-column" style="text-align: center; vertical-align: middle;">Status</th>
-                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Hương vị</th>
-                        <th class="custom-column" style="text-align: center; vertical-align: middle;">Danh mục</th>
                         <th class="custom-column" style="text-align: center; vertical-align: middle;">Actions</th>
-                        <th class="custom-column" style="display: none; text-align: center; vertical-align: middle;"></th>
-                        <th class="custom-column" style="display: none; text-align: center; vertical-align: middle;"></th>
-                        <th class="custom-column" style="display: none; text-align: center; vertical-align: middle;"></th>
-                        <th class="custom-column" style="display: none; text-align: center; vertical-align: middle;"></th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% if (typeof products !== 'undefined' && products.length > 0) { %>
-                            <% products.forEach(function(product) { %>
+                        <% if (typeof productDetails !== 'undefined' && productDetails.length > 0) { %>
+                            <% productDetails.forEach(function(productDetail) { %>
                             <tr class="spandd">
                                 <td>
-                                    <% if (typeof product.productId !== null && product.productId) { %>
-                                        <%= product.productId%>
+                                    <% if (typeof productDetail.productDetailId !== null && productDetail.productDetailId) { %>
+                                        <%= productDetail.productDetailId%>
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (typeof product.productName !== null && product.productName) { %>
-                                        <div>
-                                            <%= product.productName%>
-                                        </div>
-                                        <div style="width: 135px;">
-                                            <img src="<%= product.image%>"> 
-                                        </div>
+                                    <% if (typeof productDetail.productId !== null && productDetail.productId) { %>
+                                        <%= productDetail.productId%>
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (typeof product.quantity !== null && product.quantity) { %>
-                                        <%= product.quantity%>
+                                    <% if (typeof productDetail.Product.productName !== null && productDetail.Product.productName) { %>
+                                        <%= productDetail.Product.productName%>
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (typeof product.sold !== null && product.sold) { %>
-                                        <%= product.sold%>
+                                    <% if (typeof productDetail.weight !== null && productDetail.weight) { %>
+                                        <%= productDetail.weight%>
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (typeof product.description !== null && product.description) { %>
-                                        <%= product.description.length > 100 ? product.description.slice(0, 100) + '...' : product.description %>
-                                    <% } %>
-                                </td>                        
-                                <td>
-                                    <% if (typeof product.createdDate !== null && product.createdDate) { %>
-                                        <%= product.createdDate%>
+                                    <% if (typeof productDetail.price !== null && productDetail.price) { %>
+                                        <%= productDetail.price%>
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (product.status === 1) { %>
+                                    <% if (typeof productDetail.stock !== null && productDetail.stock) { %>
+                                        <%= productDetail.stock%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof productDetail.discount !== null && productDetail.discount) { %>
+                                        <%= productDetail.discount%>
+                                    <% } else {%>
+                                        0
+                                    <% }%>    
+                                </td>
+                                <td>
+                                    <% if (typeof productDetail.sold !== null && productDetail.sold) { %>
+                                        <%= productDetail.sold%>
+                                    <% } else {%>
+                                        0
+                                    <% }%>
+                                </td>
+                                <td>
+                                    <% if (productDetail.status === 1) { %>
                                         Active
                                     <% } else { %>
                                         Inactive
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (typeof product.Flavor.flavorName !== null && product.Flavor.flavorName) { %>
-                                        <%= product.Flavor.flavorName%>
-                                    <% } %>
-                                </td>
-                                <td>
-                                    <% if (typeof product.Category.categoryName !== null && product.Category.categoryName) { %>
-                                        <%= product.Category.categoryName%>
-                                    <% } %>
-                                </td>
-                                <td>
                                     <a style="cursor: pointer;" class="edit open-edit-form" data-toggle="modal" style="margin-right: 5px;">
                                         <i class="fa-solid fa-pencil" style="color: #ff7100;"></i>
                                     </a>
-                                    <a style="cursor: pointer;" class="edit open-edit-image-form" data-toggle="modal" style="margin-right: 5px;">
-                                        <i class="fa-solid fa-image" style="color: #2913b7;"></i>
-                                    </a>
-                                </td>
-                                <td style="display: none;">
-                                    <% if (typeof product.productId !== null && product.productId) { %>
-                                        <%= product.productId%>
-                                    <% } %>
-                                </td>
-                                <td style="display: none;">
-                                    <% if (typeof product.Flavor.flavorId !== null && product.Flavor.flavorId) { %>
-                                        <%= product.Flavor.flavorId%>
-                                    <% } %>
-                                </td>
-                                <td style="display: none;">
-                                    <% if (typeof product.Category.id !== null && product.Category.id) { %>
-                                        <%= product.Category.id%>
-                                    <% } %>
-                                </td>
-                                <td style="display: none;">
-                                    <% if (typeof product.description !== null && product.description) { %>
-                                        <%= product.description%>
-                                    <% } %>
                                 </td>
                             </tr>
                         <% }); %>
@@ -384,93 +356,55 @@
                 <div class="overlay" id="formEdit">
                     <div class="container">
                         <div class="form">
-                            <form action="/admin/product" method="post">
+                            <form action="/admin/productDetail" method="post" >
                                 <table>
                                     <tr>
-                                        <th style="background-color: #0f65c1;" colspan="3">Chỉnh sửa sản phẩm</th>
+                                        <th style="background-color: #0f65c1;" colspan="3">Edit Product Detail</th>
                                     </tr>
                                     <tr>
-                                        <td>Tên</td>
-                                        <td colspan="2"><input type="text" name="productName" placeholder="Tên" value="" required></td>
+                                        <td>Mã</td>
+                                        <td colspan="2"><input type="text" name="productDetailId" placeholder="0" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td>Số lượng tồn kho</td>
-                                        <td colspan="2"><input type="text" name="quantity" placeholder="1" value="" readonly></td>
+                                        <td>Sản phẩm</td>
+                                        <td colspan="2">
+                                            <select name="productId" required>
+                                                <% products.forEach(function(product) { %>
+                                                    <option value="<%= product.productId%>"><%= product.productName%></option>
+                                                <% }); %>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cân nặng</td>
+                                        <td colspan="2"><input type="text" name="weight" placeholder="0" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Giá</td>
+                                        <td colspan="2"><input type="text" name="price" placeholder="0" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tồn kho</td>
+                                        <td colspan="2"><input type="text" name="stock" placeholder="0" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Giảm giá</td>
+                                        <td colspan="2"><input type="text" name="discount" placeholder="0" required></td>
                                     </tr>
                                     <tr>
                                         <td>Đã bán</td>
-                                        <td colspan="2"><input type="text" name="sold" placeholder="1" value="" readonly></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mô tả</td>
-                                        <td colspan="2"><input type="text" name="description" placeholder="Mô tả" value="" required></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ngày tạo</td>
-                                        <td colspan="2"><input type="text" name="createdDate" placeholder="Ngày tạo" value="" readonly></td>
+                                        <td colspan="2"><input type="text" name="sold" placeholder="0" required></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 110px">Status</td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="status" value="active"> Active
+                                                <input type="radio" name="status" value="active" checked> Active
                                             </label>
                                             <label>
                                                 <input type="radio" name="status" value="inactive"> Inactive
                                             </label>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hương vị</td>
-                                        <td colspan="2">
-                                            <select name="flavorId" required>
-                                                <% flavors.forEach(function(flavor) { %>
-                                                    <option value="<%= flavor.flavorId%>"><%= flavor.flavorName%></option>
-                                                <% }); %>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Danh mục</td>
-                                        <td colspan="2">
-                                            <select name="categoryId" required>
-                                                <% categories.forEach(function(category) { %>
-                                                    <option value="<%= category.id%>"><%= category.categoryName%></option>
-                                                <% }); %>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr style="display: none">
-                                        <td>Id</td>
-                                        <td><input type="text" name="productId" placeholder="id" value=""></td>
-                                    </tr>
-                                </table>
-                                <div class="bk_save_user" style="margin-bottom: 5px;">
-                                    <button type="submit" class="button-save-user" style="background-color: #0f65c1">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="overlay" id="formChangeImage">
-                    <div class="container">
-                        <div class="form">
-                            <form action="/admin/product/changeImage" method="post"  enctype="multipart/form-data">
-                                <table>
-                                    <tr>
-                                        <th style="background-color: #0f65c1;" colspan="2">Thay đổi hình ảnh sản phẩm</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Hình ảnh</td>
-                                        <td colspan="2">
-                                            <input type="file" name="file">
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr style="display: none">
-                                        <td>Id</td>
-                                        <td><input type="text" name="productId" placeholder="id" value=""></td>
                                     </tr>
                                 </table>
                                 <div class="bk_save_user" style="margin-bottom: 5px;">
@@ -484,18 +418,40 @@
                 <div class="overlay" id="formCreate">
                     <div class="container">
                         <div class="form">
-                            <form action="/admin/product/create" method="post">
+                            <form action="/admin/productDetail/create" method="post" >
                                 <table>
                                     <tr>
-                                        <th style="background-color: #0f65c1;" colspan="3">Chỉnh sửa sản phẩm</th>
+                                        <th style="background-color: #0f65c1;" colspan="3">Create Product Detail</th>
                                     </tr>
                                     <tr>
-                                        <td>Tên</td>
-                                        <td colspan="2"><input type="text" name="productName" placeholder="Tên" value="" required></td>
+                                        <td>Sản phẩm</td>
+                                        <td colspan="2">
+                                            <select name="productId" required>
+                                                <% products.forEach(function(product) { %>
+                                                    <option value="<%= product.productId%>"><%= product.productName%></option>
+                                                <% }); %>
+                                            </select>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>Mô tả</td>
-                                        <td colspan="2"><input type="text" name="description" placeholder="Mô tả" value="" required></td>
+                                        <td>Cân nặng</td>
+                                        <td colspan="2"><input type="text" name="weight" placeholder="0" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Giá</td>
+                                        <td colspan="2"><input type="text" name="price" placeholder="0" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tồn kho</td>
+                                        <td colspan="2"><input type="text" name="stock" placeholder="0" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Giảm giá</td>
+                                        <td colspan="2"><input type="text" name="discount" placeholder="0" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Đã bán</td>
+                                        <td colspan="2"><input type="text" name="sold" placeholder="0" required></td>
                                     </tr>
                                     <tr>
                                         <td style="width: 110px">Status</td>
@@ -506,26 +462,6 @@
                                             <label>
                                                 <input type="radio" name="status" value="inactive"> Inactive
                                             </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hương vị</td>
-                                        <td colspan="2">
-                                            <select name="flavorId" required>
-                                                <% flavors.forEach(function(flavor) { %>
-                                                    <option value="<%= flavor.flavorId%>"><%= flavor.flavorName%></option>
-                                                <% }); %>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Danh mục</td>
-                                        <td colspan="2">
-                                            <select name="categoryId" required>
-                                                <% categories.forEach(function(category) { %>
-                                                    <option value="<%= category.id%>"><%= category.categoryName%></option>
-                                                <% }); %>
-                                            </select>
                                         </td>
                                     </tr>
                                 </table>
@@ -564,38 +500,32 @@
     <!-- Scripts -->
 <script>
     new DataTable('#example', {
-        "order": [[5,'desc']]
+        "order": []
     });
 </script>
 <script>
     $(document).ready(function () {
         $(document).on('click', '.open-edit-form', function () {
             var row = $(this).closest('tr');
-            var status = row.find('td:eq(6)').text().trim();
+            var status = row.find('td:eq(8)').text().trim();
             const formEdit = document.getElementById('formEdit');
-            const productNameInput = formEdit.querySelector('input[name="productName"]');
-            // const productImage = formEdit.querySelector('input[name="image"]');
-            const productQuantityInput = formEdit.querySelector('input[name="quantity"]');
-            const productSoldInput = formEdit.querySelector('input[name="sold"]');
-            const productDescriptionInput = formEdit.querySelector('input[name="description"]');
-            const productCreatedDateInput = formEdit.querySelector('input[name="createdDate"]');
+            const productDetailIdInput = formEdit.querySelector('input[name="productDetailId"]');
+            const productIdSelect = formEdit.querySelector('select[name="productId"]');
+            const weightInput = formEdit.querySelector('input[name="weight"]');
+            const priceInput = formEdit.querySelector('input[name="price"]');
+            const stockInput = formEdit.querySelector('input[name="stock"]');
+            const discountInput = formEdit.querySelector('input[name="discount"]');
+            const soldInput = formEdit.querySelector('input[name="sold"]');
             const statusRadioActive = formEdit.querySelector('input[value="active"]');
             const statusRadioInactive = formEdit.querySelector('input[value="inactive"]');
-            const flavorIdSelect = formEdit.querySelector('select[name="flavorId"]');
-            const categoryIdSelect = formEdit.querySelector('select[name="categoryId"]');
-            const productId = formEdit.querySelector('input[name="productId"]');
-            // const flavorId = formEdit.querySelector('input[name="flavorId"]');
-            // const categoryId = formEdit.querySelector('input[name="categoryId"]');
-            productNameInput.value = row.find('td:eq(1)').text().trim();
-            // productImageInput.value = row.find('td:eq(0)').text().trim();
-            productQuantityInput.value = row.find('td:eq(2)').text().trim();
-            productSoldInput.value = row.find('td:eq(3)').text().trim();
-            productDescriptionInput.value = row.find('td:eq(13)').text().trim();
-            productCreatedDateInput.value = row.find('td:eq(5)').text().trim();
-            const selectedFlavorId = row.find('td:eq(11)').text().trim();
-            const selectedCategoryId = row.find('td:eq(12)').text().trim();
-            productId.value = row.find('td:eq(10)').text().trim();
-            console.log(status);
+            
+            productDetailIdInput.value = row.find('td:eq(0)').text().trim();
+            const productIdSelected = row.find('td:eq(1)').text().trim();
+            weightInput.value = row.find('td:eq(3)').text().trim();
+            priceInput.value = row.find('td:eq(4)').text().trim();
+            stockInput.value = row.find('td:eq(5)').text().trim();
+            discountInput.value = row.find('td:eq(6)').text().trim();
+            soldInput.value = row.find('td:eq(7)').text().trim();
             if (status === 'Active'){
                 statusRadioActive.checked = true;
                 statusRadioInactive.checked = false;
@@ -603,44 +533,25 @@
                 statusRadioActive.checked = false;
                 statusRadioInactive.checked = true;
             }
-            for (let i = 0; i < flavorIdSelect.options.length; i++) {
-                const option = flavorIdSelect.options[i];
-                
-                // Check if the option value matches the selectedFlavorId
-                if (parseInt(option.value) === parseInt(selectedFlavorId)) {
-                    // Set the selected attribute for the matching option
-                    option.selected = true;
-                    break; // Break out of the loop since we found the matching option
-                }
-            }
-            for (let i = 0; i < categoryIdSelect.options.length; i++) {
-                const option = categoryIdSelect.options[i];
-                
-                // Check if the option value matches the selectedFlavorId
-                if (parseInt(option.value) === parseInt(selectedCategoryId)) {
-                    // Set the selected attribute for the matching option
-                    option.selected = true;
-                    break; // Break out of the loop since we found the matching option
-                }
-            }
 
+            for (let i = 0; i < productIdSelect.options.length; i++) {
+                const option = productIdSelect.options[i];
+                
+                // Check if the option value matches the selectedFlavorId
+                if (parseInt(option.value) === parseInt(productIdSelected)) {
+                    // Set the selected attribute for the matching option
+                    option.selected = true;
+                    break; // Break out of the loop since we found the matching option
+                }
+            }
             formEdit.style.display = 'flex';
 
         });
 
-        $(document).on('click', '.open-edit-image-form', function () {
-            var row = $(this).closest('tr');
-            const formChangeImage = document.getElementById('formChangeImage');
-            const productId = formChangeImage.querySelector('input[name="productId"]');
-            productId.value = row.find('td:eq(10)').text().trim();
-
-            formChangeImage.style.display = 'flex';
-
-        });
-
-        $(document).on('click', '.create-product', function () {
+        $(document).on('click', '.showAddFormButton', function () {
             
             const formCreate = document.getElementById('formCreate');
+            
             formCreate.style.display = 'flex';
 
         });
@@ -657,12 +568,6 @@
             formCreate.addEventListener('click', function (e) {
                 if (e.target === formCreate) {
                     formCreate.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
-                }
-            });
-            const formChangeImage = document.getElementById('formChangeImage');
-            formChangeImage.addEventListener('click', function (e) {
-                if (e.target === formChangeImage) {
-                    formChangeImage.style.display = 'none'; // Ẩn overlay nếu bấm ra ngoài
                 }
             });
         });

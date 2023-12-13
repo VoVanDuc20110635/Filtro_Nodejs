@@ -5,6 +5,7 @@ import categoryController from '../../controller/admin/categoryController'
 import flavorController from '../../controller/admin/flavorController'
 import orderController from '../../controller/admin/orderController'
 import productController from '../../controller/admin/productController'
+import productDetailController from '../../controller/admin/productDetailController'
 import staffController from '../../controller/admin/staffController'
 import userController from '../../controller/admin/userController'
 import multer from 'multer';
@@ -64,6 +65,9 @@ const initWebRouteAdmin = (app) => {
   router.get('/admin/product', productController.getProductPage);
   router.post('/admin/product', productController.update);
   router.post('/admin/product/create', productController.create);
+  router.get('/admin/productDetail', productDetailController.getProductDetailPage);
+  router.post('/admin/productDetail', productDetailController.update);
+  router.post('/admin/productDetail/create', productDetailController.create);
   router.post('/admin/product/changeImage', upload2.single('file'), productController.changeImage);
   router.get('/admin/staff', staffController.getStaffPage);
   router.post('/admin/staff', staffController.update);
