@@ -179,7 +179,7 @@
                             ><i class="fa-solid fa-circle-info" style="margin-right: 5px;"></i>Chi tiết sản phẩm
                             </a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="/admin/category"
                             ><i class="fa-solid fa-list" style="margin-right: 5px;"></i>Danh mục
                             </a>
@@ -189,7 +189,7 @@
                             ><i class="fa-regular fa-star" style="margin-right: 5px;"></i>Hương vị
                             </a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="/admin/contact"
                             ><i class="fa-solid fa-comment" style="margin-right: 5px;"></i>Phản hồi
                             </a>
@@ -264,51 +264,76 @@
                   </div>
                 <div class="search-box">
                     <div class="search">
-                        <button class="my-button showAddFormButton" id="showAddFormButton"><i class="fas fa-plus add"></i>Add Category</button>
+                        <a href="/admin/RespondedContact" class="my-button showAddFormButton" id="showAddFormButton"><i class="fa-solid fa-reply"></i>Tin nhắn đã phản hồi</a>
+                        <% if (typeof numberOfNonRespondedContact !== 'undefined' &&  numberOfNonRespondedContact) { %>
+                        <a href="/admin/nonRespondedContact" class="my-button showAddFormButton" id="showAddFormButton"><i class="fa-solid fa-eye"></i>Tin nhắn chưa phản hồi (<%= numberOfNonRespondedContact %>)</a>
+                        <% } else { %> 
+                            <a href="/admin/nonRespondedContact" class="my-button showAddFormButton" id="showAddFormButton"><i class="fa-solid fa-eye"></i>Tin nhắn chưa phản hồi</a>
+                        <% } %>
                     </div>
                 </div>
     
                 <table id="example" class="table table-striped" style="width:100%">
                     <thead>
                     <tr>
-                        <th class="custom-column">Mã danh mục</th>
-                        <th class="custom-column">Tên danh mục</th>
-                        <th class="custom-column">Status</th>
+                        <th class="custom-column">Mã</th>
+                        <th class="custom-column">Tên khách hàng</th>
+                        <th class="custom-column">Email</th>
+                        <th class="custom-column">Chủ đề</th>
+                        <th class="custom-column">Tin nhắn</th>
+                        <th class="custom-column">Phản hồi</th>
                         <th class="custom-column">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <% if (typeof categories !== 'undefined' && categories.length > 0) { %>
-                            <% categories.forEach(function(category) { %>
+                        <% if (typeof contacts !== 'undefined' && contacts.length > 0) { %>
+                            <% contacts.forEach(function(contact) { %>
                             <tr class="spandd">
                                 <td>
-                                    <% if (typeof category.id !== null && category.id) { %>
-                                        <%= category.id%>
+                                    <% if (typeof contact.contactId !== null && contact.contactId) { %>
+                                        <%= contact.contactId%>
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (typeof category.categoryName !== null && category.categoryName) { %>
-                                        <%= category.categoryName%>
+                                    <% if (typeof contact.customerName !== null && contact.customerName) { %>
+                                        <%= contact.customerName%>
                                     <% } %>
                                 </td>
                                 <td>
-                                    <% if (category.status === 1) { %>
-                                        Active
+                                    <% if (typeof contact.email !== null && contact.email) { %>
+                                        <%= contact.email%>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof contact.topic !== null && contact.topic) { %>
+                                        <%= contact.topic%>
                                     <% } else { %>
-                                        Inactive
+                                        <p></p>
                                     <% } %>
                                 </td>
                                 <td>
-                                    <a style="cursor: pointer;" class="edit open-edit-form" data-toggle="modal"  style="margin-right: 5px;">
+                                    <% if (typeof contact.message !== null && contact.message) { %>
+                                        <%= contact.message%>
+                                    <% } else { %>
+                                        <p></p>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (typeof contact.response !== null && contact.response) { %>
+                                        <%= contact.response%>
+                                    <% } else { %>
+                                        <p></p>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <a style="cursor: pointer;" class="edit open-edit-form" data-toggle="modal" style="margin-right: 5px;">
                                         <i class="fa-solid fa-pencil" style="color: #ff7100;"></i>
                                     </a>
                                 </td>
                             </tr>
                         <% }); %>
                         <% }else { %>
-                            <tr>
-                                <td colspan="7" class="text-center"><p>No data</p></td>
-                            </tr>
+                            
                         <% } %>
                     </tbody>
                 </table>
@@ -316,29 +341,34 @@
                 <div class="overlay" id="formEdit">
                     <div class="container">
                         <div class="form">
-                            <form action="/admin/category" method="post" >
+                            <form action="/admin/contact" method="post" >
                                 <table>
                                     <tr>
-                                        <th style="background-color: #0f65c1;" colspan="3">Edit category</th>
+                                        <th style="background-color: #0f65c1;" colspan="3">Reponse message</th>
                                     </tr>
                                     <tr>
-                                        <td>Tên danh mục</td>
-                                        <td colspan="2"><input type="text" name="categoryName" placeholder="Tên danh mục" required></td>
+                                        <td>Email</td>
+                                        <td colspan="2"><input type="text" name="email" placeholder="Email" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 110px">Status</td>
-                                        <td>
-                                            <label>
-                                                <input type="radio" name="status" value="active"> Active
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="status" value="inactive"> Inactive
-                                            </label>
+                                        <td>Chủ đề</td>
+                                        <td colspan="2"><input type="text" name="topic" placeholder="Topic" readonly></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tin nhắn</td>
+                                        <td colspan="2"><textarea class="form-control" value ="message_edit" rows="6" id="message" placeholder="Message"
+                                            readonly></textarea>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>Phản hồi</td>
+                                        <td colspan="2"><textarea class="form-control" value="response_edit" rows="6" id="response" name="response" placeholder="Response"
+                                            required></textarea></td>
+                                    </tr>
+                                    
                                     <tr style="display: none">
                                         <td>Id</td>
-                                        <td><input type="text" name="categoryId" placeholder="id" value=""></td>
+                                        <td><input type="text" name="contactId" placeholder="id" value=""></td>
                                     </tr>
                                 </table>
                                 <div class="bk_save_user" style="margin-bottom: 5px;">
@@ -349,41 +379,6 @@
                     </div>
                 </div>
 
-                <div class="overlay" id="formCreate">
-                    <div class="container">
-                        <div class="form">
-                            <form action="/admin/create/category" method="post" >
-                                <table>
-                                    <tr>
-                                        <th style="background-color: #0f65c1;" colspan="3">Create category</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Tên danh mục</td>
-                                        <td colspan="2"><input type="text" name="categoryName" placeholder="Tên danh mục" required></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 110px">Status</td>
-                                        <td>
-                                            <label>
-                                                <input type="radio" name="status" value="active" checked> Active
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="status" value="inactive"> Inactive
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr style="display: none">
-                                        <td>Id</td>
-                                        <td><input type="text" name="categoryId" placeholder="id" value=""></td>
-                                    </tr>
-                                </table>
-                                <div class="bk_save_user" style="margin-bottom: 5px;">
-                                    <button type="submit" class="button-save-user" style="background-color: #0f65c1">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
     
             </div>
             <!--End: Content-->
@@ -419,21 +414,18 @@
     $(document).ready(function () {
         $(document).on('click', '.open-edit-form', function () {
             var row = $(this).closest('tr');
-            var status = row.find('td:eq(2)').text().trim();
             const formEdit = document.getElementById('formEdit');
-            const categoryNameInput = formEdit.querySelector('input[name="categoryName"]');
-            const statusRadioActive = formEdit.querySelector('input[value="active"]');
-            const statusRadioInactive = formEdit.querySelector('input[value="inactive"]');
-            const categoryIdInput = formEdit.querySelector('input[name="categoryId"]');
-            categoryNameInput.value = row.find('td:eq(1)').text().trim();
-            categoryIdInput.value = row.find('td:eq(0)').text().trim();
-            if (status == 1){
-                statusRadioActive.checked = true;
-                statusRadioInactive.checked = false;
-            } else{
-                statusRadioActive.checked = false;
-                statusRadioInactive.checked = true;
-            }
+            const topicInput = formEdit.querySelector('input[name="topic"]');
+            const emailInput = formEdit.querySelector('input[name="email"]');
+            const massageInput = formEdit.querySelector('textarea[value="message_edit"]');
+            const responseInput = formEdit.querySelector('textarea[value="response_edit"]');
+            const contactIdInput = formEdit.querySelector('input[name="contactId"]');
+            topicInput.value = row.find('td:eq(3)').text().trim();
+            emailInput.value = row.find('td:eq(2)').text().trim();
+            massageInput.value = row.find('td:eq(4)').text().trim();
+            responseInput.value = row.find('td:eq(5)').text().trim();
+            contactIdInput.value = row.find('td:eq(0)').text().trim();
+            
             formEdit.style.display = 'flex';
 
         });

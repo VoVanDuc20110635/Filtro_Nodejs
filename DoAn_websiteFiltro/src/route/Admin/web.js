@@ -8,6 +8,7 @@ import productController from '../../controller/admin/productController'
 import productDetailController from '../../controller/admin/productDetailController'
 import staffController from '../../controller/admin/staffController'
 import userController from '../../controller/admin/userController'
+import contactController from '../../controller/admin/contactController'
 import multer from 'multer';
 import path from 'path';
 import { error } from "console";
@@ -73,6 +74,10 @@ const initWebRouteAdmin = (app) => {
   router.post('/admin/staff', staffController.update);
   router.get('/admin/user', userController.getUserPage);
   router.post('/admin/user', userController.update);
+  router.get('/admin/contact', contactController.getContactPage);
+  router.get('/admin/RespondedContact', contactController.getRespondedContactPage);
+  router.get('/admin/nonRespondedContact', contactController.getNonRespondedContactPage);
+  router.post('/admin/contact', contactController.update);
   // router.post('/login', loginController.login);
 
   return app.use('/', router);
