@@ -15,10 +15,16 @@ let showProfile = async (req, res) => {
     }
     let user = await userService.getUserById(temp.userId);
     if (message){
-        return res.render('../views/user/user-profile.ejs', { session: req.session, user: user, message: message });    
+        res.render('../views/user/user-profile.ejs', { session: req.session, user: user, message: message });    
+        message = null;
+        errorMessage = null; 
+        return;
     }
     if (errorMessage){
-        return res.render('../views/user/user-profile.ejs', { session: req.session, user: user, errorMessage:errorMessage });    
+        res.render('../views/user/user-profile.ejs', { session: req.session, user: user, errorMessage:errorMessage }); 
+        message = null;
+        errorMessage = null;   
+        return;
     }
     message = null;
     errorMessage = null;
@@ -41,6 +47,14 @@ let processProfile = async (req, res) => {
         errorMessage = "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự.";
         return res.redirect('/user/profile');
         }
+    try{
+        let tempDob = moment(dob).toDate(); // Convert dob to a Date object
+        revertedDob = new Date(Date.UTC(tempDob.getFullYear(), tempDob.getMonth(), tempDob.getDate()));
+    } catch(err){
+        errorMessage = "Ngày sinh không đúng định dạng, yyyy-MM-dd (ngày, tháng, năm)";
+        return res.redirect('/user/profile');
+    }
+        
     // console.log(name, address, zip, city, email, phoneNumber, dob, sex);
     await userService.updateUser(userId, name, address, zip, city, email, phoneNumber, dob, sex);
     message = "Cập nhật thành công!";

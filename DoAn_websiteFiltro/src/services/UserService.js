@@ -80,7 +80,7 @@ class UserService {
             email: email,
             accountId: account.id
         });
-
+        
         // create cart
         let cart = await cartService.createCart(user);
     }
@@ -90,8 +90,6 @@ class UserService {
         if (!user) {
             throw new UserNotFoundException(`Can't find this user!`);
         }
-        console.log(dob);
-        console.log(moment(dob).toDate());
         user.name = name;
         let tempDob = moment(dob).toDate(); // Convert dob to a Date object
         user.dob = new Date(Date.UTC(tempDob.getFullYear(), tempDob.getMonth(), tempDob.getDate()));
