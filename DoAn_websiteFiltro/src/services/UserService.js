@@ -86,7 +86,6 @@ class UserService {
     }
 
     async updateUser(userId, name, address, zip, city, email, phoneNumber, dob, sex){
-        console.log(userId);
         const user = await User.findByPk(userId);
         if (!user) {
             throw new UserNotFoundException(`Can't find this user!`);
@@ -167,7 +166,7 @@ class UserService {
         });
         return listUser;
     }
-      async updateUser(name, dob, sex, address, zip, city, email, phoneNumber, status, userId) {
+    async updateUser2(name, dob, sex, address, zip, city, email, phoneNumber, status, userId) {
         try {
             const tempUser = await User.findOne({
                 where: {
@@ -176,7 +175,9 @@ class UserService {
             });
             // Hash the password
             tempUser.name = name;
-            tempUser.dob = dob;
+            // tempUser.dob = dob;
+            let tempDob = moment(dob).toDate(); // Convert dob to a Date object
+            tempUser.dob = new Date(Date.UTC(tempDob.getFullYear(), tempDob.getMonth(), tempDob.getDate()));
             tempUser.sex = sex;
             tempUser.address = address;
             tempUser.zip = zip;

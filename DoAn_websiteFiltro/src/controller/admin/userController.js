@@ -54,7 +54,7 @@ let update = async (req, res) => {
                 errorMessage = "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự.";
                 return res.redirect("/admin/user");
             }
-        await userService.updateUser(name, dob, sex, address, zip, city, email, phoneNumber, status, userId);
+        await userService.updateUser2(name, dob, sex, address, zip, city, email, phoneNumber, status, userId);
         message = "Cập nhật thành công!";
         return res.redirect("/admin/user");
     } catch(err){
