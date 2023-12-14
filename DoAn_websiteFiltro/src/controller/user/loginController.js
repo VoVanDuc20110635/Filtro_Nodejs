@@ -87,11 +87,10 @@ let processChangePassword = async (req, res) => {
     let email = req.session.email;
     let token = req.session.token;
     let {newPassword, repeatPassword} = req.body;
-    console.log(newPassword, repeatPassword);
     if (newPassword !== repeatPassword){
         return res.render('../views/user/passwordReset.ejs', { session: req.session, errorMessage: "RepeatPassword không đúng" });
     }
-    if ( await inputService.isValidPassword(password) == false||
+    if ( await inputService.isValidPassword(newPassword) == false||
             await inputService.isValidPassword(repeatPassword) == false){
             return res.render('../views/user/passwordReset.ejs', { errorMessage: "Mật khẩu với dài ít nhất 8 ký tự, có ít nhất một chữ hoa, có ít nhất 1 số tự nhiên và chỉ có 1 ký tự đặc biệt:@#$%^&+=.! " });
             }

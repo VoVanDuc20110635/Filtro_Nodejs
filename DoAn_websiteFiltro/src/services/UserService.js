@@ -19,6 +19,19 @@ class UserService {
         const listUser = await User.findAll();
         return listUser;
     }
+    async getAllUserByRoleNumber(roleNumber) {
+        const listUser = await User.findAll({
+            include: [
+                {
+                  model: Account,
+                  where: {
+                    roleNumber: roleNumber
+                  }
+                },
+              ],
+        });
+        return listUser;
+    }
 
     async getUserById(id) {
         return await User.findOne({

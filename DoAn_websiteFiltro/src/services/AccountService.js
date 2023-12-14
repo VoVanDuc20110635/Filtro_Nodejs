@@ -19,6 +19,15 @@ class AccountService {
         });
         return listAccount;
     }
+    async getListAllUserByStatus(roleNumber) {
+        const listAccount = await Account.findAll({
+            include: User,
+            where: {
+                roleNumber: roleNumber
+            }
+        });
+        return listAccount;
+    }
     async updateAccount(accountName, password, status, role, accountId) {
         try {
             const tempAccount = await Account.findOne({

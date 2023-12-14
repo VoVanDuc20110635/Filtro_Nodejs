@@ -170,11 +170,13 @@
                             ><i class="fa-solid fa-receipt" style="margin-right: 5px;"></i>Đơn hàng
                             </a>
                         </li>
-                        <li>
-                            <a href="/admin/staff"
-                            ><i class="fa-solid fa-user-tie" style="margin-right: 5px;"></i>Nhân viên
-                            </a>
-                        </li>
+                        <% if (typeof session.account.roleNumber === 1) { %>
+                            <li>
+                                <a href="/admin/staff"
+                                ><i class="fa-solid fa-user-tie" style="margin-right: 5px;"></i>Nhân viên
+                                </a>
+                            </li>
+                        <% } %>
                         <li>
                             <a href="/admin/product"
                             ><i class="fa-brands fa-product-hunt" style="margin-right: 5px;"></i>Sản phẩm
@@ -404,34 +406,7 @@
                             <form action="/admin/order" method="post" >
                                 <table>
                                     <tr>
-                                        <th style="background-color: #0f65c1;" colspan="7">Edit Order</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 60px" colspan="1"> Status</td>
-                                        <td colspan="2">
-                                            <label>
-                                                <input type="radio" name="status" value="Pending"> Pending
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="status" value="Cancel"> Cancel
-                                            </label>
-                                        </td>
-                                        <td colspan="2">
-                                            <label>
-                                                <input type="radio" name="status" value="Delivery"> Delivery
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="status" value="Received"> Received
-                                            </label>
-                                        </td>
-                                        <td colspan="2">
-                                            <label>
-                                                <input type="radio" name="status" value="Exchange"> Exchange
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="status" value="Processed"> Processed
-                                            </label>
-                                        </td>
+                                        <th style="background-color: #0f65c1;" colspan="7">View Order</th>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -497,27 +472,10 @@
             var row = $(this).closest('tr');
             var status = row.find('td:eq(7)').text().trim();
             const formEdit = document.getElementById('formEdit');
-            const statusRadioPending = formEdit.querySelector('input[value="Pending"]');
-            const statusRadioCancel = formEdit.querySelector('input[value="Cancel"]');
-            const statusRadioDelivery = formEdit.querySelector('input[value="Delivery"]');
-            const statusRadioReceived = formEdit.querySelector('input[value="Received"]');
-            const statusRadioExchange = formEdit.querySelector('input[value="Exchange"]');
-            const statusRadioProcessed = formEdit.querySelector('input[value="Processed"]');
+
             const orderIdInput = formEdit.querySelector('input[name="orderId"]');
             orderIdInput.value = row.find('td:eq(0)').text().trim();
-            if (status ===  'Pending'){
-                statusRadioPending.checked = true;
-            } else if (status === 'Cancel'){
-                statusRadioCancel.checked = true;
-            } else if (status === 'Delivery'){
-                statusRadioDelivery.checked = true;
-            } else if (status === 'Received'){
-                statusRadioReceived.checked = true;
-            } else if (status === 'Exchange'){
-                statusRadioExchange.checked = true;
-            }else {
-                statusRadioCancel.checked = true;
-            }
+
             const orderId = $(this).data('order-id');
             const orderDetailList = $(this).data('orderdetail-list');
             const orderDetailArray = Array.isArray(orderDetailList) ?

@@ -78,7 +78,7 @@ let logout = async (req, res) => {
         if (err) {
             console.error('Error destroying session:', err);
         } else {
-            res.redirect('/login'); // Redirect to the login page or any other desired page
+            res.redirect('/admin/login'); // Redirect to the login page or any other desired page
         }
     });
 };

@@ -21,8 +21,13 @@ let getAccountPage = async (req, res) => {
     if (!req.session.user){
         return res.redirect("/admin/login");
     }
+    let accountList;
+    if (req.session.account.roleNumber == 1){
+        accountList = await accountService.getListAllUser();
+    } else {
+        accountList = await accountService.getListAllUserByStatus(3);
+    }
     
-    let accountList = await accountService.getListAllUser();
     if (message){
         res.render('../views/admin/account.ejs', { session: req.session, accounts: accountList, message: message });
         message = null;

@@ -35,7 +35,7 @@ let registerUser = async (req, res) => {
             return res.render('../views/user/register.ejs', { errorMessage: "Email không tồn tại!" });
         }
         await userService.registerUser(userName, accountName, email, password, repeatPassword);
-        return res.render('../views/user/register.ejs', { message: "Register Successfully! Login now!" });
+        return res.render('../views/user/register.ejs', { message: "Đăng ký thành công! Đăng nhập ngay bây giờ!" });
     } catch (exception) {
         return res.render('../views/user/register.ejs', { errorMessage: exception.message });
     }

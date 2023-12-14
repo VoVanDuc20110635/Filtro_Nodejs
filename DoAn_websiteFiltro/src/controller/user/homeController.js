@@ -33,6 +33,8 @@ const userService = new UserService();
 const ProductService = require('../../services/ProductService');
 const productService = new ProductService();
 let getHomepage = async (req, res) => {
+    let ipAddress = req.headers['X-FORWARDED-FOR'] || req.connection.remoteAddress;
+    console.log(ipAddress);
     // let userId = parseInt( req.session.user.userId, 10);
     const categories = await categoryService.get5Categories();
     let product6thList = await productService.getSixthProducts();

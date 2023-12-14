@@ -12,6 +12,7 @@ const userService = new UserService();
 const InputService = require('../../services/InputService');
 const inputService = new InputService();
 
+const moment = require('moment'); // Import the moment library
 
 const AuthenticationAccountException = require('../../Exception/AuthenticationAccountException');
 let message;
@@ -21,7 +22,13 @@ let getUserPage = async (req, res) => {
         return res.redirect("/admin/login");
     }
     
-    let userList = await userService.getListAllUser();
+    
+    let userList;
+    if (req.session.account.roleNumber == 1){
+        userList = await userService.getListAllUser();
+    } else {
+        userList = await userService.getAllUserByRoleNumber(3);
+    }
     if (message){
         res.render('../views/admin/user.ejs', { session: req.session, users: userList, message: message });
         message = null;
@@ -42,7 +49,7 @@ let update = async (req, res) => {
             return res.redirect("/admin/login");
         }
         let {name, dob, sex, address, zip, city, email, phoneNumber, status, userId} = req.body;
-        if (await inputService.isValidComment(name) == false||
+        if (await inputService.containsUTF8(name) == false||
             await inputService.isValidComment(dob) == false||
             await inputService.isValidComment(sex) == false||
             await inputService.isValidComment(address) == false||
@@ -54,6 +61,17 @@ let update = async (req, res) => {
                 errorMessage = "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự.";
                 return res.redirect("/admin/user");
             }
+        try{
+            let tempDob = moment(dob).toDate(); // Convert dob to a Date object
+            let revertedDob = new Date(Date.UTC(tempDob.getFullYear(), tempDob.getMonth(), tempDob.getDate()));
+            if(isNaN(tempDob)){
+                errorMessage = "Ngày sinh không đúng định dạng, yyyy-MM-dd (năm, tháng , ngày)";
+                return res.redirect('/admin/user');
+            }
+        } catch(err){
+            errorMessage = "Ngày sinh không đúng định dạng, yyyy-MM-dd (năm, tháng , ngày)";
+            return res.redirect('/admin/user');
+        }
         await userService.updateUser2(name, dob, sex, address, zip, city, email, phoneNumber, status, userId);
         message = "Cập nhật thành công!";
         return res.redirect("/admin/user");

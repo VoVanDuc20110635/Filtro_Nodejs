@@ -12,7 +12,7 @@ const userService = new UserService();
 const InputService = require('../../services/InputService');
 const inputService = new InputService();
 
-
+const moment = require('moment'); // Import the moment library
 
 const AuthenticationAccountException = require('../../Exception/AuthenticationAccountException');
 let message;
@@ -21,7 +21,9 @@ let getStaffPage = async (req, res) => {
     if (!req.session.user){
         return res.redirect("/admin/login");
     }
-    
+    if (req.session.account.roleNumber !== 1){
+        return res.render('../views/admin/dashboard.ejs', {session: req.session,errorMessage: "Bạn không có quyền truy cập trang này!"});
+    }
     let staffList = await userService.getListAllStaff();
     if (message){
         res.render('../views/admin/staff.ejs', { session: req.session, users: staffList, message: message });
@@ -43,7 +45,7 @@ let update = async (req, res) => {
             return res.redirect("/admin/login");
         }
         let {name, dob, sex, address, zip, city, email, phoneNumber, status, userId} = req.body;
-        if (await inputService.isValidComment(name) == false||
+        if (await inputService.containsUTF8(name) == false||
             await inputService.isValidComment(dob) == false||
             await inputService.isValidComment(sex) == false||
             await inputService.isValidComment(address) == false||
@@ -55,7 +57,18 @@ let update = async (req, res) => {
                 errorMessage = "Chỉ được nhập chữ thường, chữ hoa, số tự nhiên, chữ tiếng việt, dấu @, dấu (), dấu phẩy, dấu nháy đơn, nháy kép, dấu chấm và khoảng trắng, dài từ 1 - 100 ký tự.";
                 return res.redirect("/admin/staff");
             }
-        await userService.updateUser(name, dob, sex, address, zip, city, email, phoneNumber, status, userId);
+        try{
+            let tempDob = moment(dob).toDate(); // Convert dob to a Date object
+            let revertedDob = new Date(Date.UTC(tempDob.getFullYear(), tempDob.getMonth(), tempDob.getDate()));
+            if(isNaN(tempDob)){
+                errorMessage = "Ngày sinh không đúng định dạng, yyyy-MM-dd (năm, tháng , ngày)";
+                return res.redirect('/admin/staff');
+            }
+        } catch(err){
+            errorMessage = "Ngày sinh không đúng định dạng, yyyy-MM-dd (năm, tháng , ngày)";
+            return res.redirect('/admin/staff');
+        }
+        await userService.updateUser(userId, name, address, zip, city, email, phoneNumber, dob, sex);
         message = "Cập nhật thành công!";
         return res.redirect("/admin/staff");
     } catch(err){
