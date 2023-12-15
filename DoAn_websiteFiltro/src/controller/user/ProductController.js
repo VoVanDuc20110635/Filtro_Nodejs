@@ -62,7 +62,32 @@ let feedback = async(req, res) => {
     return res.redirect(`/product/${productId}`);
 
 }
+let removeFeedback = async(req, res) => {
+    let productId = parseInt(req.params.id, 10);
+    let feedbackId = parseInt(req.params.feedbackId, 10);
+    let userId = parseInt( req.session.user.userId, 10);
+    
+    await feedbackService.removeFeedback(feedbackId);
+
+    // console.log(userId, productId, content, numberOfStars, currentDay);
+    return res.redirect(`/product/${productId}`);
+
+}
+let updateFeedback = async(req, res) => {
+    let productId = parseInt(req.params.id, 10);
+    let feedbackId = parseInt(req.params.feedbackId, 10);
+    let userId = parseInt( req.session.user.userId, 10);
+    let {numberOfStars, content} = req.body;
+    numberOfStars = parseInt( numberOfStars, 10);
+    await feedbackService.updateFeedback(feedbackId, numberOfStars, content);
+
+    // console.log(userId, productId, content, numberOfStars, currentDay);
+    return res.redirect(`/product/${productId}`);
+
+}
 module.exports = {
     getProductPage,
-    feedback
+    feedback,
+    removeFeedback,
+    updateFeedback
 }

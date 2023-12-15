@@ -22,12 +22,17 @@
 
     <!-- Libraries Stylesheet -->
 
+    
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/public/css/style.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="/public/css/boot1/owl.carousel.min.css">
 
     <link href="/public/css/form.css" rel="stylesheet">
+    <script
+                src="https://kit.fontawesome.com/8f73a47761.js"
+                crossorigin="anonymous"
+        ></script>
 </head>
 
 <body>
@@ -291,8 +296,32 @@
                                                     value="<%= feedback.stars %>" name="numberOfStars">
                                             </div>
                                             <p>
-                                                <%= feedback.content %>
-                                            </p>
+                                                <%= feedback.content %> 
+                                            </p> 
+                                            <% if (session.user && feedback.User.userId == session.user.userId ) { %>
+                                                <div>
+                                                    <a class="editFeedback"><i class="fa-solid fa-pencil" style="color: #ff7100; cursor: pointer;" ></i></a>
+                                                    <a href="/product/<%= product.productId %>/feedback/<%= feedback.feedbackId %>"><i class="fa-solid fa-trash" style="color: red;"></i></a>
+                                                </div>
+                                                <form id="feedbackEditForm" style="display: none;" action="/product/<%= product.productId %>/editFeedback/<%= feedback.feedbackId %>" method="post">
+                                                    <!-- Other form inputs... -->
+                                                    <p class="mb-0 mr-2">Your Rating * :</p>
+                                                    <div class="text-primary">
+                                                        <i class="far fa-star fa-star-comment" onclick="setRating2(1)"></i>
+                                                        <i class="far fa-star fa-star-comment" onclick="setRating2(2)"></i>
+                                                        <i class="far fa-star fa-star-comment" onclick="setRating2(3)"></i>
+                                                        <i class="far fa-star fa-star-comment" onclick="setRating2(4)"></i>
+                                                        <i class="far fa-star fa-star-comment" onclick="setRating2(5)"></i>
+                                                    </div>
+                                                    <input type="hidden" name="numberOfStars" id="numberOfStarsInput2" required>
+                                                    <textarea name="content" value="<%= feedback.content%>" cols="30" rows="5"
+                                                    class="form-control" required><%= feedback.content%></textarea>
+                                                    <div>
+                                                        <button class="btn btn-primary px-3" style="margin-top: 15px; margin-bottom: 15px;" type="submit">Submit</button>
+                                                        <a class="btn btn-primary px-3" class="cancelEditFeedbackForm">Cancel</a>
+                                                    </div>
+                                                </form>
+                                            <% } %>
                                             <hr>
                                         </div>
                                     </div>
@@ -365,12 +394,11 @@
                                         <%= product.productName %>
                                     </h6>
                                     <div class="d-flex justify-content-center">
+                                        <h10 class="text-truncate priceAfterDiscount2" style="margin-bottom: 2px; font-size: 15px;" data-product-id="<%= product.productId %>"></h10>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
                                         <h6 class="discountProduct" data-product-id="<%= product.productId %>"> Giảm giá: 
                                         </h6>
-                                        <!-- <h6 class="text-muted ml-2"><del>
-                                                <%= (product.price).toLocaleString('en-US', { style: 'currency' ,
-                                                    currency: 'USD' }) %>
-                                            </del></h6> -->
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between bg-light border">
@@ -580,6 +608,28 @@
             var quantityInput = document.getElementById('quantityInput');
             quantityInput.value
         }
+        function setRating2(rating) {
+            var stars = document.getElementsByClassName('fa-star-comment');
+            var input = document.getElementById('numberOfStarsInput2');
+
+            // Xóa lớp 'fas' (sao đầy) và thêm lớp 'far' (sao trống) cho tất cả các sao
+            for (var i = 0; i < stars.length; i++) {
+                stars[i].classList.remove('fas');
+                stars[i].classList.add('far');
+            }
+
+            // Thêm lớp 'fas' (sao đầy) cho số sao đã được chọn
+            for (var j = 0; j < rating; j++) {
+                stars[j].classList.remove('far');
+                stars[j].classList.add('fas');
+            }
+
+            // Đặt giá trị cho phần tử input
+            console.log(rating);
+            input.value = rating;
+            var quantityInput = document.getElementById('quantityInput');
+            quantityInput.value
+        }
     </script>
 
     <script>
@@ -623,10 +673,10 @@
                 const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
                 const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
                 const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
-
+                const minDiscount = Math.min(...productDetailArray.map(detail => detail.discount));
                 // Update the content of the current h6.discountProduct
                 if (maxDiscount > 0) {
-                    $(this).text(`Giảm giá lên đến ${maxDiscount}%`);
+                    $(this).text(`Giảm giá: ${minDiscount}% - ${maxDiscount}%`);
                 } else {
                     $(this).text(`Không giảm giá!`);
                     $(this).css('visibility', 'hidden');
@@ -666,6 +716,9 @@
 
                 const minDiscount = Math.min(...productDetailArray.map(detail => detail.discount));
                 const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                if (maxDiscount > 0){
+                    
+                }
                 $(this).text(`${minPrice - minPrice*correspondingDiscountMin/100}đ - ${maxPrice - maxPrice*correspondingDiscount/100}đ`);
                 // Update the content of the current h6.discountProduct
                 if (correspondingDiscountMin > 0 ){
@@ -701,6 +754,25 @@
                 });
 
                 formImport.style.display= 'flex';
+            });
+            $(document).on('click', '.editFeedback', function () {
+                const feedbackEditForm = document.getElementById('feedbackEditForm');
+                feedbackEditForm.style.display= 'flex';
+            });  
+            $(document).on('click', '.cancelEditFeedbackForm', function () {
+                const feedbackEditForm = document.getElementById('feedbackEditForm');
+                feedbackEditForm.style.display= 'none';
+            });  
+            $('.priceAfterDiscount2').each(function () {
+                const productId = $(this).data('product-id');
+                const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
+                const maxPrice = Math.max(...productDetailArray.map(detail => detail.price));
+                const minPrice = Math.min(...productDetailArray.map(detail => detail.price));
+                // Update the content of the current h6.discountProduct
+                const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                $(this).text(`${minPrice}đ - ${maxPrice}đ`);
+                
             });
 
             $(document).on('click', function (e) {

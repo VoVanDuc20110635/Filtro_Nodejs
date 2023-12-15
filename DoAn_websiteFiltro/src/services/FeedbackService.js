@@ -17,8 +17,34 @@ class FeedbackService {
             throw error;
         }
     }
+    async removeFeedback(feedbackId) {
+        try {
+            const deletedFeedback = await Feedback.destroy({
+                where: {
+                    feedbackId: feedbackId
+                },
+            });
+        } catch (error) {
+            console.error('Error removing cart item:', error);
+            // Handle the error appropriately
+        }
+    }
+
+    async getAllFeedBackByProductId(id) {
+        try {
+            const feedbackList = await Feedback.findAll({
+                where: { 'productId': id }, // Replace 'productId' with the actual field name in your model
+                include: User,
+            });
+
+            return feedbackList;
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async addFeedBack(userId, productId, content, numberOfStarts, currentDay) {
+
         let feedBack = {
             productId: productId,
             userId: userId,
@@ -28,6 +54,23 @@ class FeedbackService {
         }
         try {
             const newFeedBack = await Feedback.create(feedBack);
+        }
+        catch (error) {
+            console.error('Error creating contact:', error);
+        }
+
+    }
+    async updateFeedback(feedbackId, numberOfStars, content) {
+        console.log(feedbackId, numberOfStars, content);
+        try {
+            let oldFeedback = await Feedback.findOne({
+                where: {
+                    feedbackId: feedbackId
+                }
+            })
+            oldFeedback.stars = numberOfStars;
+            oldFeedback.content = content;
+            oldFeedback.save();
         }
         catch (error) {
             console.error('Error creating contact:', error);

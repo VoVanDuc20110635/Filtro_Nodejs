@@ -527,6 +527,46 @@
                     
                 }
             });
+            $('.priceAfterDiscount').each(function () {
+                const productId = $(this).data('product-id');
+                const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
+                const maxPrice = Math.max(...productDetailArray.map(detail => detail.price));
+                const minPrice = Math.min(...productDetailArray.map(detail => detail.price));
+                // Update the content of the current h6.discountProduct
+                const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                if (maxDiscount > 0){
+                    $(this).text(`${minPrice}đ - ${maxPrice}đ`);
+                }
+                
+            });
+            $('.priceBeforeDiscount').each(function () {
+                const productId = $(this).data('product-id');
+                const productDetails = $(`.showImportButton[data-product-id="${productId}"]`).data('productdetail-list');
+                const productDetailArray = Array.isArray(productDetails) ? productDetails : JSON.parse(productDetails);
+                const maxDetail = productDetailArray.reduce((max, currentDetail) => {
+                    return currentDetail.price > max.price ? currentDetail : max;
+                }, productDetailArray[0]);
+
+                const maxPrice = maxDetail.price;
+                const correspondingDiscount = maxDetail.discount;
+                
+                const minDetail = productDetailArray.reduce((min, currentDetail) => {
+                    return currentDetail.price < min.price ? currentDetail : min;
+                }, productDetailArray[0]);
+
+                const minPrice = minDetail.price;
+                const correspondingDiscountMin = minDetail.discount;
+
+                const minDiscount = Math.min(...productDetailArray.map(detail => detail.discount));
+                const maxDiscount = Math.max(...productDetailArray.map(detail => detail.discount));
+                $(this).text(`${minPrice - minPrice*correspondingDiscountMin/100}đ - ${maxPrice - maxPrice*correspondingDiscount/100}đ`);
+                // Update the content of the current h6.discountProduct
+                if (correspondingDiscountMin > 0 ){
+                    $('#discountRange').text(`Giảm giá: ${minDiscount}% - ${maxDiscount}%`);
+                }
+                
+            });
             $(document).on('click', '.showImportButton', function () {
                 const formImport = document.getElementById('formEdit');
                 const productId = $(this).data('product-id');

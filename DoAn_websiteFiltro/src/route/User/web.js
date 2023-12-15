@@ -8,6 +8,7 @@ import userController from '../../controller/user/UserController'
 import orderController from '../../controller/user/OrderController'
 import productController from '../../controller/user/ProductController'
 import cartController from '../../controller/user/CartController'
+import vnpayPaymentController from '../../controller/user/VnpayPaymentController'
 import multer from 'multer';
 import path from 'path';
 import { error } from "console";
@@ -65,9 +66,12 @@ const initWebRoute = (app) => {
   router.get('/invoice/:orderId/:status', orderController.updateOrder);
   router.get('/product/:id', productController.getProductPage );
   router.post('/product/:id/feedback', productController.feedback);
+  router.get('/product/:id/feedback/:feedbackId', productController.removeFeedback);
+  router.post('/product/:id/editFeedback/:feedbackId', productController.updateFeedback);
   router.get('/cart', cartController.showCart);
   router.post('/cart/add', cartController.addCart);
   router.post('/cart/remove/:productId', cartController.removeCartItem);
+  router.get('/order/payment/:orderId', vnpayPaymentController.createVNPayOrder);
   // router.get('/detail/user/:id', homeController.getDetailPage);
   // router.post('/create-new-user', homeController.createNewUser);
   // router.post('/delete-user', homeController.deleteUser);

@@ -34,6 +34,16 @@ class OrderService {
             throw error;
         }
     }
+    async getOrderById(orderId){
+      try {
+          const order = await Order.findOne(
+            { where: { orderId: orderId } }
+          );
+          return order; // Returns the updated order
+        } catch (error) {
+          throw error;
+      }
+  }
     async placeOrder(cartId, user, sumOfAllItem, address, city, zip){
         try{
             const newOrder = await Order.create({
