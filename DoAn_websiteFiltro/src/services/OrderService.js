@@ -15,7 +15,7 @@ class OrderService {
                 where: {
                     userId: userId,
                 },
-                order: [['orderDate', 'DESC']],
+                order: [['orderId', 'DESC']],
             });
             return orders;
         } catch (error) {
@@ -44,7 +44,7 @@ class OrderService {
           throw error;
       }
   }
-    async placeOrder(cartId, user, sumOfAllItem, address, city, zip, productDetailIdArray){
+    async placeOrder(cartId, user, sumOfAllItem, address, city, zip, productDetailIdArray, deliveryFee){
         try{
             const newOrder = await Order.create({
                 userId: user.userId,
@@ -52,11 +52,12 @@ class OrderService {
                 phoneNumber: user.phoneNumber,
                 email: user.email,
                 address: address,
-                total: sumOfAllItem,
+                total: sumOfAllItem + deliveryFee,
                 status: 1,
                 paymentMethod:1,
                 zip: zip,
-                city: city
+                city: city,
+                deliveryFee: deliveryFee
             });
             let cartItemList = await cartItemService.getCartItemListWithTheseId(cartId, productDetailIdArray);
             for (let cartItem of cartItemList) {

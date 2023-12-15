@@ -50,6 +50,10 @@ const Order = sequelize.define('Order', {
     type: DataTypes.STRING,
     field: 'thanhpho',
   },
+  deliveryFee: {
+    type: DataTypes.STRING,
+    field: 'phi',
+  },
 }, {
   tableName: 'dathang', // Specify the table name
   timestamps: false, // Disable Sequelize's default timestamps (createdAt and updatedAt)

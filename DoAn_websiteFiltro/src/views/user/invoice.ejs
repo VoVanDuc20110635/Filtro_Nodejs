@@ -194,8 +194,17 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>Address</label>
-                                    <% if ( session.user.address !== null || session.user.email.address > 0) { %>
-                                        <input type="text" class="form-control" name="address" value="<%= session.user.address %>" readonly>
+                                    <% if ( order) { %>
+                                        <input type="text" class="form-control" name="address" value="<%= order.address %>" readonly>
+                                    <% } else { %>
+                                        <input type="text" class="form-control" name="address" value="1234 Main St" readonly>
+                                    <% } %>
+                                    <div class="invalid-feedback"> Please enter your shipping address.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Shipping fee</label>
+                                    <% if ( order) { %>
+                                        <input type="text" class="form-control" name="address" value="<%= order.deliveryFee %>" readonly>
                                     <% } else { %>
                                         <input type="text" class="form-control" name="address" value="1234 Main St" readonly>
                                     <% } %>
@@ -234,7 +243,7 @@
                                     <div class="custom-control custom-radio">
                                         <input id="creditRadio" name="paymentMethod" type="radio" class="custom-control-input"
                                             value="2" readonly>
-                                        <label class="custom-control-label" for="creditRadio">Bank card payment</label>
+                                        
                                     </div>
                                 </div>
                                 <div class="form-group" id="cc-fields" style="display: none;">

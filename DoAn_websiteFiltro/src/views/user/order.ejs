@@ -25,6 +25,7 @@
     <link href="/public/css/style.css" rel="stylesheet">
     <link rel="stylesheet" ref="/css/order.css">
     <script src="/public/javascript/order.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <!--        <link rel="stylesheet" type="tex    t/css" href="/css/boot1/style.css" th:href="@{/css/boot1/style.css}">-->
     <!--        <link rel="stylesheet" type="text/css" href="/css/boot1/deltailProduct.css" th:href="@{/css/boot1/deltailProduct.css}">-->
 
@@ -202,12 +203,25 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>Address</label>
-                                    <% if ( session.user.address !== null || session.user.email.address > 0) { %>
+                                    <!-- <% if ( session.user.address !== null || session.user.email.address > 0) { %>
                                         <input type="text" class="form-control" name="address" value="<%= session.user.address %>" required>
                                     <% } else { %>
                                         <input type="text" class="form-control" name="address" value="1234 Main St" required>
-                                    <% } %>
+                                    <% } %> -->
                                     <div class="invalid-feedback"> Please enter your shipping address.</div>
+                                    <div>
+                                        <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                        <option value="" selected>Chọn tỉnh thành</option>           
+                                        </select>
+                                                  
+                                        <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                        <option value="" selected>Chọn quận huyện</option>
+                                        </select>
+                                        
+                                        <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                                        <option value="" selected>Chọn phường xã</option>
+                                        </select>
+                                    </div>    
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -242,7 +256,6 @@
                                     <div class="custom-control custom-radio">
                                         <input id="creditRadio" name="paymentMethod" type="radio" class="custom-control-input"
                                             value="2">
-                                        <label class="custom-control-label" for="creditRadio">Bank card payment</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="cc-fields" style="display: none;">
@@ -274,6 +287,8 @@
                                     <input type="hidden" name="productIds" id="productIdsInput" value="<%= productIds %>">
                                 </div>
                                 <hr class="mb-4">
+                                <input type="hidden" class="form-control" name="address" id="addressInput" value="" required>
+                                <input type="hidden" class="form-control deliveryFeeInput" id="deliveryFeeInput" name="deliveryFee" value="" required>
                                 <button class="btn btn-primary btn-lg btn-block mb-5" type="submit">Continue to checkout</button>
                             </form>
                         </div>
@@ -370,6 +385,90 @@
             var ccFields = document.getElementById('cc-fields');
             ccFields.style.display = this.checked ? 'none' : 'block';
         });
+    </script>
+    
+    <script>
+        var citis = document.getElementById("city");
+        var districts = document.getElementById("district");
+        var wards = document.getElementById("ward");
+        var addressInput = document.getElementById("addressInput");
+        var deliveryFeeInput = document.getElementById("deliveryFeeInput");
+        var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json", 
+        method: "GET", 
+        responseType: "application/json", 
+        };
+        var promise = axios(Parameter);
+        promise.then(function (result) {
+        renderCity(result.data);
+        });
+        
+        function renderCity(data) {
+            for (const x of data) {
+                citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                
+            }
+            citis.onchange = function () {
+                district.length = 1;
+                ward.length = 1;
+                if(this.value != ""){
+                const result = data.filter(n => n.Id === this.value);
+            
+                for (const k of result[0].Districts) {
+                    district.options[district.options.length] = new Option(k.Name, k.Id);
+                }
+                }
+                updateDeliveryFee();
+            };
+            district.onchange = function () {
+                ward.length = 1;
+                const dataCity = data.filter((n) => n.Id === citis.value);
+                if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+            
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                }
+                }
+                updateDeliveryFee();
+            };
+            wards.onchange = function () {
+                updateDeliveryFee();
+            };
+            function updateDeliveryFee() {
+                const selectedCity = citis.options[citis.selectedIndex].text;
+                const selectedDistrict = district.options[district.selectedIndex].text;
+                const selectedWard = wards.options[wards.selectedIndex].text;
+
+                addressInput.value = selectedCity + ' ' + selectedDistrict + ' ' + selectedWard;
+                deliveryFeeInput.value = calculateDistance(selectedCity);
+            }
+            function calculateDistance(city){
+                try{
+                        if (city.includes("Hà Nội") || city.includes("Hà Giang") || city.includes("Cao Bằng") || city.includes("Bắc Cạn") ||
+                    city.includes("Tuyên Quang") || city.includes("Lào Cai") || city.includes("Điện Biên") || city.includes("Lai Châu") || 
+                    city.includes("Lai Châu") || city.includes("Sơn La") || city.includes("Yên Bái") || city.includes("Hòa Bình") ||
+                    city.includes("Thái Nguyên") || city.includes("Lạng Sơn") || city.includes("Quảng Ninh") || city.includes("Bắc Giang")||
+                    city.includes("Phú Thọ") || city.includes("Vĩnh Phúc") || city.includes("Bắc Ninh") || city.includes("Hải Dương")||
+                    city.includes("Hải Phòng") || city.includes("Hưng Yên")){
+                        return 30000;
+                    } else if (city.includes("Thái Bình") || city.includes("Hà Nam") || city.includes("Nam Định") || city.includes("Ninh Bình") ||
+                    city.includes("Thanh Hóa") || city.includes("Nghệ An") || city.includes("Hà Tĩnh") || city.includes("Quảng Bình") ||
+                    city.includes("Quảng Trị") || city.includes("Huế") || city.includes("Đà Nẵng") || city.includes("Quảng Nam") ||
+                    city.includes("Quảng Ngãi") || city.includes("Bình Định") || city.includes("Phú Yên") || city.includes("Khánh Hòa") ||
+                    includes("Ninh Thuận") || city.includes("Bình Thuận")){
+                        return 20000;
+                    }
+                    
+                }
+                catch(err){
+                    return 10000;
+                }
+                
+                
+            }
+        }
+        
     </script>
 </body>
 

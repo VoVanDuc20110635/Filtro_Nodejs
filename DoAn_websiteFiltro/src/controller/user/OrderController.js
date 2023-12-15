@@ -26,12 +26,15 @@ let getOrderPage = async (req, res) => {
 
 let placeOrder = async(req, res) => {
     try{
-        let {sumOfAllItem, address, city,zip,productIds} = req.body;
+        let {sumOfAllItem, city,zip,productIds, address, deliveryFee} = req.body;
+        console.log(sumOfAllItem, city,zip,productIds, address, deliveryFee);
         var productDetailIdArray = productIds.split(',').map(Number);
+        deliveryFee = parseInt(deliveryFee, 10);
+        sumOfAllItem = parseInt(sumOfAllItem, 10);
         let user = req.session.user; 
         let cartId = req.session.cart.id;
         if (user){
-            await orderService.placeOrder(cartId, user,sumOfAllItem, address, city, zip, productDetailIdArray);
+            await orderService.placeOrder(cartId, user,sumOfAllItem, address, city, zip, productDetailIdArray, deliveryFee);
         } else{
             return res.redirect('/login');
         }
