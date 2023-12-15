@@ -272,24 +272,28 @@
                   </div>
                 <div class="search-box">
                     <div class="search">
-                        <% if (typeof numberPending !== 'undefined' &&  numberPending) { %>
-                            <a href="/admin/order/1" class="my-button showAddFormButton"><i class="fa-solid fa-reply"></i>Chờ duyệt (<%= numberPending %>)</a>
-                        <% } %>
-                        <% if (typeof numberCanceled !== 'undefined' &&  numberCanceled) { %>
-                            <a href="/admin/order/2" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Hủy đơn (<%= numberCanceled %>)</a>
-                        <% } %>
-                        <% if (typeof numberDelivering !== 'undefined' &&  numberDelivering) { %>
-                            <a href="/admin/order/3" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đang giao (<%= numberDelivering %>)</a>
-                        <% } %>
-                        <% if (typeof numberReceived !== 'undefined' &&  numberReceived) { %>
-                            <a href="/admin/order/4" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đã nhận (<%= numberReceived %>)</a>
-                        <% } %>
-                        <% if (typeof numberExchange !== 'undefined' &&  numberExchange) { %>
-                            <a href="/admin/order/5" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đổi trả (<%= numberExchange %>)</a>
-                        <% } %>
-                        <% if (typeof numberProcessed !== 'undefined' &&  numberProcessed) { %>
-                            <a href="/admin/order/6" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đã xử lý (<%= numberProcessed %>)</a>
-                        <% } %>
+                        <div>
+                            <% if (typeof numberPending !== 'undefined' &&  numberPending) { %>
+                                <a href="/admin/order/1" class="my-button showAddFormButton"><i class="fa-solid fa-reply"></i>Chờ duyệt (<%= numberPending %>)</a>
+                            <% } %>
+                            <% if (typeof numberCanceled !== 'undefined' &&  numberCanceled) { %>
+                                <a href="/admin/order/2" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Hủy đơn (<%= numberCanceled %>)</a>
+                            <% } %>
+                            <% if (typeof numberDelivering !== 'undefined' &&  numberDelivering) { %>
+                                <a href="/admin/order/3" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đang giao (<%= numberDelivering %>)</a>
+                            <% } %>
+                        </div>
+                        <div style="margin-top: 22px;">
+                            <% if (typeof numberReceived !== 'undefined' &&  numberReceived) { %>
+                                <a href="/admin/order/4" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đã nhận (<%= numberReceived %>)</a>
+                            <% } %>
+                            <% if (typeof numberExchange !== 'undefined' &&  numberExchange) { %>
+                                <a href="/admin/order/5" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đổi trả (<%= numberExchange %>)</a>
+                            <% } %>
+                            <% if (typeof numberProcessed !== 'undefined' &&  numberProcessed) { %>
+                                <a href="/admin/order/6" class="my-button showAddFormButton"><i class="fa-solid fa-eye"></i>Đã xử lý (<%= numberProcessed %>)</a>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
     

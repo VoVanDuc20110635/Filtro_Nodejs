@@ -587,7 +587,7 @@
 
                 // Add options to the select
                 productDetailArray.forEach(function (productDetail) {
-                    if (productDetail.stock !== 0) {
+                    if (productDetail.stock > 0) {
                         let price = productDetail.price-productDetail.price*productDetail.discount/100;
                         
 

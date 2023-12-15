@@ -103,11 +103,11 @@ let updateStatusOrder = async(req, res) => {
         } else{
             return res.redirect('/admin/login');
         }
-        return res.redirect('/admin/order');
+        return res.redirect('/admin/order/0');
     }
     catch(err){
         errorMessage = err;
-        return res.redirect('/admin/order');
+        return res.redirect('/admin/order/0');
     }
     
 }

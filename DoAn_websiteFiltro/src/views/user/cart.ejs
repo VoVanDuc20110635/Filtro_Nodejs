@@ -439,8 +439,10 @@
                 var checkmark = checkbox.nextElementSibling; 
                 if (masterCheckbox.checked) {
                 checkmark.innerHTML = '✔';
+                checkbox.checked = true;
                 } else {
                     checkmark.innerHTML = '';
+                    checkbox.checked = false;
                 }
             });
             var checkmarkMaster = masterCheckbox.nextElementSibling; 
