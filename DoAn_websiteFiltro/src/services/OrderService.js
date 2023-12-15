@@ -44,7 +44,7 @@ class OrderService {
           throw error;
       }
   }
-    async placeOrder(cartId, user, sumOfAllItem, address, city, zip){
+    async placeOrder(cartId, user, sumOfAllItem, address, city, zip, productDetailIdArray){
         try{
             const newOrder = await Order.create({
                 userId: user.userId,
@@ -58,7 +58,7 @@ class OrderService {
                 zip: zip,
                 city: city
             });
-            let cartItemList = await cartItemService.getCartItemList(cartId);
+            let cartItemList = await cartItemService.getCartItemListWithTheseId(cartId, productDetailIdArray);
             for (let cartItem of cartItemList) {
                 let orderDetail = await OrderDetail.create({
                     orderId: newOrder.orderId,
@@ -68,6 +68,22 @@ class OrderService {
                     pricePerProduct: cartItem.price,
                     total: cartItem.total
                 })
+                let productDatabase = await Product.findOne({
+                  where:{
+                    productId: cartItem.productId
+                  }
+                })
+                productDatabase.sold = productDatabase.sold + 1;
+                productDatabase.quantity = productDatabase.quantity -1 ;
+                productDatabase.save();
+                let productDetailDatabase = await ProductDetail.findOne({
+                  where:{
+                    productDetailId: cartItem.productDetailId
+                  }
+                })
+                productDetailDatabase.sold = productDetailDatabase.sold + 1;
+                productDetailDatabase.stock = productDetailDatabase.stock -1 ;
+                productDetailDatabase.save();
                 let deletedCartItem = await CartItem.destroy({
                     where: {
                         cartId: cartId,

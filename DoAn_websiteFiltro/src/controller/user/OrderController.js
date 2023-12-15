@@ -16,9 +16,9 @@ let getOrderPage = async (req, res) => {
         var quantitiesArray = quantities.split(',').map(Number);
         var pricesArray = prices.split(',').map(Number);
         await cartItemService.updateCartItemList(req.session.cart.id, productDetailIdArray, quantitiesArray, pricesArray);
-        let cartItemList = await cartItemService.getCartItemList(req.session.cart.id);
+        let cartItemList = await cartItemService.getCartItemListWithTheseId(req.session.cart.id, productDetailIdArray);
         const sum = cartItemList.reduce((acc, item) => acc + item.total, 0);
-        return res.render('../views/user/order.ejs', { session: req.session, cartItemList:cartItemList, sum:sum});
+        return res.render('../views/user/order.ejs', { session: req.session, cartItemList:cartItemList, sum:sum, productIds:productIds});
     } else{
         return res.render('../views/user/order.ejs', { session: req.session});    
     }
@@ -26,11 +26,12 @@ let getOrderPage = async (req, res) => {
 
 let placeOrder = async(req, res) => {
     try{
-        let {sumOfAllItem, address, city,zip} = req.body;
+        let {sumOfAllItem, address, city,zip,productIds} = req.body;
+        var productDetailIdArray = productIds.split(',').map(Number);
         let user = req.session.user; 
         let cartId = req.session.cart.id;
         if (user){
-            await orderService.placeOrder(cartId, user,sumOfAllItem, address, city, zip);
+            await orderService.placeOrder(cartId, user,sumOfAllItem, address, city, zip, productDetailIdArray);
         } else{
             return res.redirect('/login');
         }

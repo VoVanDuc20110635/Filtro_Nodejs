@@ -746,11 +746,15 @@
 
                 // Add options to the select
                 productDetailArray.forEach(function (productDetail) {
-                    let price = productDetail.price-productDetail.price*productDetail.discount/100;
-                    $('#productDetailSelect').append($('<option>', {
-                    value: productDetail.productDetailId, // Replace with the actual property of productDetail
-                    text: productDetail.weight + "gram với giá " + price + "đ;" + "( giảm giá:"+productDetail.discount  +"%);" + " tồn kho: " + productDetail.stock// Replace with the actual property of productDetail
-                    }));
+                    if (productDetail.stock !== 0) {
+                        let price = productDetail.price-productDetail.price*productDetail.discount/100;
+                        
+
+                        $('#productDetailSelect').append($('<option>', {
+                            value: productDetail.productDetailId,
+                            text: productDetail.weight + " gram với giá " + price + "đ; ( giảm giá:" + productDetail.discount + "%); tồn kho: " + productDetail.stock,
+                        }));
+                    }
                 });
 
                 formImport.style.display= 'flex';
